@@ -9,7 +9,7 @@ import java.util.Date;
 public class User  implements Serializable {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UsersSequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "Login", unique = true, nullable = false)
@@ -36,11 +36,6 @@ public class User  implements Serializable {
     @Column(name = "Date_Register", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRegister;
-
-    @Basic(optional = false)
-    @Column(name = "Date_Exit")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateExit;
 
     // Нужен для получения данных из БД
     protected User(){ }

@@ -2,6 +2,7 @@ package com.pip_coursework.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @RestController
@@ -21,7 +21,7 @@ public class UserController {
     public String add(@RequestParam("login") String login,
                       @RequestParam("password") char[] password,
                       @RequestParam("mail") String mail,
-                      @RequestParam("date") Date date,
+                      @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
                       @RequestParam("lang") char[] lang,
                       @RequestParam("sex") char sex){
         String executiongStatus = "";

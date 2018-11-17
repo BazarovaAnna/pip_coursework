@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Effect {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EffectsSequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
 
     @Column(name = "Name", unique = true, nullable = false)
