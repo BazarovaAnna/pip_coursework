@@ -1,6 +1,6 @@
 package com.pip_coursework;
 
-import com.pip_coursework.repository.CustomerRepository;
+import com.pip_coursework.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PipCourseworkApplication implements CommandLineRunner {
     @Autowired
-    CustomerRepository repository;
+    UserRepository repository;
 
     public static void main(String[] args) {
         SpringApplication.run(PipCourseworkApplication.class, args);
