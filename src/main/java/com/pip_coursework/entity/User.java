@@ -9,7 +9,7 @@ import java.util.Date;
 public class User  implements Serializable {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UsersSequence")
     private long id;
 
     @Column(name = "Login", unique = true, nullable = false)

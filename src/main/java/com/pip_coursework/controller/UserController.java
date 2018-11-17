@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
-    @RequestMapping("/UserController/save")
+    @RequestMapping("/UserController/add")
     public String add(@RequestParam("login") String login,
                       @RequestParam("password") char[] password,
                       @RequestParam("mail") String mail,
@@ -27,6 +27,10 @@ public class UserController {
         String executiongStatus = "";
 
         try{
+            if(repository.findByLogin(login).size()  > 0){
+                throw  new DataIntegrityViolationException("");
+            }
+
             repository.save(new User(login, password,
                     mail, date, lang, sex));
 
@@ -54,7 +58,6 @@ public class UserController {
     @RequestMapping("/UserController/findByLogin")
     public String fetchDataByLogin(@RequestParam("login") String login){
         String result = "";
-        ArrayList<User> users = (ArrayList<User>) repository.findByLogin(login);
 
         for(User user: repository.findByLogin(login)){
             result += user.toString() + "<br>";
