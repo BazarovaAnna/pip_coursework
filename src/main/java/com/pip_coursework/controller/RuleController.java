@@ -45,8 +45,6 @@ public class RuleController {
                 throw new DataIntegrityViolationException("");
             }
 
-
-
             repository.save(new Rule(creator, title, description));
 
             executiongStatus = "Done";
