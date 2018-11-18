@@ -68,6 +68,11 @@ public class RulesController {
 
     @RequestMapping("RulesController/findbyid")
     public  String findById(@RequestParam("id") long id){
-        return repository.findById(id).toString();
+        String result = "";
+        result = repository.findById(id).toString();
+        if (result.equals("")) {
+            return "There're no rules with this is";
+        }
+        return  result;
     }
 }

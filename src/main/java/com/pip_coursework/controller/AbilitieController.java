@@ -61,6 +61,9 @@ public class AbilitieController {
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();
+        if (result.equals("")) {
+            return "There're no abilities with this is";
+        }
         return  result;
     }
 }

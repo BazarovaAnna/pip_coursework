@@ -47,6 +47,11 @@ public class GenreController {
 
     @RequestMapping("GenreController/findbyid")
     public  String findById(@RequestParam("id") long id){
-        return repository.findById(id).toString();
+        String result = "";
+        result = repository.findById(id).toString();
+        if (result.equals("")) {
+            return "There're no genres with this is";
+        }
+        return  result;
     }
 }
