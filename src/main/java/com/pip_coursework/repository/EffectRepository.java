@@ -7,4 +7,6 @@ import java.util.ArrayList;
 
 public interface EffectRepository extends CrudRepository<Effect, Long> {
     ArrayList<Effect> findByName(String name);
+
+    ArrayList<Effect> findById(long Id);
 }

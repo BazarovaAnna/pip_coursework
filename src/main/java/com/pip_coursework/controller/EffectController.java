@@ -13,7 +13,7 @@ public class EffectController {
     @Autowired
     EffectRepository repository;
 
-    @RequestMapping("EffectController/add")
+    @RequestMapping("/EffectController/add")
     public  String add(@RequestParam("name") String name,
                        @RequestParam("description") String description){
            String executiongStatus = "";
@@ -35,7 +35,7 @@ public class EffectController {
         }
     }
 
-    @RequestMapping("EffectController/findall")
+    @RequestMapping("/EffectController/findall")
     public  String findAll(){
         String result = "";
 
@@ -46,10 +46,13 @@ public class EffectController {
         return result;
     }
 
-    @RequestMapping("EffectController/findbyid")
+    @RequestMapping("/EffectController/findbyid")
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();
+        if (result.equals("")) {
+            return "There're no effects with this is";
+        }
         return  result;
     }
 }
