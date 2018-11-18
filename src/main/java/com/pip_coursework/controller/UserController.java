@@ -65,4 +65,15 @@ public class UserController {
 
         return  result;
     }
+
+    @RequestMapping("/UserController/findByLogin")
+    public String findById(@RequestParam("id") long id){
+        String result = "";
+
+        for(User user: repository.findById(id)){
+            result += user.toString() + "<br>";
+        }
+
+        return  result;
+    }
 }

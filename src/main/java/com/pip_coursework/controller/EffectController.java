@@ -50,6 +50,9 @@ public class EffectController {
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();
+        if (result.equals("")) {
+            return "There're no effects with this is";
+        }
         return  result;
     }
 }
