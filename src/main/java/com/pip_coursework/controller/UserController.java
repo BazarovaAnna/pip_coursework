@@ -1,5 +1,9 @@
 package com.pip_coursework.controller;
 
+import com.pip_coursework.entity.Genre;
+import com.pip_coursework.entity.User_Genre;
+import com.pip_coursework.repository.User_GenreRepository;
+import com.pip_coursework.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,12 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.Date;
 
 @RestController
 public class UserController {
     @Autowired
     UserRepository repository;
+    @Autowired
+    User_GenreRepository user_genreRepository;
+    @Autowired
+    GenreRepository genreRepository;
 
     @RequestMapping("/UserController/add")
     public String add(@RequestParam("login") String login,
@@ -77,23 +86,38 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/findbyid/findgenres")
+    @RequestMapping("/UserController/findgenres")
     public String findGenresById(@RequestParam("id") long id){
         String result = "";
-        result = repository.findById(id).get(0).getUsersGenres().toString();
+        result = user_genreRepository.findByUserId(id).toString();
         if (result.equals("")) {
-            return "There're no genres with this id";
+            return "There're no genres referenced to user with this id";
         }
         return  result;
     }
 
-    @RequestMapping("/UserController/findbyid/setgenre")
-    public String setGenreById(@RequestParam("id") long id){
-        String result = "";
-        result = repository.findById(id).get(0).getUsersGenres().toString();
-        if (result.equals("")) {
-            return "There're no genres with this id";
+    @RequestMapping("/UserController/setgenre")
+    public String setGenreById(@RequestParam("id") long id, long genreId){
+        String result = "done";
+
+        try {
+            Genre genre = genreRepository.findById(genreId).get(0);
+            User user = repository.findById(id).get(0);
+            user.addGenreToUser(genre);
+            genreRepository.findById(genreId).get(0).addUserToGenre(user);
+            repository.save(user);
+            genreRepository.save(genre);
+            user_genreRepository.save(new User_Genre(id, genreId, user, genre));
         }
-        return  result;
+
+        catch (DataIntegrityViolationException e) {
+            result = "There're no user or genre with this id";
+        }
+
+        finally {
+            return result;
+        }
     }
+
+    //TODO: @RequestMapping("/UserController/deletegenre")
 }

@@ -7,18 +7,19 @@ import com.pip_coursework.multipleKeys.usersGenresKey;
 @IdClass(usersGenresKey.class)
 @Table(name = "Users_Genres")
 public class User_Genre {
-    @Id
+
     @ManyToOne
     private User user;
 
-    @Column(name = "User_Id")
+    @Id
+    @Column(name = "User_Id", insertable = false, updatable = false)
     private long userId;
 
-    @Id
     @ManyToOne
     private Genre genre;
 
-    @Column(name = "Genre_Id")
+    @Id
+    @Column(name = "Genre_Id", insertable = false, updatable = false)
     private long genreId;
 
     protected User_Genre(){

@@ -2,6 +2,7 @@ package com.pip_coursework.controller;
 
 import com.pip_coursework.entity.Genre;
 import com.pip_coursework.repository.GenreRepository;
+import com.pip_coursework.repository.User_GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenreController {
     @Autowired
     GenreRepository repository;
+    @Autowired
+    User_GenreRepository user_genreRepository;
 
     @RequestMapping("/GenreController/add")
     public  String add(@RequestParam("name") String name){
@@ -55,13 +58,20 @@ public class GenreController {
         return  result;
     }
 
-    @RequestMapping("/GenreController/findbyid/findusers")
+    @RequestMapping("/GenreController/findusers")
     public String findUsersById(@RequestParam("id") long id){
         String result = "";
-        result = repository.findById(id).get(0).getGenresUsers().toString();
-        if (result.equals("")) {
-            return "There're no genres with this id";
+        try {
+            result = user_genreRepository.findByGenreId(id).toString();
+            if (result.equals("")) {
+                result = "There're no users referenced to genre with this id";
+            }
         }
-        return  result;
+        catch (DataIntegrityViolationException e) {
+            result = "Genre with this id doesn't exist";
+        }
+        finally {
+            return  result;
+        }
     }
 }

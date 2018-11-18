@@ -11,11 +11,15 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
 
-    @ManyToMany
     private ArrayList<User> users;
+
     public ArrayList<User> getGenresUsers() {
         return users;
     }
+    public void addUserToGenre(User user) {
+        users.add(user);
+    }
+    public void removeUserFromGenre (User user) { users.remove(user); }
 
     @Column(name = "Name", unique = true, nullable = false)
     private String name;

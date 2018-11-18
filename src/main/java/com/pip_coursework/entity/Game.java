@@ -14,19 +14,19 @@ public class Game {
     @ManyToOne
     private Genre genre;
 
-    @Column(name = "Genre_Id")
+    @Column(name = "Genre_Id", insertable = false, updatable = false)
     private long genreId;
 
     @ManyToOne
     private Rules rules;
 
-    @Column(name = "Rules_Id")
+    @Column(name = "Rules_Id", insertable = false, updatable = false)
     private long rulesId;
 
     @ManyToOne
     private User gm;
 
-    @Column(name = "GM_Id")
+    @Column(name = "GM_Id", insertable = false, updatable = false)
     private long gmId;
 
     @Column(name = "State", unique = true, nullable = false)

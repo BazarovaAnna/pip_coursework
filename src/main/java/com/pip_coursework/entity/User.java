@@ -37,12 +37,12 @@ public class User implements Serializable {
     @Column(name = "Date_Register", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRegister;
-
-    @ManyToMany
+    
     private ArrayList<Genre> genres;
-    public void setGenreToUser(Genre genre) {
+    public void addGenreToUser(Genre genre) {
         genres.add(genre);
     }
+    public void removeGenreFromUser (Genre genre) { genres.remove(genre); }
     public ArrayList<Genre> getUsersGenres() {
         return genres;
     }
