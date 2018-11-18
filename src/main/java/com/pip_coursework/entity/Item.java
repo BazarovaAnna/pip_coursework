@@ -22,6 +22,8 @@ public class Item {
     @Column(name = "Weight", nullable = false)
     private double weight;
 
+    public long getId(){ return  id;}
+
     protected Item(){}
 
     public Item(String name, String description,
