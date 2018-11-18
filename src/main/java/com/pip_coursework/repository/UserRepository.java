@@ -1,6 +1,5 @@
 package com.pip_coursework.repository;
 
-import com.pip_coursework.entity.Effect;
 import com.pip_coursework.entity.User;
 import org.springframework.data.repository.CrudRepository;
 

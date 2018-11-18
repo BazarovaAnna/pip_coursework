@@ -2,6 +2,7 @@ package com.pip_coursework.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -50,6 +51,17 @@ public class User  implements Serializable {
         this.language = language;
         this.sex = sex;
         this.dateRegister = new Date();
+    }
+
+    private ArrayList<Rule> rules;
+
+    @OneToMany(mappedBy = "creator")
+    public ArrayList<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRule(Rule rule) {
+        this.rules.add(rule);
     }
 
     @Override

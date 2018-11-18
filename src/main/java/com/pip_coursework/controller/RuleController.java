@@ -1,7 +1,9 @@
 package com.pip_coursework.controller;
 
-import com.pip_coursework.entity.Rules;
-import com.pip_coursework.repository.RulesRepository;
+import com.pip_coursework.entity.Rule;
+import com.pip_coursework.entity.User;
+import com.pip_coursework.repository.RuleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RulesController {
+public class RuleController {
     @Autowired
-    RulesRepository repository;
+    RuleRepository repository;
 
-    @RequestMapping("RulesController/add")
+    @RequestMapping("RuleController/addCommon")
     public  String add(@RequestParam("title") String title, @RequestParam("description") String description){
         String executiongStatus = "";
 
@@ -22,7 +24,7 @@ public class RulesController {
                 throw new DataIntegrityViolationException("");
             }
 
-            repository.save(new Rules(title, description));
+            repository.save(new Rule(title, description));
 
             executiongStatus = "Done";
         }
@@ -34,8 +36,8 @@ public class RulesController {
         }
     }
 
-    @RequestMapping("RulesController/add")
-    public  String add(@RequestParam("creator_id") long creator_id, @RequestParam("title") String title, @RequestParam("description") String description){
+    @RequestMapping("RuleController/customerAdd")
+    public  String addWithCreator(@RequestParam("creator") User creator, @RequestParam("title") String title, @RequestParam("description") String description){
         String executiongStatus = "";
 
         try {
@@ -43,7 +45,9 @@ public class RulesController {
                 throw new DataIntegrityViolationException("");
             }
 
-            repository.save(new Rules(creator_id, title, description));
+
+
+            repository.save(new Rule(creator, title, description));
 
             executiongStatus = "Done";
         }
@@ -55,18 +59,18 @@ public class RulesController {
         }
     }
 
-    @RequestMapping("RulesController/findall")
+    @RequestMapping("RuleController/findall")
     public  String findAll(){
         String result = "";
 
-        for(Rules rules : repository.findAll()){
-            result += rules.toString() + "<br>";
+        for(Rule rule : repository.findAll()){
+            result += rule.toString() + "<br>";
         }
 
         return result;
     }
 
-    @RequestMapping("RulesController/findbyid")
+    @RequestMapping("RuleController/findbyid")
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();

@@ -66,7 +66,7 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/findByLogin")
+    @RequestMapping("/UserController/findById")
     public String findById(@RequestParam("id") long id){
         String result = "";
 
