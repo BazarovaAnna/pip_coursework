@@ -8,7 +8,7 @@ public class Ability {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected  long id;
+    private long id;
 
     @Column(name = "Name", unique = true, nullable = false)
     private String name;
