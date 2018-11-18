@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Abilities")
-public class Abilitie {
+public class Ability {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,9 @@ public class Abilitie {
     @Column(name = "Perk_Ability", nullable = false)
     private char perkAbility;
 
-    protected Abilitie(){
+    protected Ability(){ }
 
-    }
-
-    public Abilitie(String name, String description, char perkAbility){
+    public Ability(String name, String description, char perkAbility){
         this.name = name;
         this.description= description;
         this.perkAbility = perkAbility;
