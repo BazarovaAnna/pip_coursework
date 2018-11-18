@@ -19,6 +19,8 @@ public class Ability {
     @Column(name = "Perk_Ability", nullable = false)
     private char perkAbility;
 
+    public long getId() {return id;}
+
     protected Ability(){ }
 
     public Ability(String name, String description, char perkAbility){
