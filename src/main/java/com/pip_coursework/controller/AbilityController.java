@@ -14,7 +14,7 @@ public class AbilityController {
     @Autowired
     AbilityRepository repository;
 
-    @RequestMapping("AbilitieController/add")
+    @RequestMapping("/AbilityController/add")
     public  String add(@RequestParam("name") String name,
                        @RequestParam("perkabil") char perkAbil ,
                        @RequestParam("description") String description){
@@ -45,7 +45,7 @@ public class AbilityController {
         }
     }
 
-    @RequestMapping("AbilitieController/findall")
+    @RequestMapping("/AbilityController/findall")
     public  String findAll(){
         String result = "";
 
@@ -56,7 +56,7 @@ public class AbilityController {
         return result;
     }
 
-    @RequestMapping("AbilitieController/findbyid")
+    @RequestMapping("/AbilityController/findbyid")
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();

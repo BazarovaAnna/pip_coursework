@@ -13,7 +13,7 @@ public class GenreController {
     @Autowired
     GenreRepository repository;
 
-    @RequestMapping("GenreController/add")
+    @RequestMapping("/GenreController/add")
     public  String add(@RequestParam("name") String name){
         String executiongStatus = "";
 
@@ -34,7 +34,7 @@ public class GenreController {
         }
     }
 
-    @RequestMapping("GenreController/findall")
+    @RequestMapping("/GenreController/findall")
     public  String findAll(){
         String result = "";
 
@@ -45,12 +45,22 @@ public class GenreController {
         return result;
     }
 
-    @RequestMapping("GenreController/findbyid")
+    @RequestMapping("/GenreController/findbyid")
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();
         if (result.equals("")) {
             return "There're no genres with this is";
+        }
+        return  result;
+    }
+
+    @RequestMapping("/GenreController/findbyid/findusers")
+    public String findUsersById(@RequestParam("id") long id){
+        String result = "";
+        result = repository.findById(id).get(0).getGenresUsers().toString();
+        if (result.equals("")) {
+            return "There're no genres with this id";
         }
         return  result;
     }

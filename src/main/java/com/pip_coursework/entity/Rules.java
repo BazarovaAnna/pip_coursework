@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Rules")
-public class Rule {
+public class Rules {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,29 +14,33 @@ public class Rule {
     @ManyToOne
     private User creator;
 
+    @Column(name = "Creator")
+    private long creatorId;
+
     @Column(name = "Title", unique = true, nullable = false)
     private String title;
 
     @Column(name = "Description", unique = true, nullable = false)
     private String description;
 
-    protected Rule(){
+    protected Rules(){
 
     }
 
-    public Rule(User Creator, String Title, String Description){
+    public Rules(long creatorId, User Creator, String Title, String Description){
+        this.creatorId = creatorId;
         this.creator = Creator;
         this.title = Title;
         this.description = Description;
     }
 
-    public Rule(String Title, String Description){
+    public Rules(String Title, String Description){
         this.title = Title;
         this.description = Description;
     }
 
     @Override
     public String toString() {
-        return  String.format("%s Rule title - '%s', created by %s. Description: %s", id, title, creator, description);
+        return  String.format("%s Rules title - '%s', created by %s. Description: %s", id, title, creator, description);
     }
 }

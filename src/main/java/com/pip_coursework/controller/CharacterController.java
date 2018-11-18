@@ -27,7 +27,7 @@ public class CharacterController {
     // TODO Нужно добавить сесси для передачи сущности юзера
     // TODO Добавить валидацию расс и классов из списка
     // TODO Каждой рассе и классу должен соответствовать параметр максимального веса, которые должны складываться
-    @RequestMapping("CharacterController/add")
+    @RequestMapping("/CharacterController/add")
     public String add(@RequestParam("userId") long userId,
                       @RequestParam("name") String name,
                       @RequestParam("userClass") String userClass,
@@ -60,7 +60,7 @@ public class CharacterController {
         }
     }
 
-    @RequestMapping("CharacterController/findall")
+    @RequestMapping("/CharacterController/findall")
     public  String findAll(){
         String result = "";
 

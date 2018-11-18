@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -39,6 +38,15 @@ public class User implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRegister;
 
+    @ManyToMany
+    private ArrayList<Genre> genres;
+    public void setGenreToUser(Genre genre) {
+        genres.add(genre);
+    }
+    public ArrayList<Genre> getUsersGenres() {
+        return genres;
+    }
+
     // Нужен для получения данных из БД
     protected User(){ }
 
@@ -54,7 +62,7 @@ public class User implements Serializable {
         this.dateRegister = new Date();
     }
 
-    private ArrayList<Rule> rules;
+    private ArrayList<Rules> rules;
 
     @Override
     public String toString() {

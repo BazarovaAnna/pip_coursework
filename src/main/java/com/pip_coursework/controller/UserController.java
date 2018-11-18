@@ -76,4 +76,24 @@ public class UserController {
 
         return  result;
     }
+
+    @RequestMapping("/UserController/findbyid/findgenres")
+    public String findGenresById(@RequestParam("id") long id){
+        String result = "";
+        result = repository.findById(id).get(0).getUsersGenres().toString();
+        if (result.equals("")) {
+            return "There're no genres with this id";
+        }
+        return  result;
+    }
+
+    @RequestMapping("/UserController/findbyid/setgenre")
+    public String setGenreById(@RequestParam("id") long id){
+        String result = "";
+        result = repository.findById(id).get(0).getUsersGenres().toString();
+        if (result.equals("")) {
+            return "There're no genres with this id";
+        }
+        return  result;
+    }
 }

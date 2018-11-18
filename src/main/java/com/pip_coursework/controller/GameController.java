@@ -2,10 +2,10 @@ package com.pip_coursework.controller;
 
 import com.pip_coursework.entity.Game;
 import com.pip_coursework.entity.Genre;
-import com.pip_coursework.entity.Rule;
+import com.pip_coursework.entity.Rules;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.GameRepository;
-import com.pip_coursework.repository.RuleRepository;
+import com.pip_coursework.repository.RulesRepository;
 import com.pip_coursework.repository.UserRepository;
 import com.pip_coursework.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +20,26 @@ public class GameController {
     @Autowired
     GameRepository repository;
     @Autowired
-    RuleRepository ruleRepository;
+    RulesRepository rulesRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
     GenreRepository genreRepository;
 
-    @RequestMapping("GameController/add")
+    @RequestMapping("/GameController/add")
     public  String add(@RequestParam("genre_id") long genre_id, @RequestParam("rules_id") long rules_id,
                        @RequestParam("gm_id") long gm_id, @RequestParam("state") String state){
         String executiongStatus = "";
         Genre genre = getGenre(genre_id);
-        Rule rules = getRules(rules_id);
+        Rules rules = getRules(rules_id);
         User gm = getUser(gm_id);
-        repository.save(new Game(genre, rules, gm, state));
+        repository.save(new Game(genre_id, rules_id, gm_id, genre, rules, gm, state));
 
         executiongStatus = "Done";
         return  executiongStatus;
     }
 
-    @RequestMapping("GameController/findall")
+    @RequestMapping("/GameController/findall")
     public  String findAll(){
         String result = "";
 
@@ -50,7 +50,7 @@ public class GameController {
         return result;
     }
 
-    @RequestMapping("GameController/findbyid")
+    @RequestMapping("/GameController/findbyid")
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();
@@ -65,9 +65,9 @@ public class GameController {
         return curUser.get(0);
     }
 
-    private Rule getRules(long rulesId){
-        ArrayList<Rule> curRule = ruleRepository.findById(rulesId);
-        return curRule.get(0);
+    private Rules getRules(long rulesId){
+        ArrayList<Rules> curRules = rulesRepository.findById(rulesId);
+        return curRules.get(0);
     }
 
     private Genre getGenre(long genreId){

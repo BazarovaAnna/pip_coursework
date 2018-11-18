@@ -1,8 +1,8 @@
 package com.pip_coursework.controller;
 
-import com.pip_coursework.entity.Rule;
+import com.pip_coursework.entity.Rules;
 import com.pip_coursework.entity.User;
-import com.pip_coursework.repository.RuleRepository;
+import com.pip_coursework.repository.RulesRepository;
 import com.pip_coursework.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-public class RuleController {
+public class RulesController {
     @Autowired
-    RuleRepository repository;
+    RulesRepository repository;
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping("RuleController/addCommon")
+    @RequestMapping("/RulesController/addCommon")
     public  String add(@RequestParam("title") String title, @RequestParam("description") String description){
         String executiongStatus = "";
 
@@ -28,7 +28,7 @@ public class RuleController {
                 throw new DataIntegrityViolationException("");
             }
 
-            repository.save(new Rule(title, description));
+            repository.save(new Rules(title, description));
 
             executiongStatus = "Done";
         }
@@ -40,7 +40,7 @@ public class RuleController {
         }
     }
 
-    @RequestMapping("RuleController/customerAdd")
+    @RequestMapping("/RulesController/customerAdd")
     public  String addWithCreator(@RequestParam("creator_id") long creator_id, @RequestParam("title") String title, @RequestParam("description") String description){
         String executiongStatus = "";
 
@@ -52,7 +52,7 @@ public class RuleController {
             User creator =  getUser(creator_id);
             //TODO: нужно как-то проверить наличие юзера
 
-            repository.save(new Rule(creator, title, description));
+            repository.save(new Rules(creator_id, creator, title, description));
 
             executiongStatus = "Done";
         }
@@ -64,18 +64,18 @@ public class RuleController {
         }
     }
 
-    @RequestMapping("RuleController/findall")
+    @RequestMapping("/RulesController/findall")
     public  String findAll(){
         String result = "";
 
-        for(Rule rule : repository.findAll()){
-            result += rule.toString() + "<br>";
+        for(Rules rules : repository.findAll()){
+            result += rules.toString() + "<br>";
         }
 
         return result;
     }
 
-    @RequestMapping("RuleController/findbyid")
+    @RequestMapping("/RulesController/findbyid")
     public  String findById(@RequestParam("id") long id){
         String result = "";
         result = repository.findById(id).toString();

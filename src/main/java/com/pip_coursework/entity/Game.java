@@ -14,11 +14,20 @@ public class Game {
     @ManyToOne
     private Genre genre;
 
+    @Column(name = "Genre_Id")
+    private long genreId;
+
     @ManyToOne
-    private Rule rule;
+    private Rules rules;
+
+    @Column(name = "Rules_Id")
+    private long rulesId;
 
     @ManyToOne
     private User gm;
+
+    @Column(name = "GM_Id")
+    private long gmId;
 
     @Column(name = "State", unique = true, nullable = false)
     private String state;
@@ -37,16 +46,19 @@ public class Game {
     protected Game(){ }
 
     // Нужен для добавления данных в БД
-    public Game(Genre genre, Rule rule, User gm, String state){
+    public Game(long genreId, long rulesId, long gmId, Genre genre, Rules rules, User gm, String state){
+        this.genreId = genreId;
+        this.rulesId = rulesId;
+        this.gmId = gmId;
         this.genre = genre;
         this.gm = gm;
-        this.rule = rule;
+        this.rules = rules;
         this.state = state;
         this.time_creating = new Date();
     }
 
     @Override
     public String toString() {
-        return  String.format("%s game genre - '%s', rule - %s, gm - %s, state - %s, creation time - %s, deleting time - @s", id, genre.toString(), rule.toString(), gm.toString(), state, time_creating.toString(), time_deleting.toString());
+        return  String.format("%s game genre - '%s', rules - %s, gm - %s, state - %s, creation time - %s, deleting time - @s", id, genre.toString(), rules.toString(), gm.toString(), state, time_creating.toString(), time_deleting.toString());
     }
 }
