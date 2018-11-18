@@ -1,7 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
-import org.springframework.data.rest.core.annotation.RestResource;
+//import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
 @Table(name = "Rules")
@@ -12,9 +12,6 @@ public class Rule {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "Creator_Id", unique = false, nullable = true)
-    @RestResource(path = "Creator", rel="User")
-    //@Column(name = "Creator")
     private User creator;
 
     @Column(name = "Title", unique = true, nullable = false)

@@ -56,15 +56,6 @@ public class User implements Serializable {
 
     private ArrayList<Rule> rules;
 
-    @OneToMany(mappedBy = "creator")
-    public ArrayList<Rule> getRules() {
-        return rules;
-    }
-
-    public void setRule(Rule rule) {
-        this.rules.add(rule);
-    }
-
     @Override
     public String toString() {
         return String.format("User[id=%d, login='%s', password='%s']", id, login, String.copyValueOf(password));

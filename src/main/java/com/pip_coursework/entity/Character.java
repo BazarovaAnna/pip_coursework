@@ -11,7 +11,7 @@ public class Character {
     private long id;
 
     @ManyToOne
-    private  User user;
+    private User user;
 
     @Column(name = "Name", unique = true, nullable = false)
     private  String name;

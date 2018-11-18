@@ -7,4 +7,6 @@ import java.util.ArrayList;
 
 public interface AbilityRepository extends CrudRepository<Ability, Long> {
     ArrayList<Ability> findByName(String name);
+
+    ArrayList<Ability> findById(long Id);
 }

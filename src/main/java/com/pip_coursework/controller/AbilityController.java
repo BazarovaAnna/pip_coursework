@@ -61,7 +61,7 @@ public class AbilityController {
         String result = "";
         result = repository.findById(id).toString();
         if (result.equals("")) {
-            return "There're no abilities with this is";
+            return "There're no abilities with this id";
         }
         return  result;
     }
