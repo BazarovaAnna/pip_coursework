@@ -40,6 +40,8 @@ public class Character {
     @Column(name = "Level", nullable = false)
     private long level;
 
+    public long getId() {return id;}
+
     protected Character(){ }
 
     public  Character(User user, String name, String userClass,
