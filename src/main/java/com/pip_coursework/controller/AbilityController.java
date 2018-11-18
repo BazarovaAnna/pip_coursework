@@ -1,9 +1,8 @@
 package com.pip_coursework.controller;
 
-import com.pip_coursework.entity.Abilitie;
-import com.pip_coursework.entity.Effect;
+import com.pip_coursework.entity.Ability;
 import com.pip_coursework.exception.PerkAbilityException;
-import com.pip_coursework.repository.AbilitieRepository;
+import com.pip_coursework.repository.AbilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AbilitieController {
+public class AbilityController {
     @Autowired
-    AbilitieRepository repository;
+    AbilityRepository repository;
 
     @RequestMapping("AbilitieController/add")
     public  String add(@RequestParam("name") String name,
@@ -30,7 +29,7 @@ public class AbilitieController {
                 throw new PerkAbilityException();
             }
 
-            repository.save(new Abilitie(name,description, perkAbil));
+            repository.save(new Ability(name,description, perkAbil));
 
             executiongStatus = "Done";
         }
@@ -50,7 +49,7 @@ public class AbilitieController {
     public  String findAll(){
         String result = "";
 
-        for(Abilitie abilitie : repository.findAll()){
+        for(Ability abilitie : repository.findAll()){
             result += abilitie.toString() + "<br>";
         }
 
