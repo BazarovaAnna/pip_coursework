@@ -1,13 +1,8 @@
 package com.pip_coursework.controller;
 
+import com.pip_coursework.entity.*;
 import com.pip_coursework.entity.Character;
-import com.pip_coursework.entity.Game;
-import com.pip_coursework.entity.Group;
-import com.pip_coursework.entity.User;
-import com.pip_coursework.repository.CharacterRepository;
-import com.pip_coursework.repository.GameRepository;
-import com.pip_coursework.repository.GroupRepository;
-import com.pip_coursework.repository.UserRepository;
+import com.pip_coursework.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +26,10 @@ public class CharacterController {
     GroupRepository groupRepository;
     @Autowired
     GameRepository gameRepository;
+    @Autowired
+    SessionRepository sessionRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     // TODO Нужно добавить сесси для передачи сущности юзера
     // TODO Добавить валидацию расс и классов из списка
@@ -113,6 +112,42 @@ public class CharacterController {
     }
 
     //TODO: @RequestMapping("/UserController/deletegenre")
+
+    @RequestMapping("/CharacterController/findsessions")
+    public String findSessionsById(@RequestParam("id") long id) {
+        String result = "";
+        result = memberRepository.findByCharacterId(id).toString();
+        if (result.equals("")) {
+            return "There're no sessions referenced to Character with this id";
+        }
+        return  result;
+    }
+
+
+    @RequestMapping("/CharacterController/setsession")
+    public String setSessionById(@RequestParam("id") long id, long sessionId, float charactersRating){
+        String result = "done";
+
+        try {
+            Session member = sessionRepository.findById(sessionId).get(0);
+            Character character = characterRepository.findById(id).get(0);
+            character.addSessionToCharacter(member);
+            sessionRepository.findById(sessionId).get(0).addMemberToSession(character);
+            characterRepository.save(character);
+            sessionRepository.save(member);
+            memberRepository.save(new Member(sessionId, id, member, character, charactersRating));
+        }
+
+        catch (DataIntegrityViolationException e) {
+            result = "There're no session or character with this id";
+        }
+
+        finally {
+            return result;
+        }
+    }
+
+    //TODO: removesession и нормально предыдущий метод обозвать
 
     private User getUser(long userId){
         ArrayList<User> curUser = userRepository.findById(userId);

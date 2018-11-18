@@ -48,6 +48,12 @@ public class Character {
         return games;
     }
 
+    private ArrayList<Session> sessions;
+    public void addSessionToCharacter(Session session) { sessions.add(session); }
+    public void removeSessionFromCharacter (Session session) { sessions.remove(session); }
+    public ArrayList<Session> getSessions() { return sessions; }
+
+
     protected Character(){ }
 
     public  Character(User user, String name, String userClass,
