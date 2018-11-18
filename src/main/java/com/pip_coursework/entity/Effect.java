@@ -16,6 +16,8 @@ public class Effect{
     @Column(name = "Description")
     private String description;
 
+    public long getId() { return id; }
+
     protected Effect(){
 
     }

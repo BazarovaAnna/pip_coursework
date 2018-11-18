@@ -41,6 +41,8 @@ public class Character {
     @Column(name = "Level", nullable = false)
     private long level;
 
+    public long getId() {return id;}
+
     private ArrayList<Game> games;
     public void addGameToCharacter(Game game) { games.add(game); }
     public void removeGameFromCharacter (Game game) { games.remove(game); }
