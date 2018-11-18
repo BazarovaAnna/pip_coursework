@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Characters")
@@ -39,6 +40,13 @@ public class Character {
 
     @Column(name = "Level", nullable = false)
     private long level;
+
+    private ArrayList<Game> games;
+    public void addGameToCharacter(Game game) { games.add(game); }
+    public void removeGameFromCharacter (Game game) { games.remove(game); }
+    public ArrayList<Game> getGames() {
+        return games;
+    }
 
     protected Character(){ }
 

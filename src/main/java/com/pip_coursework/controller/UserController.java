@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.Date;
 
 @RestController

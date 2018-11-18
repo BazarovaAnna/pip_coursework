@@ -1,8 +1,12 @@
 package com.pip_coursework.controller;
 
 import com.pip_coursework.entity.Character;
+import com.pip_coursework.entity.Game;
+import com.pip_coursework.entity.Group;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.CharacterRepository;
+import com.pip_coursework.repository.GameRepository;
+import com.pip_coursework.repository.GroupRepository;
 import com.pip_coursework.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +27,10 @@ public class CharacterController {
     CharacterRepository characterRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    GroupRepository groupRepository;
+    @Autowired
+    GameRepository gameRepository;
 
     // TODO Нужно добавить сесси для передачи сущности юзера
     // TODO Добавить валидацию расс и классов из списка
@@ -70,6 +78,41 @@ public class CharacterController {
 
         return result;
     }
+
+    @RequestMapping("/CharacterController/findgames")
+    public String findGamesById(@RequestParam("id") long id){
+        String result = "";
+        result = groupRepository.findByCharacterId(id).toString();
+        if (result.equals("")) {
+            return "There're no genres referenced to user with this id";
+        }
+        return  result;
+    }
+
+    @RequestMapping("/CharacterController/setgame")
+    public String setGameById(@RequestParam("id") long id, long gameId){
+        String result = "done";
+
+        try {
+            Game game = gameRepository.findById(gameId).get(0);
+            Character character = characterRepository.findById(id).get(0);
+            character.addGameToCharacter(game);
+            gameRepository.findById(gameId).get(0).addCharacterToGame(character);
+            characterRepository.save(character);
+            gameRepository.save(game);
+            groupRepository.save(new Group(gameId, id, game, character));
+        }
+
+        catch (DataIntegrityViolationException e) {
+            result = "There're no game or character with this id";
+        }
+
+        finally {
+            return result;
+        }
+    }
+
+    //TODO: @RequestMapping("/UserController/deletegenre")
 
     private User getUser(long userId){
         ArrayList<User> curUser = userRepository.findById(userId);

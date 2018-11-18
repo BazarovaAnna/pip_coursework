@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -41,6 +42,15 @@ public class Game {
     @Column(name = "Time_Deleting", unique = true, nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date time_deleting;
+
+    private ArrayList<Character> characters;
+    public void addCharacterToGame(Character character) {
+        characters.add(character);
+    }
+    public void removeCharacterFromGame (Character character) { characters.remove(character); }
+    public ArrayList<Character> getCharacters() {
+        return characters;
+    }
 
     // Нужен для получения данных из БД
     protected Game(){ }

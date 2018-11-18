@@ -13,7 +13,7 @@ public class Genre {
 
     private ArrayList<User> users;
 
-    public ArrayList<User> getGenresUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
     public void addUserToGenre(User user) {

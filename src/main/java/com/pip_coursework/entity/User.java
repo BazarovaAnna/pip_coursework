@@ -37,13 +37,13 @@ public class User implements Serializable {
     @Column(name = "Date_Register", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRegister;
-    
+
     private ArrayList<Genre> genres;
     public void addGenreToUser(Genre genre) {
         genres.add(genre);
     }
     public void removeGenreFromUser (Genre genre) { genres.remove(genre); }
-    public ArrayList<Genre> getUsersGenres() {
+    public ArrayList<Genre> getGenres() {
         return genres;
     }
 

@@ -4,11 +4,11 @@ import com.pip_coursework.entity.Game;
 import com.pip_coursework.entity.Genre;
 import com.pip_coursework.entity.Rules;
 import com.pip_coursework.entity.User;
-import com.pip_coursework.repository.GameRepository;
-import com.pip_coursework.repository.RulesRepository;
-import com.pip_coursework.repository.UserRepository;
-import com.pip_coursework.repository.GenreRepository;
+import com.pip_coursework.entity.Character;
+import com.pip_coursework.entity.Group;
+import com.pip_coursework.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +25,10 @@ public class GameController {
     UserRepository userRepository;
     @Autowired
     GenreRepository genreRepository;
+    @Autowired
+    GroupRepository groupRepository;
+    @Autowired
+    CharacterRepository characterRepository;
 
     @RequestMapping("/GameController/add")
     public  String add(@RequestParam("genre_id") long genre_id, @RequestParam("rules_id") long rules_id,
@@ -59,6 +63,42 @@ public class GameController {
         }
         return  result;
     }
+
+    @RequestMapping("/GameController/findcharacters")
+    public String findCharactersById(@RequestParam("id") long id){
+        String result = "";
+        result = groupRepository.findByGameId(id).toString();
+        if (result.equals("")) {
+            return "There're no genres referenced to user with this id";
+        }
+        return  result;
+    }
+
+    @RequestMapping("/GameController/setcharacter")
+    public String setCharaterById(@RequestParam("id") long id, long characterId){
+        String result = "done";
+
+        try {
+            Character character = characterRepository.findById(characterId).get(0);
+            Game game = repository.findById(id).get(0);
+            game.addCharacterToGame(character);
+            characterRepository.findById(characterId).get(0).addGameToCharacter(game);
+            repository.save(game);
+            characterRepository.save(character);
+            groupRepository.save(new Group(id, characterId, game, character));
+        }
+
+        catch (DataIntegrityViolationException e) {
+            result = "There're no game or character with this id";
+        }
+
+        finally {
+            return result;
+        }
+    }
+
+    //TODO: @RequestMapping("/UserController/deletegenre")
+
 
     private User getUser(long userId){
         ArrayList<User> curUser = userRepository.findById(userId);
