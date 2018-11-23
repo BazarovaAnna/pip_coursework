@@ -9,17 +9,27 @@ public class Ability {
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    public long getId() {
+        return id;
+    }
 
     @Column(name = "Name", unique = true, nullable = false)
     private String name;
+    public String getName() {
+        return name;
+    }
 
     @Column(name = "Description")
     private String description;
+    public String getDescription() {
+        return description;
+    }
 
     @Column(name = "Perk_Ability", nullable = false)
     private char perkAbility;
-
-    public long getId() {return id;}
+    public char getPerkAbility() {
+        return perkAbility;
+    }
 
     protected Ability(){ }
 

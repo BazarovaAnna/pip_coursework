@@ -11,6 +11,10 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @ManyToOne
     private User user;
 
@@ -31,12 +35,18 @@ public class Character {
 
     @Column(name =  "Condition", length = 40, nullable = false)
     private char[] condition;
+    public char[] getCondition() { return condition;}
+    public void setCondition(char[] condition) {this.condition = condition; }
+    //изменяемое во времени поле
 
     @Column(name = "Pers_Money", nullable = false)
     private double persMoney;
+    public double getPersMoney() {return persMoney;}
+    public void setPersMoney(double persMoney) {this.persMoney = persMoney;}
 
     @Column(name = "Max_Weight", nullable = false)
     private double maxWeight;
+    public double getMaxWeight() {return maxWeight;}
 
     @Column(name = "Level", nullable = false)
     private long level;

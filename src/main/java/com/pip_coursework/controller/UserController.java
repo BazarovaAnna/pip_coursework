@@ -1,8 +1,8 @@
 package com.pip_coursework.controller;
 
 import com.pip_coursework.entity.Genre;
-import com.pip_coursework.entity.User_Genre;
-import com.pip_coursework.repository.User_GenreRepository;
+import com.pip_coursework.entity.UserGenre;
+import com.pip_coursework.repository.UserGenreRepository;
 import com.pip_coursework.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     UserRepository repository;
     @Autowired
-    User_GenreRepository user_genreRepository;
+    UserGenreRepository user_genreRepository;
     @Autowired
     GenreRepository genreRepository;
 
@@ -106,7 +106,7 @@ public class UserController {
             genreRepository.findById(genreId).get(0).addUserToGenre(user);
             repository.save(user);
             genreRepository.save(genre);
-            user_genreRepository.save(new User_Genre(id, genreId, user, genre));
+            user_genreRepository.save(new UserGenre(id, genreId, user, genre));
         }
 
         catch (DataIntegrityViolationException e) {

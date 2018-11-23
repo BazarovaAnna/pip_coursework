@@ -49,8 +49,8 @@ public class AbilityController {
     public  String findAll(){
         String result = "";
 
-        for(Ability abilitie : repository.findAll()){
-            result += abilitie.toString() + "<br>";
+        for(Ability ability : repository.findAll()){
+            result += ability.toString() + "<br>";
         }
 
         return result;

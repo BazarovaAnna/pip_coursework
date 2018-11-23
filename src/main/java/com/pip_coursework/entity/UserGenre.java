@@ -6,7 +6,7 @@ import com.pip_coursework.multipleKeys.usersGenresKey;
 @Entity
 @IdClass(usersGenresKey.class)
 @Table(name = "Users_Genres")
-public class User_Genre {
+public class UserGenre {
 
     @ManyToOne
     private User user;
@@ -22,10 +22,10 @@ public class User_Genre {
     @Column(name = "Genre_Id", insertable = false, updatable = false)
     private long genreId;
 
-    protected User_Genre(){
+    protected UserGenre(){
     }
 
-    public User_Genre(long userId, long genreId, User user, Genre genre){
+    public UserGenre(long userId, long genreId, User user, Genre genre){
         this.userId = userId;
         this.genreId = genreId;
         this.user = user;

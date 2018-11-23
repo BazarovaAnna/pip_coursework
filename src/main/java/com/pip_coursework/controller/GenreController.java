@@ -2,7 +2,7 @@ package com.pip_coursework.controller;
 
 import com.pip_coursework.entity.Genre;
 import com.pip_coursework.repository.GenreRepository;
-import com.pip_coursework.repository.User_GenreRepository;
+import com.pip_coursework.repository.UserGenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ public class GenreController {
     @Autowired
     GenreRepository repository;
     @Autowired
-    User_GenreRepository user_genreRepository;
+    UserGenreRepository user_genreRepository;
 
     @RequestMapping("/GenreController/add")
     public  String add(@RequestParam("name") String name){

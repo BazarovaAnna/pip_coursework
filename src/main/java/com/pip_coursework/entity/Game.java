@@ -12,6 +12,10 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    public long getId() {
+        return id;
+    }
+
     @ManyToOne
     private Genre genre;
 

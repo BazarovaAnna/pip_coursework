@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Entity
 @IdClass(CharactersEffectsKey.class)
-@Table(name = "Characters_Effects")
-public class Characters_Effects {
+@Table(name = "CharactersEffects")
+public class CharactersEffects {
 
     @ManyToOne
     private Effect effect;
@@ -35,9 +35,9 @@ public class Characters_Effects {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeOverlay;
 
-    protected Characters_Effects(){}
+    protected CharactersEffects(){}
 
-    public Characters_Effects(Effect effect, Character character){
+    public CharactersEffects(Effect effect, Character character){
         this.effectId = effect.getId();
         this.characterId = character.getId();
         this.effect = effect;

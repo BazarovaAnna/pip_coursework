@@ -7,8 +7,8 @@ import java.util.Date;
 
 @Entity
 @IdClass(CharactersAbilitiesKey.class)
-@Table(name = "Characters_Abilities")
-public class Characters_Abilities {
+@Table(name = "CharactersAbilities")
+public class CharactersAbilities {
     @ManyToOne
     private Ability ability;
 
@@ -29,9 +29,9 @@ public class Characters_Abilities {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLearning;
 
-    protected Characters_Abilities(){}
+    protected CharactersAbilities(){}
 
-    public Characters_Abilities(Ability ability, Character character, Date timeLearning){
+    public CharactersAbilities(Ability ability, Character character, Date timeLearning){
         this.abilityId = ability.getId();
         this.characterId = character.getId();
         this.ability = ability;
