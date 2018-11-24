@@ -5,7 +5,6 @@ import com.pip_coursework.entity.User;
 import java.io.Serializable;
 
 public class UsersGenresKey implements Serializable {
-    private User user;
-    private Genre genre;
-
+    User user;
+    Genre genre;
 }
