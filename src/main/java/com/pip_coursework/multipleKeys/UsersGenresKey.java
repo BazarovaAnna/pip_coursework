@@ -7,4 +7,6 @@ import java.io.Serializable;
 public class UsersGenresKey implements Serializable {
     private User user;
     private Genre genre;
+
+
 }
