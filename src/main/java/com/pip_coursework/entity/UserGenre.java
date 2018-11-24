@@ -1,7 +1,8 @@
 package com.pip_coursework.entity;
 
-import javax.persistence.*;
 import com.pip_coursework.multipleKeys.UsersGenresKey;
+
+import javax.persistence.*;
 
 @Entity
 @IdClass(UsersGenresKey.class)
