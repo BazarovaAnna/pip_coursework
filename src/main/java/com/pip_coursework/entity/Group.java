@@ -1,11 +1,11 @@
 package com.pip_coursework.entity;
 
-import com.pip_coursework.multipleKeys.groupsKey;
+import com.pip_coursework.multipleKeys.GroupsKey;
 
 import javax.persistence.*;
 
 @Entity
-@IdClass(groupsKey.class)
+@IdClass(GroupsKey.class)
 @Table(name = "Groups")
 public class Group {
     @Id

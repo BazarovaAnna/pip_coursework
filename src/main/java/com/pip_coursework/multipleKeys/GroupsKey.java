@@ -4,7 +4,7 @@ import com.pip_coursework.entity.Game;
 import java.io.Serializable;
 
 
-public class groupsKey implements Serializable {
+public class GroupsKey implements Serializable {
     Game game;
     Character character;
 }

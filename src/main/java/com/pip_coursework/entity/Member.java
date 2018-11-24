@@ -1,11 +1,11 @@
 package com.pip_coursework.entity;
 
-import com.pip_coursework.multipleKeys.membersKey;
+import com.pip_coursework.multipleKeys.MembersKey;
 
 import javax.persistence.*;
 
 @Entity
-@IdClass(membersKey.class)
+@IdClass(MembersKey.class)
 @Table(name = "Members")
 public class Member {
     @Id
