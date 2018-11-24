@@ -4,7 +4,7 @@ import com.pip_coursework.entity.Session;
 import java.io.Serializable;
 
 
-public class membersKey implements Serializable {
+public class MembersKey implements Serializable {
     Session session;
     Character character;
 }
