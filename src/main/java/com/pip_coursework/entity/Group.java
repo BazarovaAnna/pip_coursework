@@ -8,33 +8,24 @@ import javax.persistence.*;
 @IdClass(groupsKey.class)
 @Table(name = "Groups")
 public class Group {
-
+    @Id
     @ManyToOne
     private Game game;
 
     @Id
-    @Column(name = "Game_Id", insertable = false, updatable = false)
-    private long gameId;
-
     @ManyToOne
     private Character character;
-
-    @Id
-    @Column(name = "Character_Id", insertable = false, updatable = false)
-    private long characterId;
 
     protected Group(){
     }
 
-    public Group(long gameId, long characterId, Game game, Character character){
-        this.gameId = gameId;
+    public Group(Game game, Character character){
         this.game = game;
-        this.characterId = characterId;
         this.character = character;
     }
 
     @Override
     public String toString() {
-        return  String.format("Game - '%s', character - '%s'", game.toString(), character.toString());
+        return  String.format("Игра: %s, персонаж: %s", game.toString(), character.toString());
     }
 }

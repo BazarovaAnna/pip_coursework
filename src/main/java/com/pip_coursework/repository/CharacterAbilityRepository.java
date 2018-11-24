@@ -1,6 +1,5 @@
 package com.pip_coursework.repository;
 
-
 import com.pip_coursework.entity.CharactersAbilities;
 import org.springframework.data.repository.CrudRepository;
 

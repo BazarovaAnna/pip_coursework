@@ -10,17 +10,25 @@ public class Effect{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
 
+    public long getId() {
+        return id;
+    }
+
     @Column(name = "Name", unique = true, nullable = false)
     private String name;
+
+    public String getName() {
+        return name;
+    }
 
     @Column(name = "Description")
     private String description;
 
-    public long getId() { return id; }
-
-    protected Effect(){
-
+    public String getDescription() {
+        return description;
     }
+
+    protected Effect(){ }
 
     public Effect(String name, String description){
         this.name = name;
@@ -29,6 +37,6 @@ public class Effect{
 
     @Override
     public String toString() {
-        return  String.format("%s Effect name - '%s'",id, name);
+        return  String.format("%s Название эффекта - '%s'. %s", id, name, description);
     }
 }

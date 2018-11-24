@@ -31,7 +31,7 @@ public class SessionController {
     public  String add(@RequestParam("game_id") long gameId, @RequestParam("gms_rating") float gmsRating){
         String executiongStatus = "";
         Game game = gameRepository.findById(gameId).get(0);
-        repository.save(new Session(gameId, game, gmsRating));
+        repository.save(new Session(game, gmsRating));
         executiongStatus = "Done";
         return executiongStatus;
     }
@@ -76,11 +76,9 @@ public class SessionController {
         try {
             Character member = characterRepository.findById(memberId).get(0);
             Session session = repository.findById(id).get(0);
-            session.addMemberToSession(member);
-            characterRepository.findById(memberId).get(0).addSessionToCharacter(session);
             repository.save(session);
             characterRepository.save(member);
-            memberRepository.save(new Member(id, memberId, session, member, charactersRating));
+            memberRepository.save(new Member(session, member, charactersRating));
         }
 
         catch (DataIntegrityViolationException e) {

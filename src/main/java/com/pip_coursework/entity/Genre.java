@@ -1,7 +1,6 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "Genres")
@@ -11,22 +10,18 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
 
-    private ArrayList<User> users;
-
-    public ArrayList<User> getUsers() {
-        return users;
+    public long getId() {
+        return id;
     }
-    public void addUserToGenre(User user) {
-        users.add(user);
-    }
-    public void removeUserFromGenre (User user) { users.remove(user); }
 
     @Column(name = "Name", unique = true, nullable = false)
     private String name;
 
-    protected Genre(){
-
+    public String getName() {
+        return name;
     }
+
+    protected Genre(){ }
 
     public Genre(String name){
         this.name = name;
@@ -34,6 +29,6 @@ public class Genre {
 
     @Override
     public String toString() {
-        return  String.format("%s Genre name - '%s'", id, name);
+        return  String.format("%s Название жанра - '%s'", id, name);
     }
 }

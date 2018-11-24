@@ -1,39 +1,37 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
-import com.pip_coursework.multipleKeys.usersGenresKey;
+import com.pip_coursework.multipleKeys.UsersGenresKey;
 
 @Entity
-@IdClass(usersGenresKey.class)
+@IdClass(UsersGenresKey.class)
 @Table(name = "Users_Genres")
 public class UserGenre {
-
+    @Id
     @ManyToOne
     private User user;
 
-    @Id
-    @Column(name = "User_Id", insertable = false, updatable = false)
-    private long userId;
+    public User getUser() {
+        return user;
+    }
 
+    @Id
     @ManyToOne
     private Genre genre;
 
-    @Id
-    @Column(name = "Genre_Id", insertable = false, updatable = false)
-    private long genreId;
-
-    protected UserGenre(){
+    public Genre getGenre() {
+        return genre;
     }
 
-    public UserGenre(long userId, long genreId, User user, Genre genre){
-        this.userId = userId;
-        this.genreId = genreId;
+    protected UserGenre(){ }
+
+    public UserGenre(User user, Genre genre){
         this.user = user;
         this.genre = genre;
     }
 
     @Override
     public String toString() {
-        return  String.format("User - '%s', genre - '%s'", user, genre);
+        return  String.format("Пользователь - '%s', жанр - '%s'", user.toString(), genre.toString());
     }
 }

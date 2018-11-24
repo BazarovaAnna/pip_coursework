@@ -1,8 +1,10 @@
 package com.pip_coursework.multipleKeys;
+import com.pip_coursework.entity.Session;
+
 import java.io.Serializable;
 
 
 public class membersKey implements Serializable {
-    long sessionId;
-    long characterId;
+    Session session;
+    Character character;
 }

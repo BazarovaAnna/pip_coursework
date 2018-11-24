@@ -8,37 +8,50 @@ import javax.persistence.*;
 @IdClass(membersKey.class)
 @Table(name = "Members")
 public class Member {
-
+    @Id
     @ManyToOne
     private Session session;
 
-    @Id
-    @Column(name = "Session_Id", insertable = false, updatable = false)
-    private long sessionId;
+    public Session getSession() {
+        return session;
+    }
 
+    @Id
     @ManyToOne
     private Character character;
 
-    @Id
-    @Column(name = "Character_Id", insertable = false, updatable = false)
-    private long characterId;
+    public Character getCharacter() {
+        return character;
+    }
 
-    @Column(name = "Characters_Rating", nullable = false)
+    @Column(name = "Characters_Rating")
     private float charactersRating;
+
+    public float getCharactersRating() {
+        return charactersRating;
+    }
+
+    public void setCharactersRating(float charactersRating) {
+        this.charactersRating = charactersRating;
+    }
 
     protected Member(){
     }
 
-    public Member(long sessionId, long characterId, Session session, Character character, float charactersRating){
-        this.sessionId = sessionId;
+    public Member(Session session, Character character, float charactersRating){
         this.session = session;
-        this.characterId = characterId;
         this.character = character;
         this.charactersRating = charactersRating;
     }
 
+    public Member(Session session, Character character){
+        this.session = session;
+        this.character = character;
+    }
+
     @Override
     public String toString() {
-        return  String.format("Session - '%s', character - '%s', character's rating - '%s'", session.toString(), character.toString(), charactersRating);
+        return  String.format("Сессия: '%s', персонаж: '%s', рейтинг персонажа: '%s'",
+                session.toString(), character.toString(), charactersRating);
     }
 }

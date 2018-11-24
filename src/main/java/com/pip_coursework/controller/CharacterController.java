@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 public class CharacterController {
     private final double MAXWEIGHT = 100;
-    private final double INITIALMONEY = 0;
     private final long INITIALLEVEL = 1;
 
     @Autowired
@@ -50,9 +49,8 @@ public class CharacterController {
             if(characterRepository.findByName(name).size()  > 0){
                 throw  new DataIntegrityViolationException("");
             }
-
-            characterRepository.save(new Character(curUser,name,userClass,
-                    race,story,sex, condition, INITIALMONEY, MAXWEIGHT, INITIALLEVEL));
+            characterRepository.save(new Character(curUser, name, userClass,
+                    race, story, sex, condition, MAXWEIGHT, INITIALLEVEL));
 
             executiongStatus = "Done";
         }
@@ -95,11 +93,9 @@ public class CharacterController {
         try {
             Game game = gameRepository.findById(gameId).get(0);
             Character character = characterRepository.findById(id).get(0);
-            character.addGameToCharacter(game);
-            gameRepository.findById(gameId).get(0).addCharacterToGame(character);
             characterRepository.save(character);
             gameRepository.save(game);
-            groupRepository.save(new Group(gameId, id, game, character));
+            groupRepository.save(new Group(game, character));
         }
 
         catch (DataIntegrityViolationException e) {
@@ -131,11 +127,9 @@ public class CharacterController {
         try {
             Session member = sessionRepository.findById(sessionId).get(0);
             Character character = characterRepository.findById(id).get(0);
-            character.addSessionToCharacter(member);
-            sessionRepository.findById(sessionId).get(0).addMemberToSession(character);
             characterRepository.save(character);
             sessionRepository.save(member);
-            memberRepository.save(new Member(sessionId, id, member, character, charactersRating));
+            memberRepository.save(new Member(member, character, charactersRating));
         }
 
         catch (DataIntegrityViolationException e) {

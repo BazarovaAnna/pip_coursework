@@ -102,11 +102,9 @@ public class UserController {
         try {
             Genre genre = genreRepository.findById(genreId).get(0);
             User user = repository.findById(id).get(0);
-            user.addGenreToUser(genre);
-            genreRepository.findById(genreId).get(0).addUserToGenre(user);
             repository.save(user);
             genreRepository.save(genre);
-            user_genreRepository.save(new UserGenre(id, genreId, user, genre));
+            user_genreRepository.save(new UserGenre(user, genre));
         }
 
         catch (DataIntegrityViolationException e) {

@@ -37,7 +37,7 @@ public class GameController {
         Genre genre = getGenre(genre_id);
         Rules rules = getRules(rules_id);
         User gm = getUser(gm_id);
-        repository.save(new Game(genre_id, rules_id, gm_id, genre, rules, gm, state));
+        repository.save(new Game(genre, rules, gm, state));
 
         executiongStatus = "Done";
         return  executiongStatus;
@@ -81,11 +81,9 @@ public class GameController {
         try {
             Character character = characterRepository.findById(characterId).get(0);
             Game game = repository.findById(id).get(0);
-            game.addCharacterToGame(character);
-            characterRepository.findById(characterId).get(0).addGameToCharacter(game);
             repository.save(game);
             characterRepository.save(character);
-            groupRepository.save(new Group(id, characterId, game, character));
+            groupRepository.save(new Group(game, character));
         }
 
         catch (DataIntegrityViolationException e) {

@@ -9,30 +9,39 @@ import java.util.Date;
 @IdClass(InventoryKey.class)
 @Table(name = "Inventory")
 public class Inventory {
+    @Id
     @ManyToOne
     private Item item;
 
-    @Id
-    @Column(name = "Item_Id", insertable = false, updatable = false)
-    private long itemId;
+    public Item getItem() {
+        return item;
+    }
 
+    @Id
     @ManyToOne
-    Character character;
+    private Character character;
 
-    @Id
-    @Column(name = "Character_Id", insertable = false, updatable = false)
-    private long characterId;
+    public Character getCharacter() {
+        return character;
+    }
 
-    @Id
     @Basic(optional = false)
-    @Column(name = "Time_Getting")
+    @Column(name = "Time_Getting", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeGetting;
 
+    public Date getTimeGetting() {
+        return timeGetting;
+    }
+
     @Basic(optional = false)
-    @Column(name = "Time_Selling", nullable = false)
+    @Column(name = "Time_Selling")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeSelling;
+
+    public Date getTimeSelling() {
+        return timeSelling;
+    }
 
     public void SellTimeSelling(){
         this.timeSelling = new Date();
@@ -41,11 +50,14 @@ public class Inventory {
     protected Inventory(){}
 
     public Inventory(Item item, Character character){
-        this.itemId = item.getId();
-        this.characterId = character.getId();
         this.item = item;
         this.character = character;
         this.timeGetting = new Date();
+    }
+
+    @Override
+    public String toString() {
+        return  String.format("Персонаж - %s, предмет - %s", character.toString(), item.toString());
     }
 }
 

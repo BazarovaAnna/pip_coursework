@@ -1,7 +1,6 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
-//import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
 @Table(name = "Rules")
@@ -11,24 +10,34 @@ public class Rules {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    public long getId() {
+        return id;
+    }
+
     @ManyToOne
     private User creator;
 
-    @Column(name = "Creator")
-    private long creatorId;
+    public User getCreator() {
+        return creator;
+    }
 
     @Column(name = "Title", unique = true, nullable = false)
     private String title;
 
+    public String getTitle() {
+        return title;
+    }
+
     @Column(name = "Description", unique = true, nullable = false)
     private String description;
 
-    protected Rules(){
-
+    public String getDescription() {
+        return description;
     }
 
-    public Rules(long creatorId, User Creator, String Title, String Description){
-        this.creatorId = creatorId;
+    protected Rules(){ }
+
+    public Rules(User Creator, String Title, String Description){
         this.creator = Creator;
         this.title = Title;
         this.description = Description;
@@ -41,6 +50,6 @@ public class Rules {
 
     @Override
     public String toString() {
-        return  String.format("%s Rules title - '%s', created by %s. Description: %s", id, title, creator, description);
+        return  String.format("%s Название правил - '%s', созданы: %s. Описание: %s", id, title, creator, description);
     }
 }

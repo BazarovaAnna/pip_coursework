@@ -9,34 +9,42 @@ import java.util.Date;
 @IdClass(CharactersAbilitiesKey.class)
 @Table(name = "CharactersAbilities")
 public class CharactersAbilities {
+    @Id
     @ManyToOne
     private Ability ability;
 
-    @Id
-    @Column(name = "Ability_Id", insertable = false, updatable = false)
-    private long abilityId;
+    public Ability getAbility() {
+        return ability;
+    }
 
+    @Id
     @ManyToOne
-    Character character;
+    private Character character;
 
-    @Id
-    @Column(name = "Character_Id", insertable = false, updatable = false)
-    private long characterId;
+    public Character getCharacter() {
+        return character;
+    }
 
-    @Id
     @Basic(optional = false)
-    @Column(name = "Time_Learning")
+    @Column(name = "Time_Learning", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeLearning;
+
+    public Date getTimeLearning() {
+        return timeLearning;
+    }
 
     protected CharactersAbilities(){}
 
     public CharactersAbilities(Ability ability, Character character, Date timeLearning){
-        this.abilityId = ability.getId();
-        this.characterId = character.getId();
         this.ability = ability;
         this.character = character;
         this.timeLearning = timeLearning;
+    }
+
+    @Override
+    public String toString() {
+        return  String.format("Персонаж - %s, абилка - %s", character.toString(), ability.toString());
     }
 }
 

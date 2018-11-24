@@ -9,24 +9,28 @@ public class Ability {
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     public long getId() {
         return id;
     }
 
     @Column(name = "Name", unique = true, nullable = false)
     private String name;
+
     public String getName() {
         return name;
     }
 
     @Column(name = "Description")
     private String description;
+
     public String getDescription() {
         return description;
     }
 
     @Column(name = "Perk_Ability", nullable = false)
     private char perkAbility;
+
     public char getPerkAbility() {
         return perkAbility;
     }
@@ -41,6 +45,6 @@ public class Ability {
 
     @Override
     public String toString() {
-        return  String.format("%s название %s - '%s'",id,perkAbility, name);
+        return  String.format("%s Название %s - '%s'. %s", id, perkAbility, name, description);
     }
 }

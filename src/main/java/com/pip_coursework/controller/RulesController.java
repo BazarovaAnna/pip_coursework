@@ -52,7 +52,7 @@ public class RulesController {
             User creator =  getUser(creator_id);
             //TODO: нужно как-то проверить наличие юзера
 
-            repository.save(new Rules(creator_id, creator, title, description));
+            repository.save(new Rules(creator, title, description));
 
             executiongStatus = "Done";
         }

@@ -1,7 +1,6 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -12,47 +11,68 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    public long getId() {
+        return id;
+    }
+
     @ManyToOne
     private Game game;
 
-    @Column(name = "Game_Id", insertable = false, updatable = false)
-    private long gameId;
+    public Game getGame() {
+        return game;
+    }
 
-    @Column(name = "GMs_Rating", nullable = false)
+    @Column(name = "GMs_Rating")
     private float gmsRating;
 
+    public float getGmsRating() {
+        return gmsRating;
+    }
+
+    public void setGmsRating(float gmsRating) {
+        this.gmsRating = gmsRating;
+    }
+
     @Basic(optional = false)
-    @Column(name = "Date_Start", unique = true, nullable = false)
+    @Column(name = "Date_Start", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_start;
 
+    public Date getDate_start() {
+        return date_start;
+    }
+
     @Basic(optional = false)
-    @Column(name = "Date_End", unique = true, nullable = true)
+    @Column(name = "Date_End")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_end;
 
-    private ArrayList<Character> members;
-    public void addMemberToSession(Character character) {
-        members.add(character);
+    public void setDate_end(Date date_end) {
+        this.date_end = date_end;
     }
-    public void removeMemberFromSession (Character character) { members.remove(character); }
-    public ArrayList<Character> getMembers() {
-        return members;
+
+    public Date getDate_end() {
+        return date_end;
     }
 
     // Нужен для получения данных из БД
     protected Session(){ }
 
     // Нужен для добавления данных в БД
-    public Session(long gameId, Game game, float gmsRating){
-        this.gameId = gameId;
+    public Session(Game game){
         this.game = game;
-        this.gmsRating = gmsRating;
         this.date_start = new Date();
+    }
+
+    public Session(Game game, float gmsRating){
+        this.game = game;
+        this.date_start = new Date();
+        this.gmsRating = gmsRating;
     }
 
     @Override
     public String toString() {
-        return  String.format("%s session from game - '%s', GM's rating is - %s, Start date - %s, End date - @s", id, game.toString(), gmsRating, date_start.toString(), date_end.toString());
+        return  String.format("%s Сессия из игры: %s, рейтинг ГМа - %s, длится с %s по %s",
+                id, game.toString(), gmsRating, date_start.toString(), date_end.toString());
     }
 }

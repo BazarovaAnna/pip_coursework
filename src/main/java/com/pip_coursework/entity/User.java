@@ -2,7 +2,6 @@ package com.pip_coursework.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -13,38 +12,82 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    public long getId() {
+        return id;
+    }
+
     @Column(name = "Login", unique = true, nullable = false)
-    private  String login;
+    private String login;
+
+    public String getLogin() {
+        return login;
+    }
 
     @Column(name =  "Password", length = 40, nullable = false)
     private char[] password;
 
+    public char[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
+
     @Column(name = "Mail", nullable = false)
-    private  String mail;
+    private String mail;
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
     @Basic(optional = false)
     @Column(name = "Date_Birth", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateBirth;
 
+    public Date getDateBirth() {
+        return dateBirth;
+    }
+
     @Column(name = "Language", nullable = false, length = 5)
     private char[] language;
 
-    @Column(name = "Sex", length = 1)
-    private  char sex;
+    public char[] getLanguage() {
+        return language;
+    }
+
+    @Column(name = "Sex", length = 1, nullable = false)
+    private char sex;
+
+    public char getSex() {
+        return sex;
+    }
 
     @Basic(optional = false)
     @Column(name = "Date_Register", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRegister;
 
-    private ArrayList<Genre> genres;
-    public void addGenreToUser(Genre genre) {
-        genres.add(genre);
+    public Date getDateRegister() {
+        return dateRegister;
     }
-    public void removeGenreFromUser (Genre genre) { genres.remove(genre); }
-    public ArrayList<Genre> getGenres() {
-        return genres;
+
+    @Basic(optional = false)
+    @Column(name = "Date_Exit")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateExit;
+
+    public Date getDateExit() {
+        return dateExit;
+    }
+
+    public void setDateExit(Date dateExit) {
+        this.dateExit = dateExit;
     }
 
     // Нужен для получения данных из БД
@@ -62,10 +105,8 @@ public class User implements Serializable {
         this.dateRegister = new Date();
     }
 
-    private ArrayList<Rules> rules;
-
     @Override
     public String toString() {
-        return String.format("User[id=%d, login='%s', password='%s']", id, login, String.copyValueOf(password));
+        return String.format("Пользователь[id=%d, логин='%s', пароль='%s']", id, login, String.copyValueOf(password));
     }
 }
