@@ -1,11 +1,11 @@
 package com.pip_coursework.entity;
 
-import com.pip_coursework.multipleKeys.UsersGenresKey;
+import com.pip_coursework.multipleKeys.GenresUsersKey;
 
 import javax.persistence.*;
 
 @Entity
-@IdClass(UsersGenresKey.class)
+@IdClass(GenresUsersKey.class)
 @Table(name = "Users_Genres")
 public class UserGenre {
     @Id
