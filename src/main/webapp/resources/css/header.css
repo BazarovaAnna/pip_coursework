@@ -1,0 +1,28 @@
+.header-basic-light{
+    padding: 20px 20px;
+    box-sizing:border-box;
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.15);
+    height: 80px;
+}
+
+/* Logo */
+
+.navbar-header h1{
+    float: left;
+    font: normal 36px Cookie, Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.navbar-header h1 span {
+    color: #5383d3;
+}
+
+.logo{
+    font-size: 42px;
+    color: #5c616a;
+    text-decoration: none;
+}
+
+.logo:hover, .logo:focus{
+    text-decoration: none;
+}
