@@ -7,16 +7,16 @@ import com.pip_coursework.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
 
 import java.util.Date;
 
-@RestController
+@Controller
 public class UserController {
     @Autowired
     UserRepository repository;
@@ -25,7 +25,13 @@ public class UserController {
     @Autowired
     GenreRepository genreRepository;
 
-    @RequestMapping("/UserController/add")
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String user(Model model){
+        return "user";
+    }
+
+    @RequestMapping("/user/add")
+    @ResponseBody
     public String add(@RequestParam("login") String login,
                       @RequestParam("password") char[] password,
                       @RequestParam("mail") String mail,
@@ -52,7 +58,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/UserController/findall")
+    @RequestMapping("/user/findall")
+    @ResponseBody
     public String findAll(){
         String result = "";
 
@@ -63,7 +70,8 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping("/UserController/findByLogin")
+    @RequestMapping("/user/findByLogin")
+    @ResponseBody
     public String fetchDataByLogin(@RequestParam("login") String login){
         String result = "";
 
@@ -74,7 +82,8 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/findById")
+    @RequestMapping("/user/findById")
+    @ResponseBody
     public String findById(@RequestParam("id") long id){
         String result = "";
 
@@ -85,7 +94,8 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/findgenres")
+    @RequestMapping("/user/findgenres")
+    @ResponseBody
     public String findGenresById(@RequestParam("id") long id){
         String result = "";
         result = user_genreRepository.findByUserId(id).toString();
@@ -95,7 +105,8 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/setgenre")
+    @RequestMapping("/user/setgenre")
+    @ResponseBody
     public String setGenreById(@RequestParam("id") long id, long genreId){
         String result = "done";
 

@@ -2,7 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../../../resources/css/footer.css"/>
+            <link rel="stylesheet" href="../../../resources/css/footer.css"/>
         <link href=>
     </head>
     <body>

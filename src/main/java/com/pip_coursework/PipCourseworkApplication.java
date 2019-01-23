@@ -1,23 +1,18 @@
 package com.pip_coursework;
 
-import com.pip_coursework.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class PipCourseworkApplication implements CommandLineRunner {
-    @Autowired
-    UserRepository repository;
-
-    public static void main(String[] args) {
-        SpringApplication.run(PipCourseworkApplication.class, args);
+public class PipCourseworkApplication extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(PipCourseworkApplication.class);
     }
 
-    @Override
-    public void run(String... arg0) throws Exception {
-        // clear all record if existed before do the tutorial with new data
-        repository.deleteAll();
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(PipCourseworkApplication.class, args);
     }
 }
