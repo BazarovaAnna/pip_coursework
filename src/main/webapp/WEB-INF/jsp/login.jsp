@@ -2,31 +2,48 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Логин</title>
+    <title>Вход в систему</title>
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
           rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/login.css"/>
 </head>
 <body>
-<div class="container">
-    <div class="row center-content">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form class="form-signin" method="post" action="/login">
-                <h3 class="form-signin-heading">Пожалуйста, авторизируйтесь</h3>
-                <div class="alert alert-danger" role="alert">Неверные учетные данные пользователя</div>
-                <p>
-                    <label for="username" class="sr-only">Логин</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Логин" required autofocus>
-                </p>
-                <p>
-                    <label for="password" class="sr-only">Пароль</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
-                </p>
-                <sec:csrfInput />
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
-            </form>
-        </div>
-        <div class="col-sm-4"></div>
+<jsp:include page="templates/header.jsp"/>
+<div class="container" id="center-content">
+    <div class="row main-form">
+        <h2>Авторизация</h2>
+        <form method="post" action="/login">
+            <div class="form-group">
+                <label for="login" class="cols-sm-2 control-label">Логин</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="login" id="login" placeholder="Введите логин" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="cols-sm-2 control-label">Пароль</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password"
+                               id="password" placeholder="Введите пароль" required/>
+                    </div>
+                </div>
+            </div>
+
+            <sec:csrfInput />
+            <div class="form-group ">
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Вход">
+            </div>
+        </form>
+        <%if(request.getParameter("error") != null) { %>
+                <div class="form-group" style="text-align:center">
+                    <label class="error-msg">Введен неверный логин или пароль</label>
+                </div>
+        <%}%>
+        <a href="/registration" class="ref-signin">Регистрация</a>
     </div>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>

@@ -3,6 +3,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="../../../resources/css/header.css"/>
+        <link rel="stylesheet" href="../../../resources/js/bootstrap.min.js"/>
     </head>
     <body>
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -15,20 +16,25 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <h1><a href="/" class="logo">D&<span>D</span></a></h1>
+                    <h1 style="margin-top:10px"><a href="/" class="logo">D&<span>D</span></a></h1>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left" style="margin: 5px;">
-                        <li><a href="/">Главная страница</a></li>
-                        <li><a href="/user">Личный кабинет</a></li>
+                        <li><a href="/" style="margin-top:5px;">Главная страница</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <sec:authorize access="!isAuthenticated()">
-                            <li><a href="/login" class="ref-login">Войти</a></li>
-                            <li><a href="/#" class="ref-signup">Регистрация</a></li>
+                            <li><a href="/login" style="margin-top:10px;">Войти</a></li>
+                            <li><a href="/registration" style="margin-top:10px;">Регистрация</a></li>
                         </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
-                            <li><a href="/logout" class="ref-logout">Выйти</a></li>
+                            <li><a href="/user" style="margin-top:10px;">${login}</a></li>
+                            <li>
+                                <form action="/logout" method="post" style="margin-top:8px;">
+                                    <input class="btn btn-danger" style="margin: 10px" type="submit" value="Выйти">
+                                    <sec:csrfInput />
+                                </form>
+                            </li>
                         </sec:authorize>
                     </ul>
                 </div>
