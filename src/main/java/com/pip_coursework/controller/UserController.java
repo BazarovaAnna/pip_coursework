@@ -7,14 +7,17 @@ import com.pip_coursework.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
 
 import java.util.Date;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -26,14 +29,18 @@ public class UserController {
     GenreRepository genreRepository;
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String user(Model model){
+    public String user(
+            @AuthenticationPrincipal User user,
+            Model model) {
+        model.addAttribute("login", user.getLogin());
+
         return "user";
     }
 
     @RequestMapping("/user/add")
     @ResponseBody
     public String add(@RequestParam("login") String login,
-                      @RequestParam("password") char[] password,
+                      @RequestParam("password") String password,
                       @RequestParam("mail") String mail,
                       @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
                       @RequestParam("lang") char[] lang,
@@ -41,12 +48,12 @@ public class UserController {
         String executiongStatus = "";
 
         try{
-            if(repository.findByLogin(login).size()  > 0){
+            if(repository.findByLogin(login) != null){
                 throw  new DataIntegrityViolationException("");
             }
 
             repository.save(new User(login, password,
-                    mail, date, lang, sex));
+                    mail, sex));
 
             executiongStatus = "Done";
         }
@@ -73,11 +80,7 @@ public class UserController {
     @RequestMapping("/user/findByLogin")
     @ResponseBody
     public String fetchDataByLogin(@RequestParam("login") String login){
-        String result = "";
-
-        for(User user: repository.findByLogin(login)){
-            result += user.toString() + "<br>";
-        }
+        String result = repository.findByLogin(login).toString();
 
         return  result;
     }
