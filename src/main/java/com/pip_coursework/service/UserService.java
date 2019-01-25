@@ -108,7 +108,7 @@ public class UserService implements UserDetailsService {
     public void addUsersAvatar(MultipartFile file, User user)
             throws IOException {
 
-        if(file != null){
+        if(!file.isEmpty()){
             File uploadDir = new File(uploadPath);
             if(!uploadDir.exists()){
                 uploadDir.mkdir();
@@ -121,9 +121,23 @@ public class UserService implements UserDetailsService {
             file.transferTo( new File(uploadPath + "/" + resultFilename));
 
             user.setFilename(resultFilename);
+
+            userRepository.save(user);
+        }
+    }
+
+    // Получение аватара пользователя
+    public Object getUserAvatar(User user) {
+        if(user.getFilename() == null){
+            if(user.getSex() == 'm'){
+
+                return "../../resources/default/img/man.png";
+            }
+
+            return "../../resources/default/img/woman.jpg";
         }
 
-        userRepository.save(user);
+        return "../../resources/img/" + user.getFilename();
     }
 
     /*
