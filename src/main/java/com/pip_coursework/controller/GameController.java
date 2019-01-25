@@ -9,14 +9,43 @@ import com.pip_coursework.entity.Group;
 import com.pip_coursework.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-@RestController
+@Controller
 public class GameController {
+    @RequestMapping(value="/lobby", method = RequestMethod.GET)
+    public String lobby(@AuthenticationPrincipal User user,
+                        Model model){
+
+        model.addAttribute("login", user.getLogin());
+
+        return "lobby";
+    }
+
+    @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
+    public String gamefield(@AuthenticationPrincipal User user,
+                            Model model){
+
+        model.addAttribute("login", user.getLogin());
+
+        return "gamefield";
+    }
+
+
+
+
+
+
+
+
     @Autowired
     GameRepository repository;
     @Autowired
