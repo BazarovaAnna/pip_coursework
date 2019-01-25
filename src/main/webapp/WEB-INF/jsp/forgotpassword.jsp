@@ -12,8 +12,8 @@
 <jsp:include page="templates/header.jsp"/>
 <div class="container" id="center-content">
     <div class="row main-form">
-        <h2>Авторизация</h2>
-        <form method="post" action="/login">
+        <h3>Введите логин для восстановления пароля</h3>
+        <form method="post" action="/forgotpassword">
             <div class="form-group">
                 <label for="login" class="cols-sm-2 control-label">Логин</label>
                 <div class="cols-sm-10">
@@ -23,28 +23,21 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password" class="cols-sm-2 control-label">Пароль</label>
-                <div class="cols-sm-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="password"
-                               id="password" placeholder="Введите пароль" required/>
-                    </div>
-                </div>
-            </div>
-
             <sec:csrfInput />
             <div class="form-group ">
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Вход">
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Изменить пароль">
             </div>
         </form>
-        <%if(request.getParameter("error") != null) { %>
-                <div class="alert alert-msg">
-                    <h4 id="error-msg">Неверный логин или пароль</h4>
-                </div>
+        <%if(request.getAttribute("message") != null){%>
+        <div class="alert alert-msg">
+            <label class="success">${message}</label>
+        </div>
         <%}%>
-        <a href="/forgotpassword" class="ref-signin">Забыли пароль</a>
+        <%if(request.getAttribute("error") != null){%>
+        <div class="alert alert-msg">
+            <h4 id="error-msg">${error}</h4>
+        </div>
+        <%}%>
     </div>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>

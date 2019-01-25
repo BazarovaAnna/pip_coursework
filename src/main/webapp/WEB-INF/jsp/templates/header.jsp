@@ -3,7 +3,6 @@
 <html>
     <head>
         <link rel="stylesheet" href="../../../resources/css/header.css"/>
-        <link rel="stylesheet" href="../../../resources/js/bootstrap.min.js"/>
     </head>
     <body>
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">

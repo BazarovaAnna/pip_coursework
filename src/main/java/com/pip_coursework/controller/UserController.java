@@ -4,6 +4,7 @@ import com.pip_coursework.entity.Genre;
 import com.pip_coursework.entity.UserGenre;
 import com.pip_coursework.repository.UserGenreRepository;
 import com.pip_coursework.repository.GenreRepository;
+import com.pip_coursework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,10 +24,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserRepository repository;
+
     @Autowired
-    UserGenreRepository user_genreRepository;
-    @Autowired
-    GenreRepository genreRepository;
+    UserService userService;
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String user(
@@ -36,6 +36,46 @@ public class UserController {
 
         return "user";
     }
+
+    /*
+    Код для смены пароля авторизированного пользователя
+
+    @RequestMapping(value = "/change")
+    public String change(Model modlel,
+                         @AuthenticationPrincipal User user) {
+        userService.changePassword(user);
+
+        return "user";
+    }
+
+    @RequestMapping(value = "/confirmation/{code}", method = RequestMethod.GET)
+    public String confirmation(Model model,
+                               @PathVariable String code){
+
+        boolean isConfirmed = userService.confirmationPassword(code);
+
+        if(isConfirmed){
+            model.addAttribute("message", "Пароль был успешно изменен!");
+        }
+        else {
+            model.addAttribute("message", "Что-то пошло не так!");
+        }
+
+        return "redirect:/user?success="+isConfirmed;
+    }
+    */
+
+
+
+
+
+
+
+
+    @Autowired
+    UserGenreRepository user_genreRepository;
+    @Autowired
+    GenreRepository genreRepository;
 
     @RequestMapping("/user/add")
     @ResponseBody
