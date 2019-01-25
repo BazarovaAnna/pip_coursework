@@ -1,4 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Личный кабинет</title>
@@ -29,6 +30,14 @@
                         <%}%>
                     </h2>
                     <br>
+                    <form action="/uploadfile" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <sec:csrfInput />
+                        <input class="btn btn-info" type="submit" value="Изменить">
+                    </form>
+                    <div>
+                        <img src="../../resources/img/${filename}"/>
+                    </div>
                 </div>
                 <div class="col-sm-2"></div>
             </div>

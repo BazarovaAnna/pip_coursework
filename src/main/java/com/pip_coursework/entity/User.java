@@ -45,6 +45,8 @@ public class User implements Serializable, UserDetails {
 
     private String activationCode;
 
+    private String filename;
+
     public long getId() {
         return id;
     }
@@ -108,6 +110,14 @@ public class User implements Serializable, UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     // Нужен для получения данных из БД

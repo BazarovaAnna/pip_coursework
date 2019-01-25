@@ -4,18 +4,25 @@ import com.pip_coursework.entity.Role;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
+    @Value("${upload.path}")
+    private String uploadPath;
+
     // Параметр, отвечающий за сервис на который будет направлен пользователь после перехода по ссылке
     private static final String EMAILURL = "http://localhost:8080/confirmation/";
 
@@ -95,6 +102,28 @@ public class UserService implements UserDetailsService {
         }
 
         return true;
+    }
+
+    // Добавление аватара пользователя
+    public void addUsersAvatar(MultipartFile file, User user)
+            throws IOException {
+
+        if(file != null){
+            File uploadDir = new File(uploadPath);
+            if(!uploadDir.exists()){
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+
+            String resultFilename  = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo( new File(uploadPath + "/" + resultFilename));
+
+            user.setFilename(resultFilename);
+        }
+
+        userRepository.save(user);
     }
 
     /*
