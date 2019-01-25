@@ -60,8 +60,8 @@ public class UserService implements UserDetailsService {
             user.setActivationCode(UUID.randomUUID().toString());
 
             String message = String.format(
-                    "Доброго времени суток, %s! \n" +
-                            "Не переходите по ссылке, если не меняли пароль от аккауна D&D!\n" +
+                    "Доброго времени суток, %s! " +
+                            "Не переходите по ссылке, если не меняли пароль от аккауна D&D! " +
                             "%s%s", user.getLogin(), EMAILURL, user.getActivationCode()
             );
 
