@@ -5,6 +5,7 @@
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="../../resources/css/index.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <jsp:include page="templates/header.jsp"/>
@@ -14,6 +15,18 @@
                 <div class="col-sm-8">
                     <h2>
                         Страница пользователя
+                        <a href="/change">Поменять пароль</a>
+                        <%if(request.getParameter("success") != null) { %>
+                            <%if(request.getParameter("success").equals("true")) { %>
+                                <div class="form-group" style="text-align:center">
+                                    <label>Пароль был успешно изменен!</label>
+                                </div>
+                            <%} else {%>
+                        <div class="form-group" style="text-align:center">
+                            <label>Что-то пошло не так!</label>
+                        </div>
+                            <%}%>
+                        <%}%>
                     </h2>
                     <br>
                 </div>

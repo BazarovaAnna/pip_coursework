@@ -5,7 +5,8 @@
     <title>Вход в систему</title>
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" href="../../resources/css/login.css"/>
+    <link rel="stylesheet" href="../../resources/css/formstyle.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <jsp:include page="templates/header.jsp"/>
@@ -39,11 +40,11 @@
             </div>
         </form>
         <%if(request.getParameter("error") != null) { %>
-                <div class="form-group" style="text-align:center">
-                    <label class="error-msg">Введен неверный логин или пароль</label>
+                <div class="alert alert-msg">
+                    <h4 id="error-msg">Неверный логин или пароль</h4>
                 </div>
         <%}%>
-        <a href="/registration" class="ref-signin">Регистрация</a>
+        <a href="/forgotpassword" class="ref-signin">Забыли пароль</a>
     </div>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
