@@ -19,7 +19,8 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" name="login" id="login" placeholder="Введите логин" required/>
+                        <input type="text" class="form-control" name="login" minlength="4" maxlength="30"
+                               id="login" placeholder="Введите логин" required/>
                     </div>
                 </div>
             </div>
@@ -29,7 +30,7 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="email"
+                        <input type="email" class="form-control" name="email" id="email"  maxlength="30"
                                placeholder="Введите email" data-error="Вы не правильно ввели Ваш E-mail" required/>
                     </div>
                 </div>
@@ -58,6 +59,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                         <input type="password" class="form-control" name="password"
+                               minlength="6" size="6" maxlength="30"
                                id="password" placeholder="Введите пароль" required/>
                     </div>
                 </div>

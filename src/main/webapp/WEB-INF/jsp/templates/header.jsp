@@ -31,7 +31,7 @@
                             <li>
                                 <form action="/logout" method="post" style="margin-top:8px;">
                                     <input class="btn btn-danger" style="margin: 10px" type="submit" value="Выйти">
-                                    <sec:csrfInput />
+                                    <sec:csrfInput/>
                                 </form>
                             </li>
                         </sec:authorize>

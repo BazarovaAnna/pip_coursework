@@ -6,8 +6,11 @@ import com.pip_coursework.repository.UserGenreRepository;
 import com.pip_coursework.repository.GenreRepository;
 import com.pip_coursework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +19,13 @@ import org.springframework.web.bind.annotation.*;
 
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -33,9 +40,28 @@ public class UserController {
             @AuthenticationPrincipal User user,
             Model model) {
         model.addAttribute("login", user.getLogin());
+        model.addAttribute("password", user.getPassword());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("sex", user.getSex());
+
+        model.addAttribute("filename", userService.getUserAvatar(user));
 
         return "user";
     }
+
+    // Загрузка аватарки пользователя на сервер
+    @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
+    public  ResponseEntity<?> uploadFile(@AuthenticationPrincipal User user,
+                            @RequestParam("file") MultipartFile file,
+                             Model model) throws IOException {
+
+        if(file != null){
+            userService.addUsersAvatar(file, user);
+        }
+
+        return new ResponseEntity<String>((String) userService.getUserAvatar(user), HttpStatus.OK);
+    }
+
 
     /*
     Код для смены пароля авторизированного пользователя

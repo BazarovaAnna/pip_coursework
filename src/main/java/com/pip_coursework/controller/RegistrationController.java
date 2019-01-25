@@ -17,6 +17,9 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(){
+        // TODO Удалить, после всех тестов
+        createTestUser();
+
         return "registration";
     }
 
@@ -29,5 +32,15 @@ public class RegistrationController {
         }
 
         return "redirect:/login";
+    }
+
+    private void createTestUser(){
+        User user = new User();
+        user.setLogin("a");
+        user.setPassword("a");
+        user.setEmail("vexivoyava@22office.com");
+        user.setSex('m');
+
+        userService.addUser(user);
     }
 }
