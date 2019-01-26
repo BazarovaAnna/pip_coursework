@@ -17,6 +17,9 @@ public class Character {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Character Role;
+
     public User getUser() {
         return user;
     }
@@ -100,6 +103,14 @@ public class Character {
         this.level = level;
     }
 
+    public Character getRole() {
+        return Role;
+    }
+
+    public void setRole(Character role) {
+        Role = role;
+    }
+
     protected Character(){ }
 
     public Character(User user, String name, String userClass,
@@ -162,4 +173,6 @@ public class Character {
     public String toString() {
         return String.format("%s это %s %s %d левела.", name, userClass, race, level);
     }
+
+
 }
