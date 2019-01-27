@@ -46,7 +46,7 @@ public class CharacterService {
 
             Race race = raceRepository.findByImgPath(imgPath);
             if(race == null){
-                race = raceRepository.findByImgPath("../../resources/default/img/race/женщина_воин(орк).jpg");
+                race = raceRepository.findByImgPath("../../resources/default/img/race/женщина_воин_орк.jpg");
             }
 
         if (!characterRepository.existsByName(name)){
@@ -65,5 +65,18 @@ public class CharacterService {
 
         return false;
 
+    }
+
+    // Получение списка персонажей для конкретного пользователя
+    public Object getAllCharacter(User user) {
+        ArrayList<Character> characters = new ArrayList<Character>();
+
+        characterRepository.findAllByUser(user).
+                forEach(character -> {
+                         character.setUser(null);
+                         characters.add(character);
+                });
+
+        return characters;
     }
 }

@@ -1,9 +1,11 @@
 package com.pip_coursework.controller;
 
+import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.Race;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +27,6 @@ public class NewCharacterController {
                                Model model){
 
         model.addAttribute("login", user.getLogin());
-
 
         return "newcharacter";
     }
@@ -68,4 +69,14 @@ public class NewCharacterController {
 
         return new ResponseEntity<>((String)"Персонаж с таким именем уже существует!", HttpStatus.OK);
     }
+
+    // Получение списка всех персонажей
+    @RequestMapping(value = "/newcharacter/allcharacters", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCharacters(@AuthenticationPrincipal User user){
+
+
+        return new ResponseEntity<>((ArrayList<Character>)characterService.getAllCharacter(user), HttpStatus.OK);
+    }
 }
+
+
