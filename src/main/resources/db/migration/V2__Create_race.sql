@@ -1,44 +1,44 @@
 insert into race (id, img_path, sex, type)
-  values (0, '/default/img/лучник(орк).jpg','m','орк');
+  values (0, '../../resources/default/img/race/лучник(орк).jpg','m','орк');
 
 insert into race (id, img_path, sex, type)
-  values (1, '/default/img/орк.png','m','орк');
+  values (1, '../../resources/default/img/race/орк.png','m','орк');
 
 insert into race (id, img_path, sex, type)
-  values (2, '/default/img/Черный_орк.png','m','орк');
+  values (2, '../../resources/default/img/race/Черный_орк.png','m','орк');
 
 insert into race (id, img_path, sex, type)
-  values (3, '/default/img/женщина_воин(орк).jpg','f','орк');
+  values (3, '../../resources/default/img/race/женщина_воин(орк).jpg','f','орк');
 
 insert into race (id, img_path, sex, type)
-  values (4, '/default/img/Ангрим_железный_кулак(гном).jpg','m','гном');
+  values (4, '../../resources/default/img/race/Ангрим_железный_кулак(гном).jpg','m','гном');
 
 insert into race (id, img_path, sex, type)
-  values (5, '/default/img/воин(гном).jpg','m','гном');
+  values (5, '../../resources/default/img/race/воин(гном).jpg','m','гном');
 
 insert into race (id, img_path, sex, type)
-  values (6, '/default/img/молот(гном).jpg','m','гном');
+  values (6, '../../resources/default/img/race/молот(гном).jpg','m','гном');
 
 insert into race (id, img_path, sex, type)
-  values (7, '/default/img/молот_шит(гном).jpg','m','гном');
+  values (7, '../../resources/default/img/race/молот_шит(гном).jpg','m','гном');
 
 insert into race (id, img_path, sex, type)
-  values (8, '/default/img/женщина_воин(человек).jpg','f','человек');
+  values (8, '../../resources/default/img/race/женщина_воин(человек).jpg','f','человек');
 
 insert into race (id, img_path, sex, type)
-  values (9, '/default/img/маг_огня(человек).jpg','m','человек');
+  values (9, '../../resources/default/img/race/маг_огня(человек).jpg','m','человек');
 
 insert into race (id, img_path, sex, type)
-  values (10, '/default/img/женщина_воин(эльф).jpg','f','эльф');
+  values (10, '../../resources/default/img/race/женщина_воин(эльф).jpg','f','эльф');
 
 insert into race (id, img_path, sex, type)
-  values (11, '/default/img/белый_лев(эльф).jpg','m','эльф');
+  values (11, '../../resources/default/img/race/белый_лев(эльф).jpg','m','эльф');
 
 insert into race (id, img_path, sex, type)
-  values (12, '/default/img/женщина_маг(темный эльф).jpg','f','эльф');
+  values (12, '../../resources/default/img/race/женщина_маг(темный эльф).jpg','f','эльф');
 
 insert into race (id, img_path, sex, type)
-  values (13, '/default/img/маг_хаоса(нежить).jpg','m','нежить');
+  values (13, '../../resources/default/img/race/маг_хаоса(нежить).jpg','m','нежить');
 
 insert into race (id, img_path, sex, type)
-  values (14, '/default/img/маг_энергия(нежить).jpg','m','нежить');
+  values (14, '../../resources/default/img/race/маг_энергия(нежить).jpg','m','нежить');

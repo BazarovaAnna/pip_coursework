@@ -7,8 +7,7 @@
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="../../resources/css/user.css"/>
-    < rel="stylesheet" />
-
+    <link rel="stylesheet" href="../../resources/css/photo.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -17,7 +16,7 @@
             <div class="row center-content">
                 <div class="col-sm-1 col-md-1"></div>
                 <div class="col-sm-10 col-md-10">
-                    <div class="row" style="margin-top: 10%">
+                    <div class="row">
                         <div class="col-sm-4 col-md-4 left-col">
                             <form hidden method="POST" enctype="multipart/form-data" id="fileUploadForm">
                                 <input type="file" name="file" id="file-uploader" accept="image/*"

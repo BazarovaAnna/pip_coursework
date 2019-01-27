@@ -1,19 +1,20 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Race {
+public class Race implements Serializable {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String Type;
+    private String type;
 
-    private String ImgPath;
+    private String imgPath;
 
-    private char Sex;
+    private char sex;
 
     public long getId() {
         return id;
@@ -24,26 +25,34 @@ public class Race {
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        type = type;
     }
 
     public String getImgPath() {
-        return ImgPath;
+        return imgPath;
     }
 
     public void setImgPath(String imgPath) {
-        ImgPath = imgPath;
+        imgPath = imgPath;
     }
 
     public char getSex() {
-        return Sex;
+        return sex;
     }
 
     public void setSex(char sex) {
-        Sex = sex;
+        sex = sex;
+    }
+
+    public Race(){}
+
+    public Race(char sex, String imgPath, String type) {
+        this.sex = sex;
+        this.imgPath = imgPath;
+        this.type = type;
     }
 }

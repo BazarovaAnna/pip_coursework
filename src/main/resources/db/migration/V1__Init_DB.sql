@@ -44,6 +44,7 @@ create table abilities (
   primary key (id)
   );
 
+
 create table characters (
   id  bigserial not null,
   condition varchar(40) not null,
@@ -51,11 +52,10 @@ create table characters (
   max_weight float8 not null,
   name varchar(255) not null,
   pers_money float8 not null,
-  race varchar(255) not null,
   sex char(1),
   story varchar(255),
   class varchar(255) not null,
-  role_id int8,
+  race_id int8,
   user_id int8,
   primary key (id));
 
@@ -142,6 +142,7 @@ create table user_role (
   user_id int8 not null,
   roles varchar(255));
 
+
 create table users (
   id  bigserial not null,
   activation_code varchar(255),
@@ -168,8 +169,6 @@ alter table if exists rules add constraint UK_ijbudtpsxby634taeqpl8fngd unique (
 alter table if exists rules add constraint UK_5ajydv93eveurhwiye50g5tpp unique (title);
 alter table if exists users add constraint UK_ow0gan20590jrb00upg3va2fn unique (login);
 
-
-alter table if exists characters add constraint FKb6w61usyffmtxuv5boi2mex33 foreign key (role_id) references characters;
 alter table if exists characters add constraint FK27yx743bsnnsqplnjhk5yf224 foreign key (user_id) references users;
 alter table if exists characters_abilities add constraint FK35j9mn5tihv3b9aarka58b3qr foreign key (ability_id) references abilities;
 alter table if exists characters_effects add constraint FKfuqkijbcvwayg8213v83if3ai foreign key (effect_id) references effects;

@@ -5,6 +5,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Characters")
 public class Character {
+    private static final String BASECONDITION = "Жив";
+    private static final long BASELEVEL = 1;
+    private static final double BASEMAXWEIGHT = 20.0;
+    private static final double BASEPERMONEY = 0.0;
+
+
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +23,12 @@ public class Character {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Character Role;
-
     public User getUser() {
         return user;
     }
+
+    @ManyToOne
+    private Race race;
 
     @Column(name = "Name", unique = true, nullable = false)
     private  String name;
@@ -36,13 +42,6 @@ public class Character {
 
     public String getUserClass() {
         return userClass;
-    }
-
-    @Column(name = "Race", nullable = false)
-    private  String race;
-
-    public String getRace() {
-        return race;
     }
 
     @Column(name = "Story")
@@ -103,76 +102,60 @@ public class Character {
         this.level = level;
     }
 
-    public Character getRole() {
-        return Role;
+
+    public Race getRace() {
+        return race;
     }
 
-    public void setRole(Character role) {
-        Role = role;
-    }
-
-    protected Character(){ }
-
-    public Character(User user, String name, String userClass,
-                      String race, String story, char sex,
-                      char[] condition, double maxWeight, long level){
-        this.user = user;
-        this.name = name;
-        this.userClass = userClass;
+    public void setRace(Race race) {
         this.race = race;
-        this.story = story;
+    }
+
+    public Character(){}
+
+    public Character(String name, char sex, String userClass, User user, Race race){
+        this.condition = BASECONDITION.toCharArray();
+        this.level = BASELEVEL;
+        this.maxWeight = calculateMaxWeight(race.getType(), sex, user.getLogin());
+        this.name = name;
+        this.persMoney = calculatePersMoney(race.getType(), sex, user.getLogin());
         this.sex = sex;
-        this.condition = condition;
-        this.persMoney = 0;
-        this.maxWeight = maxWeight;
-        this.level = level;
-    }
-
-    public Character(User user, String name, String userClass,
-                     String race, char sex,
-                     char[] condition, double persMoney,
-                     double maxWeight, long level){
-        this.user = user;
-        this.name = name;
         this.userClass = userClass;
-        this.race = race;
-        this.sex = sex;
-        this.condition = condition;
-        this.persMoney = persMoney;
-        this.maxWeight = maxWeight;
-        this.level = level;
-    }
-
-    public Character(User user, String name, String userClass,
-                     String race, String story,
-                     char[] condition, double maxWeight, long level){
         this.user = user;
-        this.name = name;
-        this.userClass = userClass;
         this.race = race;
-        this.story = story;
-        this.condition = condition;
-        this.persMoney = 0;
-        this.maxWeight = maxWeight;
-        this.level = level;
     }
 
-    public Character(User user, String name, String userClass, String race,
-                     char[] condition, double maxWeight, long level){
-        this.user = user;
-        this.name = name;
-        this.userClass = userClass;
-        this.race = race;
-        this.condition = condition;
-        this.persMoney = 0;
-        this.maxWeight = maxWeight;
-        this.level = level;
+    // Вычисление максимального веса
+    private double calculateMaxWeight(String type, char sex, String  username){
+        double weight = BASEMAXWEIGHT;
+        if(sex == 'f'){
+            weight -= 10;
+        }
+        if(type.equals("орк") || type.equals("гном")){
+            weight += 10;
+        }
+
+        if(username.equals("Admin")){
+            weight += 40;
+        }
+
+        return weight;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s это %s %s %d левела.", name, userClass, race, level);
+    // Вычисление стартового кошелька
+    private double calculatePersMoney(String type, char sex, String  username){
+        double perMoney = BASEPERMONEY;
+        if(type.equals("эльф")){
+            perMoney += 10;
+        }
+        if(sex == 'm'){
+            perMoney += 5;
+        }
+
+        if(username.equals("Admin")){
+            perMoney += 1000;
+        }
+
+        return perMoney;
     }
-
-
 }

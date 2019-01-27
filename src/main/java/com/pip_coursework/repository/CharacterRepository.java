@@ -9,4 +9,6 @@ public interface CharacterRepository extends CrudRepository<Character, Long> {
     ArrayList<Character> findByName(String name);
 
     ArrayList<Character> findById(long is);
+
+    boolean existsByName(String name);
 }

@@ -49,8 +49,6 @@ public class CharacterController {
             if(characterRepository.findByName(name).size()  > 0){
                 throw  new DataIntegrityViolationException("");
             }
-            characterRepository.save(new Character(curUser, name, userClass,
-                    race, story, sex, condition, MAXWEIGHT, INITIALLEVEL));
 
             executiongStatus = "Done";
         }

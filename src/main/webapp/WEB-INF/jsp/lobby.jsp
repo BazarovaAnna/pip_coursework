@@ -4,7 +4,8 @@
     <title>Лобби</title>
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" href="../../resources/css/index.css"/>
+    <link rel="stylesheet" href="../../resources/css/lobby.css"/>
+    <link rel="stylesheet" href="../../resources/css/herodashboard.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -13,12 +14,13 @@
     <div class="row center-content">
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
-            Лобби
+            Тестовый вариант лобби
         </div>
         <div class="col-sm-2"></div>
     </div>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/lobby.js"></script>
 </div>
 <jsp:include page="templates/footer.jsp"/>
 </body>
