@@ -51,7 +51,7 @@ public class UserController {
 
     // Загрузка аватарки пользователя на сервер
     @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
-    public  ResponseEntity<?> uploadFile(@AuthenticationPrincipal User user,
+    public ResponseEntity<?> uploadFile(@AuthenticationPrincipal User user,
                             @RequestParam("file") MultipartFile file,
                              Model model) throws IOException {
 

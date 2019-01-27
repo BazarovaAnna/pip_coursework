@@ -24,7 +24,8 @@ public class UserService implements UserDetailsService {
     private String uploadPath;
 
     // Параметр, отвечающий за сервис на который будет направлен пользователь после перехода по ссылке
-    private static final String EMAILURL = "http://localhost:8080/confirmation/";
+    @Value("${confirmation.path}")
+    private String confirmationPath;
 
     @Autowired
     private UserRepository userRepository;
@@ -62,7 +63,7 @@ public class UserService implements UserDetailsService {
             String message = String.format(
                     "Доброго времени суток, %s! " +
                             "Не переходите по ссылке, если не меняли пароль от аккауна D&D! " +
-                            "%s%s", user.getLogin(), EMAILURL, user.getActivationCode()
+                            "%s%s", user.getLogin(), confirmationPath, user.getActivationCode()
             );
 
             mailSender.send(user.getEmail(), "Код подтверждения", message);

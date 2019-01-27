@@ -44,7 +44,7 @@
                     <h4 id="error-msg">Неверный логин или пароль</h4>
                 </div>
         <%}%>
-        <a href="/forgotpassword" class="ref-signin">Забыли пароль</a>
+        <a href="/forgotpassword" class="ref-forgot">Забыли пароль?</a>
     </div>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>

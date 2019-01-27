@@ -1,3 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+.wrapper {
+    position: relative;
+    min-height: 100%;
+}
+.content {
+    padding-bottom: 90px;
+}
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+}
+
+
 .form-group{
     margin-bottom: 15px;
 }
@@ -56,9 +82,7 @@ input::-webkit-input-placeholder {
 
 .main-form{
     margin: 0 auto;
-    max-width: 400px;
     padding: 10px 40px;
-    background: #01bcc6;
     color: #FFF;
     text-shadow: none;
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
@@ -81,7 +105,7 @@ span.input-group-addon i {
 }
 
 
-/* Customize the label (the container) */
+/* Стили для боковой панели персонажа */
 .container-for-radio {
     display: block;
     position: relative;
@@ -144,4 +168,47 @@ span.input-group-addon i {
     height: 8px;
     border-radius: 50%;
     background: white;
+}
+
+#race-dropdown{
+    color: black;
+}
+
+#modal-window {}
+
+.modal-window-active{
+    z-index:10;
+    text-align:center;
+    padding-top: 2.5%;
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-bottom: 10%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(213, 209, 202, 0.5) /*затемнитефон*/
+}
+
+ul.hr {
+    margin: 0; /* Обнуляем значение отступов */
+    text-align: center;
+}
+
+ul.hr li {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 5px; /* Отступ слева */
+    border: 1px solid #000; /* Рамка вокруг текста */
+    padding: 3px; /* Поля вокруг текста */
+}
+
+.ur{
+    z-index:12;
+    padding-bottom: 10%;
+    padding-top: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: rgba(0, 142, 171, 0.8);
 }
