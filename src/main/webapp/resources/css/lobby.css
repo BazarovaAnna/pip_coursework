@@ -138,6 +138,10 @@
     margin-top: 10%;
 }
 
+#gm-form{
+    margin-top: 10%;
+}
+
 /* Форма персонажа */
 .character-info{
     text-align: center;
@@ -168,7 +172,34 @@
     transition: all 1s;
 }
 
+
 #char-name:hover {
     text-shadow: 1px 1px white;
     color: beige;
+}
+
+.character-player-form label{
+    font-size: 25px;
+    margin: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: wheat;
+
+    2px 2px #777;
+
+    transition: all 1s;
+}
+
+.character-player-form label:hover {
+    text-shadow: 1px 1px white;
+    color: beige;
+}
+
+#character-player-form{
+    
+}
+
+.header-character-param{
+    margin-right: 20%;
 }

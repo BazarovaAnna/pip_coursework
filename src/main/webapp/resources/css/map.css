@@ -1,0 +1,98 @@
+.point {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    position: absolute;
+}
+
+.spot1 {
+    background: red;
+    left: 10px;
+    top: 10px;
+}
+
+.spot2 {
+    background: blue;
+    right: 10px;
+    top: 10px;
+}
+
+.spot3 {
+    background: green;
+    left: 36px;
+    top: 38px;
+}
+
+.spot4 {
+    background: orange;
+    left: 10px;
+    bottom: 10px;
+}
+
+.spot5 {
+    background: purple;
+    right: 10px;
+    bottom: 10px;
+}
+#map {
+    position: absolute;
+    top: 200px;
+    left: 340px;
+    width: 700px;
+    height: 470px;
+}
+
+.field {
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    width: 664px;
+    height: 430px;
+}
+
+.part {
+    position: absolute;
+    width: 81px;
+    height: 84px;
+    border: 1px solid black;
+}
+
+.pp1 {
+    left: 0px;
+}
+.pp2 {
+    left: 83px;
+}
+.pp3 {
+    left: 166px;
+}
+.pp4 {
+    left: 249px;
+}
+.pp5 {
+    left: 332px;
+}
+.pp6 {
+    left: 415px;
+}
+.pp7 {
+    left: 498px;
+}
+.pp8 {
+    left: 581px;
+}
+.p1 {
+    top: 0px;
+}
+.p2 {
+    top: 86px;
+}
+.p3 {
+    top: 172px;
+}
+.p4 {
+    top: 258px;
+}
+.p5 {
+    top: 344px;
+}
