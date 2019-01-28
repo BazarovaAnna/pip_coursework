@@ -75,7 +75,7 @@
 .photobox{
     color: #fff;
     font-size: 1.5rem;
-    --photoboxOverlay: rgba(1, 188, 198, .7);
+    --photoboxOverlay: rgba(1, 188, 198, .4);
     photoboxAnimationDuration: .5s;
 }
 

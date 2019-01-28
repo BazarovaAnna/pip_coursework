@@ -21,15 +21,6 @@ import java.util.ArrayList;
 
 @Controller
 public class GameController {
-    @RequestMapping(value="/lobby", method = RequestMethod.GET)
-    public String lobby(@AuthenticationPrincipal User user,
-                        Model model){
-
-        model.addAttribute("login", user.getLogin());
-
-        return "lobby";
-    }
-
     @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
     public String gamefield(@AuthenticationPrincipal User user,
                             Model model){

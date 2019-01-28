@@ -1,9 +1,11 @@
 package com.pip_coursework.controller;
 
+import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.Genre;
 import com.pip_coursework.entity.UserGenre;
 import com.pip_coursework.repository.UserGenreRepository;
 import com.pip_coursework.repository.GenreRepository;
+import com.pip_coursework.service.CharacterService;
 import com.pip_coursework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,12 +25,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
 @Controller
 public class UserController {
+    @Autowired
+    private CharacterService characterService;
+
     @Autowired
     UserRepository repository;
 
@@ -61,6 +67,17 @@ public class UserController {
 
         return new ResponseEntity<String>((String) userService.getUserAvatar(user), HttpStatus.OK);
     }
+
+
+
+    // Получение списка всех персонажей
+    @RequestMapping(value = "/user/allcharacters", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCharacters(@AuthenticationPrincipal User user){
+
+
+        return new ResponseEntity<>((ArrayList<Character>)characterService.getAllCharacter(user), HttpStatus.OK);
+    }
+
 
 
     /*

@@ -156,7 +156,7 @@ function addNewCharacter() {
 // Полученеи данных о все персонажах
 function getAllCharacter() {
     $.ajax({
-        url: '/newcharacter/allcharacters',
+        url: '/user/allcharacters',
         type: "GET",
         processData: false,
         contentType: false,
