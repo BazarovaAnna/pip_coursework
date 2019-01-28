@@ -69,14 +69,6 @@ public class NewCharacterController {
 
         return new ResponseEntity<>((String)"Персонаж с таким именем уже существует!", HttpStatus.OK);
     }
-
-    // Получение списка всех персонажей
-    @RequestMapping(value = "/newcharacter/allcharacters", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCharacters(@AuthenticationPrincipal User user){
-
-
-        return new ResponseEntity<>((ArrayList<Character>)characterService.getAllCharacter(user), HttpStatus.OK);
-    }
 }
 
 
