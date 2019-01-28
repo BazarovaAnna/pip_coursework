@@ -50,25 +50,33 @@
                                                 </div>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-condition"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">Статус :</label>
+                                                <label id="char-condition" class="character-param"></label>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-level"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">Уровень :</label>
+                                                <label id="char-level" class="character-param"></label>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-race"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">Раса :</label>
+                                                <label id="char-race" class="character-param"></label>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-class"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">Класс :</label>
+                                                <label id="char-class" class="character-param"></label>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-sex"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">Пол :</label>
+                                                <label id="char-sex" class="character-param"></label>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-money"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">В кармане :</label>
+                                                <label id="char-money" class="character-param"></label>
                                             </div>
                                             <div class="character-player-form">
-                                                <label id="char-maxWeight"></label>
+                                                <label class="header-character-param" style="margin-right: 20%;">Могу унести</label>
+                                                <label id="char-maxWeight" class="character-param"></label>
+                                                <label class="header-character-param"> кг</label>
                                             </div>
                                         </div>
                                     </div>
