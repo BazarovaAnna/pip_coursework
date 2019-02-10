@@ -79,8 +79,11 @@ create table effects (
   name varchar(255) not null,
   primary key (id));
 
+
 create table games (
   id  bigserial not null,
+  description varchar(255),
+  name varchar(255),
   state varchar(255) not null,
   time_creating timestamp not null,
   time_deleting timestamp not null,

@@ -23,9 +23,4 @@ public class Group {
         this.game = game;
         this.character = character;
     }
-
-    @Override
-    public String toString() {
-        return  String.format("Игра: %s, персонаж: %s", game.toString(), character.toString());
-    }
 }
