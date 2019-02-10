@@ -186,8 +186,6 @@
     2px 2px powderblue;
     color: wheat;
 
-    2px 2px #777;
-
     transition: all 1s;
 }
 
@@ -202,4 +200,29 @@
 
 .header-character-param{
     margin-right: 20%;
+}
+
+.character-player-form .header-character-param{
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: gray;
+
+    transition: all 1s;
+}
+
+.character-player-form .header-character-param:hover {
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: black;
+
+    transition: all 1s;
+}
+
+.character-params{
+    text-align: left;
+    margin: 5% 20%;
+}
+
+.character-param{
+    float: right;
 }

@@ -230,7 +230,7 @@ function createSlide(item, i, color) {
 // Слайд персонажа, который еще не создан
 function createEmptySlide(i) {
     var slide = '<!-- Слайдер номер ' + i + '  -->' +
-        '<div class="fnc-slide m--blend-dark fnc-slide-' + i + ' ' + (i === 0 ? ' m--active-slide">' : '">') +
+        '<div class="fnc-slide m--blend-dark fnc-slide-' + i + ' ' + (i === 1 ? ' m--active-slide">' : '">') +
         '<div class="fnc-slide__inner" style="background-image: url(../../resources/default/img/race/еще_не_создан.jpg)">' +
         '<div class="fnc-slide__mask">' +
         '<div class="fnc-slide__mask-inner" style="background-image: url(../../resources/default/img/race/еще_не_создан.jpg)"></div>' +
