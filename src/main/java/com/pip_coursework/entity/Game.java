@@ -57,7 +57,7 @@ public class Game {
     }
 
     @Basic(optional = false)
-    @Column(name = "Time_Deleting")
+    @Column(name = "Time_Deleting", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeDeleting;
 
@@ -69,8 +69,31 @@ public class Game {
         this.timeDeleting = timeDeleting;
     }
 
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String name;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     // Нужен для получения данных из БД
-    protected Game(){ }
+    public Game(){ }
+
+    public Game(String state){
+        this.state = state;
+    }
 
     // Нужен для добавления данных в БД
     public Game(Genre genre, Rules rules, User gm, String state){
@@ -79,12 +102,5 @@ public class Game {
         this.rules = rules;
         this.state = state;
         this.timeCreating = new Date();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s Жанр игры: '%s', правила: %s, ГМ: %s, состояние: %s, идет с %s по %s.",
-                id, genre.toString(), rules.toString(), gm.toString(),
-                state, timeCreating.toString(), timeDeleting.toString());
     }
 }
