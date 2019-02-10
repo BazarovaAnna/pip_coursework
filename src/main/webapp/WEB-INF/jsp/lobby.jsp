@@ -49,34 +49,35 @@
                                                     <img class="character-preview img-thumbnail" id="char-avatar" alt="Preview">
                                                 </div>
                                             </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">Статус :</label>
-                                                <label id="char-condition" class="character-param"></label>
-                                            </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">Уровень :</label>
-                                                <label id="char-level" class="character-param"></label>
-                                            </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">Раса :</label>
-                                                <label id="char-race" class="character-param"></label>
-                                            </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">Класс :</label>
-                                                <label id="char-class" class="character-param"></label>
-                                            </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">Пол :</label>
-                                                <label id="char-sex" class="character-param"></label>
-                                            </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">В кармане :</label>
-                                                <label id="char-money" class="character-param"></label>
-                                            </div>
-                                            <div class="character-player-form">
-                                                <label class="header-character-param" style="margin-right: 20%;">Могу унести</label>
-                                                <label id="char-maxWeight" class="character-param"></label>
-                                                <label class="header-character-param"> кг</label>
+                                            <div class="character-params">
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">Статус :</label>
+                                                    <label id="char-condition" class="character-param"></label>
+                                                </div>
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">Уровень :</label>
+                                                    <label id="char-level" class="character-param"></label>
+                                                </div>
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">Раса :</label>
+                                                    <label id="char-race" class="character-param"></label>
+                                                </div>
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">Класс :</label>
+                                                    <label id="char-class" class="character-param"></label>
+                                                </div>
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">Пол :</label>
+                                                    <label id="char-sex" class="character-param"></label>
+                                                </div>
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">В кармане :</label>
+                                                    <label id="char-money" class="character-param"></label>
+                                                </div>
+                                                <div class="character-player-form">
+                                                    <label class="header-character-param" style="margin-right: 20%;">Могу унести</label>
+                                                    <label class="character-param"><span id="char-maxWeight"></span> кг</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
