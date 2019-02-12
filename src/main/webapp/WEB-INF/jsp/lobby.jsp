@@ -81,13 +81,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        Тестовый набор игр
+                                    <div class="col-md-6" style="position: relative">
+                                        <div class="game-info">
+                                            <div id="dukat" class="dragElement"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Версия лобби для мастера -->
                         <div id="gm-form" hidden>
                             <h1 class="character-list-header">Буду мастером!</h1>
                         </div>
@@ -102,6 +105,7 @@
     </div>
 </div>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+    <script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
     <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../resources/js/lobby.js"></script>
 </body>

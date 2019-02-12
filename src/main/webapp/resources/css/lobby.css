@@ -149,7 +149,7 @@
     color: white;
     padding: 12% 0;
     margin: 5%;
-    box-shadow: 0 0 6em rgba(0,0,0,0.7); /* Пар1аметры тени */
+    box-shadow: 0 0 6em rgba(0,0,0,0.7); /* Парааметры тени */
     border-radius: 80em 0.5em/15em 0.5em 10em;
     background-image: url("./../../resources/default/img/panel-background.jpg");
 }
@@ -225,4 +225,34 @@
 
 .character-param{
     float: right;
+}
+
+/* Форма игры  */
+
+.game-info{
+    z-index: 2;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    margin: 5%;
+    background: transparent url("./../../resources/default/img/table.png") round;
+}
+
+#dukat{
+    position: absolute;
+    right: -50;
+    top: 50;
+    z-index: 4;
+    text-align: center;
+    height: 5%;
+    width: 10%;
+    margin: 25%;
+    background: transparent url("./../../resources/default/img/dukat.png") round;
+}
+
+#dukat:hover{
+    background-color: gold;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.015s;
 }
