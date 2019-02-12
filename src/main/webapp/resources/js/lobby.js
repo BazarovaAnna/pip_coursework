@@ -13,6 +13,8 @@ window.onload = function (ev) {
     })
 
     getAllCharacter();
+
+    setDukatBorder();
 };
 
 // Отрисовка формы игрока
@@ -89,6 +91,7 @@ function createCharacterList() {
     }
 }
 
+// Заполнение информации о персонаже
 function fillCharacterPanal(character) {
     var sex = character.sex;
     $("#char-name").text(character.name)
@@ -103,3 +106,18 @@ function fillCharacterPanal(character) {
     $("#char-avatar").attr("src",character.race.imgPath)
 }
 
+// ПЕРЕМЕЩЕНИЕ МОНЕТКИ
+
+// Ограничение перемещения монетки
+function setDukatBorder(){
+    $('.dragElement').draggable({
+        axis: "x", containment: "parent",
+        stop:stopDukat
+    }).filter('#dukat').draggable("option", "axis", "y");
+}
+
+// Событие на завершение перемещения монетки
+function stopDukat() {
+    // TODO Дописать логику перетаскивания монетки
+    alert('Логика перетаскивания')
+}
