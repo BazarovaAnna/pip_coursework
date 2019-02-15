@@ -92,7 +92,7 @@
                                         <input id="character-img" type="hidden" name="imgPath" value="../../resources/default/img/man.png">
 
                                         <div class="form-group ">
-                                            <input id="submit-btn" class="btn btn-lg btn-primary btn-bl-ock"
+                                            <input id="submit-btn" class="btn btn-lg btn-primary btn-block"
                                                    type="button" value="Создать">
                                         </div>
                                     </form>
