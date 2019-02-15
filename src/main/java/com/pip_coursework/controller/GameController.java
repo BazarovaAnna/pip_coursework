@@ -7,6 +7,7 @@ import com.pip_coursework.entity.User;
 import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.Group;
 import com.pip_coursework.repository.*;
+import com.pip_coursework.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 
 @Controller
 public class GameController {
+    @Autowired
+    private GameService gameService;
+
     @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
     public String gamefield(@AuthenticationPrincipal User user,
                             Model model){
@@ -29,6 +33,8 @@ public class GameController {
 
         return "gamefield";
     }
+
+
 
 
 
@@ -57,7 +63,7 @@ public class GameController {
         Genre genre = getGenre(genre_id);
         Rules rules = getRules(rules_id);
         User gm = getUser(gm_id);
-        repository.save(new Game(genre, rules, gm, state));
+
 
         executiongStatus = "Done";
         return  executiongStatus;
