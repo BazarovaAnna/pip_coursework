@@ -4,6 +4,8 @@ import com.pip_coursework.entity.User;
 import com.pip_coursework.service.CharacterService;
 import com.pip_coursework.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,5 +30,16 @@ public class LobbyController {
         return "lobby";
     }
 
+    // Получение списка игр конкретного ГМа
+    @RequestMapping(value = "/lobby/usergames", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserGames(@AuthenticationPrincipal User user){
+        return new ResponseEntity<>(gameService.getUserGames(user), HttpStatus.OK);
+    }
 
+    // Получение списка активных игр
+    @RequestMapping(value = "/lobby/allgames", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllGames(@AuthenticationPrincipal User user){
+        // TODO возможно нужно подгружать кусками
+        return new ResponseEntity<>(gameService.getListActiveGame(), HttpStatus.OK);
+    }
 }
