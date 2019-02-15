@@ -1,51 +1,80 @@
 // Список созданых персонажей
 var charactersData;
 
+// Список игр персонажа
+var gamesData;
+
+// Флаг выбора режима
+var isChosen = false;
 
 window.onload = function (ev) {
-    $("#gamemode").mouseover(function () {
-        renderGameForm();
-    })
+    $("#gm-mode").mousedown(renderGmForm).mouseover(function () {
+        $(".shadow-form").remove();
+        $("#player-mode").prepend("<div class='shadow-form'></div>");
+    }).mouseout(function () {
+        if(!isChosen)
+            $(".shadow-form").remove();
+    });
 
-    $("#gamemmode").mouseover(function () {
-        // Затемняем картинку ведущий
-        renderGmForm();
-    })
+    $("#player-mode").mousedown(renderPlayerForm).mouseover(function () {
+        // Затемняем картинку игрок
+        $(".shadow-form").remove();
+        $("#gm-mode").prepend("<div class='shadow-form'></div>");
+    }).mouseout(function () {
+        if(!isChosen)
+            $(".shadow-form").remove();
+    });
 
-    getAllCharacter();
+    getDataFromServer('/user/allcharacters', geAllCharacterCallback);
+    getDataFromServer('/lobby/usergames', getUserCreatedGameCallback);
 
-    setDukatBorder();
+    setDukatBorder(['#player-dukat', '#gm-dukat']);
 };
 
 // Отрисовка формы игрока
-function renderGmForm() {
-    // Затемняем картинку игрок
-    $(".shadow-form").remove();
-    $("#gamemode").prepend("<div class='shadow-form'></div>");
+function renderPlayerForm(event) {
+    $("#gm-form").hide();
+    $("#player-form").show(600);
 
-    $("#player-form").hide();
-    $("#player-form-2").hide();
-    $("#gm-form").show(600);
+    $("#gm-dukat").removeClass("active-dukat");
+    $("#player-dukat").addClass("active-dukat");
 
+    isChosen = true;
+
+    moveToAnchor("#player-form");
 }
 
 // Отрисовка формы ведущего
-function renderGameForm() {
-    $(".shadow-form").remove();
-    $("#gamemmode").prepend("<div class='shadow-form'></div>");
+function renderGmForm(event) {
+    $("#player-form").hide();
+    $("#player-form-2").hide();
 
-    var playerForm = $("#player-form");
-    var $gmForm =   $("#gm-form");
+    $("#gm-form").show(600);
 
-    $gmForm.hide();
-    playerForm.show(600);
+    $("#player-dukat").removeClass("active-dukat");
+    $("#gm-dukat").addClass("active-dukat");
+
+    isChosen = true;
+
+    moveToAnchor("#gm-form");
+}
+
+// Перемещение на якорь
+function moveToAnchor(anchor) {
+    var top = $(anchor).offset().top
+    $('html, body').stop().animate({
+        scrollTop: top + 100
+    }, 777);
+
+    event.preventDefault();
+    return false;
 }
 
 
-// Полученеи данных о все персонажах
-function getAllCharacter() {
+// Общая функция получения данных с сервера
+function getDataFromServer(url, callback) {
     $.ajax({
-        url: '/user/allcharacters',
+        url: url,
         type: "GET",
         processData: false,
         contentType: false,
@@ -54,10 +83,15 @@ function getAllCharacter() {
             return request.setRequestHeader('X-CSRF-Token', $("input[name*='_csrf']").val());
         },
         success: function(data, textStatus, jqXHR) {
-            charactersData = $.parseJSON(JSON.stringify(data));
-            createCharacterList();
+            callback(data);
         },
     });
+}
+
+// Полученеи данных о всех персонажах
+function geAllCharacterCallback(data) {
+    charactersData = $.parseJSON(JSON.stringify(data));
+    createCharacterList();
 }
 
 // Создание списка персонажей
@@ -75,11 +109,12 @@ function createCharacterList() {
 
             $("#character-list").prepend(character);
 
-            $(".character-" + i).mouseover({item: charactersData[i-1]},function (event) {
+            $(".character-" + i).mousedown({item: charactersData[i-1]},function (event) {
                 // Открываем вторую часть меню персонажа
                 $("#player-form-2").show(600);
 
                 fillCharacterPanal(event.data.item)
+                moveToAnchor("#player-form-2");
             });
         }
         else{
@@ -109,15 +144,68 @@ function fillCharacterPanal(character) {
 // ПЕРЕМЕЩЕНИЕ МОНЕТКИ
 
 // Ограничение перемещения монетки
-function setDukatBorder(){
+function setDukatBorder(dukats){
     $('.dragElement').draggable({
         axis: "x", containment: "parent",
-        stop:stopDukat
-    }).filter('#dukat').draggable("option", "axis", "y");
+        stop:dragDukat
+    });
+
+    $.each(dukats, function(_, value){
+        $('.dragElement').filter(value).draggable("option", "axis", "y");
+    })
 }
 
 // Событие на завершение перемещения монетки
-function stopDukat() {
+function dragDukat() {
+    if(typeof gamesData[0] === 'undefined'){
+        alert("Пусто")
+    }
+
     // TODO Дописать логику перетаскивания монетки
-    alert('Логика перетаскивания')
+}
+
+// Получение списка созданных игр пользователем
+function getUserCreatedGameCallback(data) {
+    gamesData = $.parseJSON(JSON.stringify(data));
+    createGameList("#gm-games-slider");
+}
+
+// Создание списка уже созданный игр для ГМа
+function createGameList(tag) {
+    $(tag).empty();
+
+    var addNewGameBtn = "<div class='game-slide slide-1 btn-create-new-game' id='slide-1'><h1 class='label-under-glass'>Новая игра</h1><div class='innder-slide'></div></div>";
+
+    $(tag).prepend(addNewGameBtn);
+
+    $(".btn-create-new-game").click(renderCreatingGameForm);
+
+    for(var i = 2; i <= 3; i++){
+        var slide = "<div class='game-slide slide-" + i + "'>" +
+            "<div class='innder-slide'></div></div>";
+
+        $(tag).append(slide);
+
+        $(".slide-" + i).click({i:i}, renderGameInfoForm);
+    }
+}
+
+// Отрисовка формы для создания новой игры
+function renderCreatingGameForm() {
+    $("#game-info").hide();
+    $("#create-new-game-form").show(600);
+
+    $("#game-form-header").empty()
+    $("#game-form-header").text("Новая игра");
+}
+
+// Отрисовка формы с информацией об игре
+function renderGameInfoForm(event) {
+    // TODO Дописать отображение информации
+    alert(event.data.i)
+}
+
+// Получение списка всех игр
+function getAllCreatedGame() {
+
 }
