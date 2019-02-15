@@ -15,18 +15,48 @@ public class Game {
         return id;
     }
 
-    @ManyToOne
-    private Genre genre;
+    @Column(name = "Name", nullable = false)
+    private String name;
 
-    public Genre getGenre() {
-        return genre;
+    public String getName() {
+        return name;
     }
 
-    @ManyToOne
-    private Rules rules;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Rules getRules() {
-        return rules;
+    @Column(name = "Password", nullable = true)
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Column(name = "PersonCount", nullable = false)
+    private int personCount;
+
+    public int getPersonCount() {
+        return personCount;
+    }
+
+    public void setPersonCount(int personCount) {
+        this.personCount = personCount;
+    }
+
+    @Column(name = "Description", nullable = true)
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @ManyToOne
@@ -69,25 +99,6 @@ public class Game {
         this.timeDeleting = timeDeleting;
     }
 
-    private String description;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    private String name;
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     // Нужен для получения данных из БД
     public Game(){ }
 
@@ -96,11 +107,13 @@ public class Game {
     }
 
     // Нужен для добавления данных в БД
-    public Game(Genre genre, Rules rules, User gm, String state){
-        this.genre = genre;
+    public Game(User gm, String name, String password, String description, int personCount){
         this.gm = gm;
-        this.rules = rules;
-        this.state = state;
+        this.name = name;
+        this.password = password;
+        this.personCount = personCount;
+        this.description = description;
+        this.state = GameState.ACTIVESTATE;
         this.timeCreating = new Date();
     }
 }

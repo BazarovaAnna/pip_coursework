@@ -79,20 +79,19 @@ create table effects (
   name varchar(255) not null,
   primary key (id));
 
-
 create table games (
   id  bigserial not null,
   description varchar(255),
-  name varchar(255),
+  name varchar(255) not null,
+  password varchar(255),
+  person_count int4 not null,
   state varchar(255) not null,
   time_creating timestamp not null,
   time_deleting timestamp not null,
   date_end timestamp not null,
   date_start timestamp not null,
   gms_rating float4,
-  genre_id int8,
   gm_id int8,
-  rules_id int8,
   game_id int8,
   primary key (id));
 
@@ -175,9 +174,7 @@ alter table if exists users add constraint UK_ow0gan20590jrb00upg3va2fn unique (
 alter table if exists characters add constraint FK27yx743bsnnsqplnjhk5yf224 foreign key (user_id) references users;
 alter table if exists characters_abilities add constraint FK35j9mn5tihv3b9aarka58b3qr foreign key (ability_id) references abilities;
 alter table if exists characters_effects add constraint FKfuqkijbcvwayg8213v83if3ai foreign key (effect_id) references effects;
-alter table if exists games add constraint FKfnb2pp2b4p361k65kaf7kig55 foreign key (genre_id) references genres;
 alter table if exists games add constraint FKdce8igggv304msoc4n9viv3rs foreign key (gm_id) references users;
-alter table if exists games add constraint FKbw641s5pl9hxqnu62k9o9usig foreign key (rules_id) references rules;
 alter table if exists games add constraint FK96mh9a45l0ttt9igu5lxel207 foreign key (game_id) references games;
 alter table if exists groups add constraint FKq5odfls4c242crio7ewsbqyc0 foreign key (game_id) references games;
 
