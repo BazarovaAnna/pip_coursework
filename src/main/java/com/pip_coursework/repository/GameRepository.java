@@ -11,7 +11,7 @@ public interface GameRepository extends CrudRepository<Game, Long> {
 
     ArrayList<Game> findAllByState(String state);
 
-    Game findByGmAndState(User user, String state);
+    ArrayList<Game> findAllByGmAndState(User gm, String state);
 
     Game findByGmAndName(User user, String name);
 }
