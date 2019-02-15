@@ -35,9 +35,6 @@ public class NewCharacterController {
     @RequestMapping(value = "/newcharacter/allrace", method = RequestMethod.POST)
     public ResponseEntity<?> getAllType(@AuthenticationPrincipal User user,
                                         Model model){
-
-        model.addAttribute("races", characterService.getAllRace());
-
         return new ResponseEntity<>(characterService.getAllRace(), HttpStatus.OK);
     }
 
