@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -62,6 +63,8 @@ public class Game {
     @ManyToOne
     private User gm;
 
+    public void setGm(User gm) { this.gm = gm; }
+
     public User getGm() {
         return gm;
     }
@@ -77,25 +80,23 @@ public class Game {
         this.state = state;
     }
 
-    @Basic(optional = false)
     @Column(name = "Time_Creating", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreating;
+    private Instant timeCreating;
 
-    public Date getTimeCreating() {
+    public void setTimeCreating(Instant timeCreating){this.timeCreating = timeCreating; }
+
+    public Instant getTimeCreating() {
         return timeCreating;
     }
 
-    @Basic(optional = false)
     @Column(name = "Time_Deleting", nullable = true)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeDeleting;
+    private Instant timeDeleting;
 
-    public Date getTimeDeleting() {
+    public Instant getTimeDeleting() {
         return timeDeleting;
     }
 
-    public void setTimeDeleting(Date timeDeleting) {
+    public void setTimeDeleting(Instant timeDeleting) {
         this.timeDeleting = timeDeleting;
     }
 
@@ -114,6 +115,6 @@ public class Game {
         this.personCount = personCount;
         this.description = description;
         this.state = GameState.ACTIVESTATE;
-        this.timeCreating = new Date();
+        this.timeCreating = Instant.now();
     }
 }

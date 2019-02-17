@@ -14,4 +14,6 @@ public interface GameRepository extends CrudRepository<Game, Long> {
     ArrayList<Game> findAllByGmAndState(User gm, String state);
 
     Game findByGmAndName(User user, String name);
+
+    boolean existsByNameAndState(String name, String state);
 }
