@@ -161,6 +161,8 @@
     height:400px
 }
 
+/* Стили для формы создания игры */
+
 .header-form{
     font-size: 50px;
     margin: 10px;
@@ -172,10 +174,18 @@
     transition: all 1s;
 }
 
+.header-form-sub{
+    font-size: 40px;
+}
+
 .header-form:hover{
     text-shadow: 1px 1px white;
-    color: beige;
 }
+
+.lobby-input-group{
+    color: black;
+}
+
 
 .character-player-form label{
     font-size: 25px;

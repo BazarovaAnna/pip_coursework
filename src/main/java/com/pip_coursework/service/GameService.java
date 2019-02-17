@@ -40,22 +40,35 @@ public class GameService {
     }
 
     // Создание новой игры
-    // todo нужно доработать
-    private void createNewGame(User gm){
+    public void createNewGame(User gm,
+                               String name,
+                               int personCount,
+                               String password,
+                               String description) throws Exception {
 
-        Game game = new Game();
-        gameRepository.save(game);
+        if (!gameRepository.existsByNameAndState(name, GameState.ACTIVESTATE)) {
+            Game game = new Game(gm, name, password, description, personCount);
+
+            try {
+                gameRepository.save(game);
+                return;
+            } catch (Exception ex) {
+                throw new Exception("Что-то пошло не так во время записи в бд!");
+            }
+        }
+
+        throw new Exception("Название такой игры уже существует!");
     }
 
     private ArrayList<Character> getPlayers(Game game){
         return groupRepository.findAllByGame(game);
     }
 
-
     // Получение списка игр для конкретного пользователя
     public ArrayList<Game> getUserGames(User user) {
         ArrayList<Game> games = gameRepository.findAllByGmAndState(user, GameState.ACTIVESTATE);
+        games.forEach(x -> x.setGm(null));
 
-        return games != null ? games : new ArrayList<>();
+        return games;
     }
 }

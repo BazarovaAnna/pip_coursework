@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LobbyController {
@@ -41,5 +42,21 @@ public class LobbyController {
     public ResponseEntity<?> getAllGames(@AuthenticationPrincipal User user){
         // TODO возможно нужно подгружать кусками
         return new ResponseEntity<>(gameService.getListActiveGame(), HttpStatus.OK);
+    }
+
+    // Создание новой игры
+    @RequestMapping(value = "/lobby/newgame", method = RequestMethod.POST)
+    public ResponseEntity<?> createNewGame(@RequestParam("name") String name,
+                                           @RequestParam("personCount") String personCount,
+                                           @RequestParam("password") String password,
+                                           @RequestParam("description") String description,
+                                           @AuthenticationPrincipal User user){
+        try {
+            gameService.createNewGame(user, name, Integer.parseInt(personCount), password, description);
+            return new ResponseEntity<>((String) "Игра успешно создана!", HttpStatus.OK);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>((String)ex.getMessage(), HttpStatus.OK);
+        }
     }
 }

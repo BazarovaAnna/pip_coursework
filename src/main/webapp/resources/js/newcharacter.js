@@ -120,7 +120,6 @@ function drawRaceImg(data) {
 function addNewCharacter() {
     $(".alert.alert-msg").remove()
 
-
     var form = $('#new-character-form')[0];
 
     var data = new FormData(form);
@@ -149,6 +148,7 @@ function addNewCharacter() {
 
                 });
             }, 500);
+            $("#new-character-form").trigger('reset');
         },
     });
 }

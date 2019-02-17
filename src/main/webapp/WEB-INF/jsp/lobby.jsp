@@ -99,29 +99,29 @@
                                         <div id="create-new-game-form" hidden>
                                             <form id="new-game-form">
                                                 <div class="form-group">
-                                                    <h4 class="header-form">Название игры</h4>
-                                                    <div>
+                                                    <h4 class="header-form header-form-sub">Название игры</h4>
+                                                    <div class="lobby-input-group">
                                                         <input type="text" name="name" minlength="2" maxlength="12"
                                                                id="name" placeholder="Введите название игры" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <h4 class="header-form">Количество игроков</h4>
-                                                    <div>
-                                                        <input type="text" name="number" minlength="2" maxlength="12"
-                                                               id="number" placeholder="Введите название игры" required>
+                                                    <h4 class="header-form header-form-sub">Количество игроков</h4>
+                                                    <div class="lobby-input-group">
+                                                        <input type="text" name="personCount" minlength="2" maxlength="12"
+                                                               id="personCount" placeholder="Введите количество игроков" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <h4 class="header-form">Пароль</h4>
-                                                    <div>
+                                                    <h4 class="header-form header-form-sub">Пароль</h4>
+                                                    <div class="lobby-input-group">
                                                         <input type="text" name="password" minlength="2" maxlength="12"
                                                                id="password" placeholder="Введите пароль">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <h4 class="header-form">Описание</h4>
-                                                    <div>
+                                                    <h4 class="header-form header-form-sub">Описание</h4>
+                                                    <div class="lobby-input-group">
                                                         <input type="text" name="description" minlength="2" maxlength="12"
                                                                id="description" placeholder="Введите название игры">
                                                     </div>
