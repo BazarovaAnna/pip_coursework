@@ -21,7 +21,7 @@
                     <ul class="nav navbar-nav navbar-left" style="margin: 5px;">
                         <li><a href="/" style="margin-top:5px;">Главная страница</a></li>
                         <sec:authorize access="isAuthenticated()">
-                            <li><a href="/lobby" style="margin-top:5px;">Лобби</a></li>
+                            <li><a href="/lobby" style="margin-top:5px;">Играть</a></li>
                             <li><a href="/newcharacter" style="margin-top:5px;">Персонажи</a></li>
                         </sec:authorize>
                     </ul>
