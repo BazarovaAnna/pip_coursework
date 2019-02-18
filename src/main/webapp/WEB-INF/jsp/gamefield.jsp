@@ -6,7 +6,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="../../resources/css/photosDiv.css"/>
     <link rel="stylesheet" href="../../resources/css/chat.css"/>
-    <link rel="stylesheet" href="../../resources/css/photo.css"/>
+    <link rel="stylesheet" href="../../resources/css/photosDiv.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../resources/js/gamefield.js"></script>
 </head>
@@ -23,10 +23,10 @@
                 <div class="col-sm-8">
                     <div id="chat" class="chat">
                         <div id="chat-header" class="chat-header">
-                            <p>Чат</p>
+                            <p style="margin: 10px 0;">Чат</p>
                         </div>
                         <div class="content-discussion" id="content-discussion">
-                            <p class="chat-first">Обсуждайте ход игры здесь</p>
+                            <p class="chat-first" style="margin: 10px 0;">Обсуждайте ход игры здесь</p>
                             <div id="chat-messages" class="chat-messages">
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="photoDiv" id="user3">
                             <div class="photobox">
-                                <img src="${filename3}" class="photobox__preview" id="user-avatar3">
+                                <img src="../../resources/default/img/race/женщина_воин_орк.jpg" class="photobox__preview" id="user-avatar3" style="-moz-box-shadow:0 0 20px #FF0000; -webkit-box-shadow:0 0 20px #FF0000; box-shadow:0 0 20px #FF0000;">
                             </div>
                             <div class="point uSpot" style="background: blue;"></div>
                             <div class="description">

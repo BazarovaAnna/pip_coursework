@@ -17,6 +17,7 @@
     right: 0px;
     position: absolute;
     color: white;
+    font-size: 25px;
 }
 
 .content-discussion {
@@ -26,7 +27,7 @@
     text-align: left;
     color: #005b7c;
     left: 0px;
-    top: 50px;
+    top: 56px;
     right: 0px;
     bottom: 56px;
 }
@@ -49,15 +50,14 @@ li {
 }
 
 #send-message {
-    padding: 10px;
-    margin: 7px;
+    padding: 6px;
     color: #008eab;
 }
 
 #message-writer {
-    width: 186px;
-    height: 20px;
-    margin: 7px;
+    width: 150px;
+    height: 30px;
+    margin: 12px 10px;
 }
 
 .chat-messages {
@@ -65,4 +65,5 @@ li {
     vertical-align: bottom;
     white-space: pre-line;
     word-wrap: break-word;
+    padding: 12px;
 }
