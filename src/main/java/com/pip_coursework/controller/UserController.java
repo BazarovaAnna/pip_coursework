@@ -1,33 +1,129 @@
 package com.pip_coursework.controller;
 
+import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.Genre;
 import com.pip_coursework.entity.UserGenre;
 import com.pip_coursework.repository.UserGenreRepository;
 import com.pip_coursework.repository.GenreRepository;
+import com.pip_coursework.service.CharacterService;
+import com.pip_coursework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import com.pip_coursework.entity.User;
 import com.pip_coursework.repository.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
 
-@RestController
+@Controller
 public class UserController {
     @Autowired
+    private CharacterService characterService;
+
+    @Autowired
     UserRepository repository;
+
+    @Autowired
+    UserService userService;
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String user(
+            @AuthenticationPrincipal User user,
+            Model model) {
+        model.addAttribute("login", user.getLogin());
+        model.addAttribute("password", user.getPassword());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("sex", user.getSex());
+
+        model.addAttribute("filename", userService.getUserAvatar(user));
+
+        return "user";
+    }
+
+    // Загрузка аватарки пользователя на сервер
+    @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
+    public ResponseEntity<?> uploadFile(@AuthenticationPrincipal User user,
+                            @RequestParam("file") MultipartFile file,
+                             Model model) throws IOException {
+
+        if(file != null){
+            userService.addUsersAvatar(file, user);
+        }
+
+        return new ResponseEntity<String>((String) userService.getUserAvatar(user), HttpStatus.OK);
+    }
+
+
+
+    // Получение списка всех персонажей
+    @RequestMapping(value = "/user/allcharacters", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCharacters(@AuthenticationPrincipal User user){
+
+
+        return new ResponseEntity<>((ArrayList<Character>)characterService.getAllCharacter(user), HttpStatus.OK);
+    }
+
+
+
+    /*
+    Код для смены пароля авторизированного пользователя
+
+    @RequestMapping(value = "/change")
+    public String change(Model modlel,
+                         @AuthenticationPrincipal User user) {
+        userService.changePassword(user);
+
+        return "user";
+    }
+
+    @RequestMapping(value = "/confirmation/{code}", method = RequestMethod.GET)
+    public String confirmation(Model model,
+                               @PathVariable String code){
+
+        boolean isConfirmed = userService.confirmationPassword(code);
+
+        if(isConfirmed){
+            model.addAttribute("message", "Пароль был успешно изменен!");
+        }
+        else {
+            model.addAttribute("message", "Что-то пошло не так!");
+        }
+
+        return "redirect:/user?success="+isConfirmed;
+    }
+    */
+
+
+
+
+
+
+
+
     @Autowired
     UserGenreRepository user_genreRepository;
     @Autowired
     GenreRepository genreRepository;
 
-    @RequestMapping("/UserController/add")
+    @RequestMapping("/user/add")
+    @ResponseBody
     public String add(@RequestParam("login") String login,
-                      @RequestParam("password") char[] password,
+                      @RequestParam("password") String password,
                       @RequestParam("mail") String mail,
                       @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
                       @RequestParam("lang") char[] lang,
@@ -35,12 +131,12 @@ public class UserController {
         String executiongStatus = "";
 
         try{
-            if(repository.findByLogin(login).size()  > 0){
+            if(repository.findByLogin(login) != null){
                 throw  new DataIntegrityViolationException("");
             }
 
             repository.save(new User(login, password,
-                    mail, date, lang, sex));
+                    mail, sex));
 
             executiongStatus = "Done";
         }
@@ -52,7 +148,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/UserController/findall")
+    @RequestMapping("/user/findall")
+    @ResponseBody
     public String findAll(){
         String result = "";
 
@@ -63,18 +160,16 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping("/UserController/findByLogin")
+    @RequestMapping("/user/findByLogin")
+    @ResponseBody
     public String fetchDataByLogin(@RequestParam("login") String login){
-        String result = "";
-
-        for(User user: repository.findByLogin(login)){
-            result += user.toString() + "<br>";
-        }
+        String result = repository.findByLogin(login).toString();
 
         return  result;
     }
 
-    @RequestMapping("/UserController/findById")
+    @RequestMapping("/user/findById")
+    @ResponseBody
     public String findById(@RequestParam("id") long id){
         String result = "";
 
@@ -85,7 +180,8 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/findgenres")
+    @RequestMapping("/user/findgenres")
+    @ResponseBody
     public String findGenresById(@RequestParam("id") long id){
         String result = "";
         result = user_genreRepository.findByUserId(id).toString();
@@ -95,7 +191,8 @@ public class UserController {
         return  result;
     }
 
-    @RequestMapping("/UserController/setgenre")
+    @RequestMapping("/user/setgenre")
+    @ResponseBody
     public String setGenreById(@RequestParam("id") long id, long genreId){
         String result = "done";
 

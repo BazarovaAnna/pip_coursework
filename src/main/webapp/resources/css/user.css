@@ -1,0 +1,23 @@
+/* Стили для контейнеров */
+
+.left-col{
+    align-content: center;
+    text-align: center;
+}
+
+.middle-col{
+    text-align: left;
+}
+
+.right-col{
+    align-content: center;
+    text-align: center;
+}
+
+.user-params-label{
+    font-size: 20px;
+}
+
+.user-params-value{
+    font-size: 16px;
+}

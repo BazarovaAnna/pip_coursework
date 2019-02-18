@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -15,22 +16,54 @@ public class Game {
         return id;
     }
 
-    @ManyToOne
-    private Genre genre;
+    @Column(name = "Name", nullable = false)
+    private String name;
 
-    public Genre getGenre() {
-        return genre;
+    public String getName() {
+        return name;
     }
 
-    @ManyToOne
-    private Rules rules;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Rules getRules() {
-        return rules;
+    @Column(name = "Password", nullable = true)
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Column(name = "PersonCount", nullable = false)
+    private int personCount;
+
+    public int getPersonCount() {
+        return personCount;
+    }
+
+    public void setPersonCount(int personCount) {
+        this.personCount = personCount;
+    }
+
+    @Column(name = "Description", nullable = true)
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @ManyToOne
     private User gm;
+
+    public void setGm(User gm) { this.gm = gm; }
 
     public User getGm() {
         return gm;
@@ -47,44 +80,41 @@ public class Game {
         this.state = state;
     }
 
-    @Basic(optional = false)
     @Column(name = "Time_Creating", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeCreating;
+    private Instant timeCreating;
 
-    public Date getTimeCreating() {
+    public void setTimeCreating(Instant timeCreating){this.timeCreating = timeCreating; }
+
+    public Instant getTimeCreating() {
         return timeCreating;
     }
 
-    @Basic(optional = false)
-    @Column(name = "Time_Deleting")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeDeleting;
+    @Column(name = "Time_Deleting", nullable = true)
+    private Instant timeDeleting;
 
-    public Date getTimeDeleting() {
+    public Instant getTimeDeleting() {
         return timeDeleting;
     }
 
-    public void setTimeDeleting(Date timeDeleting) {
+    public void setTimeDeleting(Instant timeDeleting) {
         this.timeDeleting = timeDeleting;
     }
 
     // Нужен для получения данных из БД
-    protected Game(){ }
+    public Game(){ }
 
-    // Нужен для добавления данных в БД
-    public Game(Genre genre, Rules rules, User gm, String state){
-        this.genre = genre;
-        this.gm = gm;
-        this.rules = rules;
+    public Game(String state){
         this.state = state;
-        this.timeCreating = new Date();
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s Жанр игры: '%s', правила: %s, ГМ: %s, состояние: %s, идет с %s по %s.",
-                id, genre.toString(), rules.toString(), gm.toString(),
-                state, timeCreating.toString(), timeDeleting.toString());
+    // Нужен для добавления данных в БД
+    public Game(User gm, String name, String password, String description, int personCount){
+        this.gm = gm;
+        this.name = name;
+        this.password = password;
+        this.personCount = personCount;
+        this.description = description;
+        this.state = GameState.ACTIVESTATE;
+        this.timeCreating = Instant.now();
     }
 }

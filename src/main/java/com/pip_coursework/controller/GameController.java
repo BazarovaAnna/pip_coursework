@@ -7,16 +7,42 @@ import com.pip_coursework.entity.User;
 import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.Group;
 import com.pip_coursework.repository.*;
+import com.pip_coursework.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-@RestController
+@Controller
 public class GameController {
+    @Autowired
+    private GameService gameService;
+
+    @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
+    public String gamefield(@AuthenticationPrincipal User user,
+                            Model model){
+
+        model.addAttribute("login", user.getLogin());
+
+        return "gamefield";
+    }
+
+
+
+
+
+
+
+
+
+
     @Autowired
     GameRepository repository;
     @Autowired
@@ -37,7 +63,7 @@ public class GameController {
         Genre genre = getGenre(genre_id);
         Rules rules = getRules(rules_id);
         User gm = getUser(gm_id);
-        repository.save(new Game(genre, rules, gm, state));
+
 
         executiongStatus = "Done";
         return  executiongStatus;

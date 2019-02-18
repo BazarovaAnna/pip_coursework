@@ -1,0 +1,369 @@
+/* Стили для иконок игры */
+.photobox{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.photobox__previewbox{
+    position: relative;
+    overflow: hidden;
+}
+
+.photobox__preview{
+    width: 500px;
+    height: 600px;
+    background-size: cover;
+}
+
+.photobox__previewbox:before{
+    content: "";
+}
+
+/* Появление кнопки для смены изображения */
+
+.photobox .photobox__previewbox:before {
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    background-color: var(--photoboxOverlay, rgba(0, 0, 0, .8));
+    clip-path: polygon(50% 10%, 15% 90%, 85% 90%);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transition: transform calc(var(--photoboxAnimationDuration, .4s) / 2) ease-out,   opacity calc(var(--photoboxAnimationDuration, .4s) / 2) ease-out;
+    will-change: transform;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.photobox:hover .photobox__previewbox:before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(7);
+    transition-delay: calc(var(--photoboxAnimationDuration, .4s) / 2), 0s;
+    transition-duration: var(--photoboxAnimationDuration, .4s);
+}
+
+.photobox .photobox__label{
+    width: 95%;
+    text-align: center;
+
+    font-size: 230%;
+
+    opacity: 0;
+    transition: opacity calc(var(--photoboxAnimationDuration, .4s) / 4) cubic-bezier(0.71, 0.05, 0.29, 0.9), transform calc(var(--photoboxAnimationDuration, .4s) / 4) cubic-bezier(0.71, 0.05, 0.29, 0.9);
+    will-change: opacity, transform;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 200%);
+    z-index: 3;
+}
+
+.photobox:hover .photobox__label, .photobox:hover .level-label{
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition-duration: var(--photoboxAnimationDuration, .4s);
+    transition-delay: calc(var(--photoboxAnimationDuration, .4s) / 2);
+}
+
+/*
+* demo styles for photobox
+*/
+
+.photobox{
+    color: #fff;
+    font-size: 1.5rem;
+    --photoboxOverlay: rgba(1, 188, 198, .3);
+    photoboxAnimationDuration: .5s;
+}
+
+@media screen and (max-width: 480px){
+    .photobox{
+        width: 100%;
+    }
+}
+
+/* Затемнение */
+.shadow-form {
+    width:100%;
+    height:100%;
+    position:absolute;
+    background:rgba(32, 7, 114, 0.4);
+    z-index:50;
+}
+
+
+/* Стили для формы игрока */
+
+.character-list-header{
+    text-align: center;
+    font-size: 60px;
+}
+
+/* Стили для портретов персонажей */
+
+.character-preview{
+    width: 250px;
+    height: 300px;
+    background-size: cover;
+}
+
+/* Стили для значения уровня персонажа */
+
+.level-label{
+    width: 95%;
+    text-align: center;
+
+    font-size: 40px;
+
+    opacity: 0;
+    transition: opacity calc(var(--photoboxAnimationDuration, .4s) / 4) cubic-bezier(0.71, 0.05, 0.29, 0.9), transform calc(var(--photoboxAnimationDuration, .4s) / 4) cubic-bezier(0.71, 0.05, 0.29, 0.9);
+    will-change: opacity, transform;
+
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, 200%);
+    z-index: 3;
+}
+
+/* Стили для формы портретов персонажей */
+#character-list{
+    text-align: center;
+}
+
+#player-form{
+    margin-top: 10%;
+}
+
+#gm-form{
+    margin-top: 10%;
+}
+
+/* Форма персонажа */
+.info-form{
+    text-align: center;
+    background-color: #FFDC73;
+    color: white;
+    min-height: 950px;
+    padding: 12% 0;
+    margin: 5%;
+    box-shadow: 0 0 6em rgba(0,0,0,0.7); /* Парааметры тени */
+    border-radius: 80em 0.5em/15em 0.5em 10em;
+    background-image: url("./../../resources/default/img/panel-background.jpg");
+}
+
+#char-avatar{
+    width:300px;
+    height:400px
+}
+
+/* Стили для формы создания игры */
+
+.header-form{
+    font-size: 50px;
+    margin: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: wheat;
+
+    transition: all 1s;
+}
+
+.header-form-sub{
+    font-size: 40px;
+}
+
+.header-form:hover{
+    text-shadow: 1px 1px white;
+}
+
+.lobby-input-group{
+    color: black;
+}
+
+
+.character-player-form label{
+    font-size: 25px;
+    margin: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: wheat;
+
+    transition: all 1s;
+}
+
+.character-player-form label:hover {
+    text-shadow: 1px 1px white;
+    color: beige;
+}
+
+#character-player-form{
+    
+}
+
+.header-character-param{
+    margin-right: 20%;
+}
+
+.character-player-form .header-character-param{
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: gray;
+
+    transition: all 1s;
+}
+
+.character-player-form .header-character-param:hover {
+    text-shadow: 1px 1px gray,
+    2px 2px powderblue;
+    color: black;
+
+    transition: all 1s;
+}
+
+.character-params{
+    text-align: left;
+    margin: 5% 20%;
+}
+
+.character-param{
+    float: right;
+}
+
+/* Форма игры  */
+
+.game-info{
+    z-index: 2;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    margin: 5%;
+    background: transparent url("./../../resources/default/img/table.png") round;
+}
+
+.dukat{
+    position: absolute;
+    right: -20%;
+    top: 3.5%;
+    z-index: 4;
+    text-align: center;
+    height: 70px;
+    width: 70px;
+    margin: 25%;
+    background: transparent url("./../../resources/default/img/dukat.png") round;
+}
+
+.dukat:hover{
+    background-color: gold;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.015s;
+}
+
+/* Слайдер для списка доступных игр */
+#gm-games-slider{
+
+}
+
+.games-slider{
+    position: relative;
+}
+
+.game-slide{
+    position: relative;
+    width: 60%;
+    height: 200px;
+    margin: 30px;
+    background-image: url("./../../resources/default/img/panel-background.jpg");
+    right: -15%;
+}
+
+.game-slide:hover{
+}
+
+.innder-slide{
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    text-decoration: none;
+    z-index: 10;
+    text-shadow: rgba(255,255,255,.5) 1px 1px, rgba(100,100,100,.3) 3px 7px 3px;
+    user-select: none;
+    padding: 1em 2em;
+    outline: none;
+    border-radius: 3px / 100%;
+    background-image:
+            linear-gradient(45deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.8), rgba(255,255,255,.0) 70%),
+            linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0) 20%, rgba(255,255,255,0) 90%, rgba(255,255,255,.3)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5));
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+    background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+    box-shadow: rgba(0,0,0,.5) 3px 10px 10px -10px;
+}
+
+/* Стили для кнопки в виде стекла */
+.btn-glass{
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    color: #777674;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: rgba(255,255,255,.5) 1px 1px, rgba(100,100,100,.3) 3px 7px 3px;
+    user-select: none;
+    padding: 1em 2em;
+    outline: none;
+    border-radius: 3px / 100%;
+    background-image:
+            linear-gradient(45deg, rgba(255,255,255,.0) 30%, rgba(255,255,255,.8), rgba(255,255,255,.0) 70%),
+            linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0) 20%, rgba(255,255,255,0) 90%, rgba(255,255,255,.3)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(125,125,125,1), rgba(255,255,255,.9) 45%, rgba(125,125,125,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5)),
+            linear-gradient(to right, rgba(223,190,170,1), rgba(255,255,255,.9) 45%, rgba(223,190,170,.5));
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto, 100% 2px, 100% 2px, 100% 1px, 100% 1px;
+    background-position: 200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+    box-shadow: rgba(0,0,0,.5) 3px 10px 10px -10px;
+}
+
+.btn-glass:hover, .innder-slide:hover{
+    transition: .5s linear;
+    text-decoration: none;
+    background-position: -200% 0, 0 0, 0 0, 0 100%, 0 4px, 0 calc(100% - 4px);
+}
+
+.btn-glass:active{
+    top: 148px;
+}
+
+/* Стили для позиций в слайдере */
+.slide-1{
+    top: 160px;
+}
+
+.slide-2{
+    top: 160px;
+}
+
+.slide-3{
+    top: 160px;
+}
+
+.label-under-glass{
+    position: absolute;
+    margin: 22%;
+    z-index: 5;
+    color: beige;
+}

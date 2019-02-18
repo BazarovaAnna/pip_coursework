@@ -1,11 +1,3 @@
-
-
-// Загрузка с изображений
-$(".fnc-slide-1 .fnc-slide-inner").
-css('backgroundImage','url("../../resources/default/img/race/воин(гном).jpg');
-
-
-
 (function() {
 
     var $$ = function(selector, context) {
@@ -13,6 +5,7 @@ css('backgroundImage','url("../../resources/default/img/race/воин(гном).
         var elements = context.querySelectorAll(selector);
         return [].slice.call(elements);
     };
+
 
     function _fncSliderInit($slider, options) {
         var prefix = ".fnc-";
@@ -82,6 +75,7 @@ css('backgroundImage','url("../../resources/default/img/race/воин(гном).
             curSlide = slideID;
 
             $prevControl = $slider.querySelector(".m--active-control");
+
             $prevControl.classList.remove("m--active-control");
             $prevControl.classList.add("m--prev-control");
             $slider.querySelector(prefix + "nav__control-" + slideID).classList.add("m--active-control");
@@ -179,10 +173,15 @@ var $demoCont = document.querySelector(".demo-cont");
 
 [].slice.call(document.querySelectorAll(".fnc-slide__action-btn")).forEach(function($btn) {
     $btn.addEventListener("click", function() {
-        $demoCont.classList.toggle("credits-active");
+        // TODO проверака на то, что открыта страница
+        if(!$(".demo-cont").hasClass("credits-active")){
+            $demoCont.classList.toggle("credits-active");
+        }
     });
 });
 
 document.querySelector(".info-close").addEventListener("click", function() {
     $demoCont.classList.remove("credits-active");
+    $("#create-character").hide();
+    $("#info-character").hide();
 });
