@@ -5,7 +5,7 @@ p {
 .photos {
     position: absolute;
     left: 340px;
-    top: 80px;
+    top: 0px;
     width: 700px;
     height: 175px;
 }
@@ -20,6 +20,15 @@ p {
     top: 0px;
     width: 100px;
     height: 175px;
+}
+
+.photo_box {
+    width: 100px;
+    height: 100px;
+}
+
+#map {
+
 }
 
 #user1 {
@@ -39,4 +48,40 @@ p {
 }
 #user6 {
     left: 600px;
+}
+
+#user-avatar1 {
+    -moz-box-shadow:0 0 20px #000000;
+    -webkit-box-shadow:0 0 20px #000000;
+    box-shadow:0 0 20px #000000;"
+}
+
+#user-avatar2 {
+    -moz-box-shadow:0 0 20px red;
+    -webkit-box-shadow:0 0 20px red;
+    box-shadow:0 0 20px red;
+}
+
+#user-avatar3 {
+    -moz-box-shadow:0 0 20px blue;
+    -webkit-box-shadow:0 0 20px blue;
+    box-shadow:0 0 20px blue;
+}
+
+#user-avatar4 {
+    -moz-box-shadow:0 0 20px green;
+    -webkit-box-shadow:0 0 20px green;
+    box-shadow:0 0 20px green;
+}
+
+#user-avatar5 {
+    -moz-box-shadow:0 0 20px yellow;
+    -webkit-box-shadow:0 0 20px yellow;
+    box-shadow:0 0 20px yellow;
+}
+
+#user-avatar6 {
+    -moz-box-shadow:0 0 20px purple;
+    -webkit-box-shadow:0 0 20px purple;
+    box-shadow:0 0 20px purple;
 }

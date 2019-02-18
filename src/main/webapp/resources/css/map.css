@@ -9,34 +9,49 @@
     background: red;
     left: 10px;
     top: 10px;
+    -moz-box-shadow:0 0 20px red;
+    -webkit-box-shadow:0 0 20px red;
+    box-shadow:0 0 20px red;
 }
 
 .spot2 {
     background: blue;
     right: 10px;
     top: 10px;
+    -moz-box-shadow:0 0 20px blue;
+    -webkit-box-shadow:0 0 20px blue;
+    box-shadow:0 0 20px blue;
 }
 
 .spot3 {
     background: green;
     left: 36px;
     top: 38px;
+    -moz-box-shadow:0 0 20px green;
+    -webkit-box-shadow:0 0 20px green;
+    box-shadow:0 0 20px green;
 }
 
 .spot4 {
     background: orange;
     left: 10px;
     bottom: 10px;
+    -moz-box-shadow:0 0 20px yellow;
+    -webkit-box-shadow:0 0 20px yellow;
+    box-shadow:0 0 20px yellow;
 }
 
 .spot5 {
     background: purple;
     right: 10px;
     bottom: 10px;
+    -moz-box-shadow:0 0 20px purple;
+    -webkit-box-shadow:0 0 20px purple;
+    box-shadow:0 0 20px purple;
 }
 #map {
     position: absolute;
-    top: 200px;
+    top: 120px;
     left: 340px;
     width: 700px;
     height: 470px;
@@ -44,8 +59,8 @@
 
 .field {
     position: absolute;
-    top: 20px;
-    left: 18px;
+    top: 140px;
+    left: 360px;
     width: 664px;
     height: 430px;
 }
