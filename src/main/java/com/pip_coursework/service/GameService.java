@@ -46,7 +46,7 @@ public class GameService {
                                String password,
                                String description) throws Exception {
 
-        if (!gameRepository.existsByNameAndState(name, GameState.ACTIVESTATE)) {
+        if (!gameRepository.existsByNameAndState(name, GameState.INACTIVESTATE)) {
             Game game = new Game(gm, name, password, description, personCount);
 
             try {

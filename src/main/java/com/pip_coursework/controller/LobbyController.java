@@ -3,12 +3,14 @@ package com.pip_coursework.controller;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.service.CharacterService;
 import com.pip_coursework.service.GameService;
+import com.pip_coursework.transmittedObject.GameInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +56,20 @@ public class LobbyController {
         try {
             gameService.createNewGame(user, name, Integer.parseInt(personCount), password, description);
             return new ResponseEntity<>((String) "Игра успешно создана!", HttpStatus.OK);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>((String)ex.getMessage(), HttpStatus.OK);
+        }
+    }
+
+    // Расшаривание созданной игры для других игроков
+    @RequestMapping(value = "/lobby/sharegame", method = RequestMethod.POST)
+    public ResponseEntity<  ?> shareGame(@RequestBody GameInfo gameInfo,
+                                       @AuthenticationPrincipal User user){
+
+        try {
+            gameService.setGameActive(user, gameInfo.getGameName());
+            return new ResponseEntity<>((String) "Игра активна для поиска!", HttpStatus.OK);
         }
         catch (Exception ex){
             return new ResponseEntity<>((String)ex.getMessage(), HttpStatus.OK);
