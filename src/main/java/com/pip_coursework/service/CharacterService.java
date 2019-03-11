@@ -22,7 +22,9 @@ public class CharacterService {
     @Autowired
     private UserRepository userRepository;
 
-    // Получение списка доступных рас
+    /**
+     * Получение списка доступных рас
+      */
     public ArrayList<String> getAllRace(){
 
         ArrayList<String> types = raceRepository.findDistinctTypes();
@@ -30,12 +32,16 @@ public class CharacterService {
         return types;
     }
 
-    // Получение изображений для конкретной расы
+    /**
+     * Получение изображений для конкретной расы
+      */
     public ArrayList<String> getImageForRace(String race){
         return raceRepository.findImgByRace(race);
     }
 
-    // Создание нового персонажа
+    /**
+     * Создание нового персонажа
+      */
     public boolean addNewCharacter(
             String name,
             char sex,
@@ -67,7 +73,9 @@ public class CharacterService {
 
     }
 
-    // Получение списка персонажей для конкретного пользователя
+    /**
+     * Получение списка персонажей для конкретного пользователя
+      */
     public Object getAllCharacter(User user) {
         ArrayList<Character> characters = new ArrayList<Character>();
 
@@ -78,5 +86,16 @@ public class CharacterService {
                 });
 
         return characters;
+    }
+
+    /**
+     * Получение персонажа по его имени
+      */
+    public Character getCharacterByName(String name){
+        if(!characterRepository.existsByName(name)){
+            return null;
+        }
+
+        return characterRepository.findByName(name);
     }
 }

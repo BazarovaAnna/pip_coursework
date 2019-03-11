@@ -106,7 +106,7 @@ public class GameController {
 
         try {
             Character character = characterRepository.findById(characterId).get(0);
-            Game game = repository.findById(id).get(0);
+            Game game = repository.findById(id);
             repository.save(game);
             characterRepository.save(character);
             groupRepository.save(new Group(game, character));
