@@ -43,51 +43,54 @@
                             <div class="row" id="player-form-2" hidden>
                                 <div class="col-md-6">
                                     <div class="info-form">
-                                        <h2 id="char-name" class="header-form fill-game-form-header"></h2>
-                                        <div class="photobox">
-                                            <div class="photobox__previewbox">
-                                                <img class="character-preview img-thumbnail" id="char-avatar" alt="Preview">
+                                        <div id="player-character-info">
+                                            <h2 id="char-name" class="header-form fill-game-form-header"></h2>
+                                            <div class="photobox">
+                                                <div class="photobox__previewbox">
+                                                    <img class="character-preview img-thumbnail" id="char-avatar" alt="Preview">
+                                                </div>
+                                            </div>
+                                            <div class="lobby-params">
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Статус:</label>
+                                                    <label id="char-condition" class="lobby-param"></label>
+                                                </div>
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Уровень:</label>
+                                                    <label id="char-level" class="lobby-param"></label>
+                                                </div>
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Раса:</label>
+                                                    <label id="char-race" class="lobby-param"></label>
+                                                </div>
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Класс:</label>
+                                                    <label id="char-class" class="lobby-param"></label>
+                                                </div>
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Пол:</label>
+                                                    <label id="char-sex" class="lobby-param"></label>
+                                                </div>
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Количество денег:</label>
+                                                    <label id="char-money" class="lobby-param"></label>
+                                                </div>
+                                                <div class="lobby-param-row">
+                                                    <label class="header-lobby-param">Максимальный вес:</label>
+                                                    <label class="lobby-param"><span id="char-maxWeight"></span> кг</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="lobby-params">
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Статус:</label>
-                                                <label id="char-condition" class="lobby-param"></label>
-                                            </div>
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Уровень:</label>
-                                                <label id="char-level" class="lobby-param"></label>
-                                            </div>
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Раса:</label>
-                                                <label id="char-race" class="lobby-param"></label>
-                                            </div>
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Класс:</label>
-                                                <label id="char-class" class="lobby-param"></label>
-                                            </div>
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Пол:</label>
-                                                <label id="char-sex" class="lobby-param"></label>
-                                            </div>
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Количество денег:</label>
-                                                <label id="char-money" class="lobby-param"></label>
-                                            </div>
-                                            <div class="lobby-param-row">
-                                                <label class="header-lobby-param">Максимальный вес:</label>
-                                                <label class="lobby-param"><span id="char-maxWeight"></span> кг</label>
-                                            </div>
-                                        </div>
+                                        <div id=""></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="game-info" style="position: relative">
                                         <div id="player-games-slider" class="games-slider"></div>
-                                        <div id="player-dukat" class="dukat dragElement"></div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="player-game-info"></div>
                         </div>
                     </div>
                     <!-- Версия лобби для мастера -->
@@ -149,40 +152,14 @@
                                             <button id="submit-btn" class="stamp-btn">Создать</button>
                                         </form>
                                     </div>
-                                    <div id="game-info" hidden>
-                                        <div class="lobby-params">
-                                            <div class="form-group">
-                                                <h2 class="header-form header-form-sub">Название игры:</h2>
-                                                <div class="lobby-input-group">
-                                                    <h2 id="game-name" class="lobby-game-param"></h2>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <h4 class="header-form header-form-sub">Кол-во игроков:</h4>
-                                                <div class="lobby-input-group">
-                                                    <h2 id="game-count" class="lobby-game-param"></h2>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <h3 class="header-form header-form-sub">Описание:</h3>
-                                                <div class="lobby-input-group">
-                                                    <textarea id="game-descr" class="lobby-game-param" rows="4" cols="50"
-                                                              wrap="soft" disabled="disabled">
-                                                    </textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <button id="share-game-btn" class="stamp-btn">Выбрать</button>
-                                                <button id="start-game-btn" class="stamp-btn" hidden>Начать</button>
-                                            </div>
-                                        </div>
+                                        <div id="gm-game-info">
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="game-info">
                                     <div id="gm-games-slider" class="games-slider"></div>
-                                    <div id="gm-dukat" class="dukat dragElement"></div>
                                 </div>
                             </div>
                         </div>
@@ -202,9 +179,8 @@
 <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../resources/js/lobby.js"></script>
 <!-- Либы для работы с WebSocket -->
-<script src="webjars/webjars/sockjs-client/sockjs.min.js"></script>
-<script src="webjars/stomp-websocket/stomp.min.js"></script>
-
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script type="text/javascript" src="../../resources/js/lobbyWebSocket.js"></script>
 </body>
 </html>

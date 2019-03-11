@@ -28,7 +28,7 @@ window.onload = function (ev) {
 
     getDataFromServer('/user/allcharacters', geAllCharacterCallback);
     getDataFromServer('/lobby/usergames', getUserCreatedGameCallback);
-    getDataFromServer('/lobby/allgames', getAllCreatedGameCallback);
+    getDataFromServer('/lobby/allgames', getAllGameCallback);
 
     setDukatBorder(['#player-dukat', '#gm-dukat']);
 
@@ -183,26 +183,26 @@ function createGameList(tag) {
 
     $(".btn-create-new-game").click(renderCreatingGameForm);
 
-    for(var i = 2; i <= 3; i++){
+    for(var i = 2; i <= gamesData.length; i++){
         if(i - 2 < gamesData.length){
             var slide = "<div class='game-slide slide-gm-" + i + "'>" +
                 "<h2 class='label-under-glass' style='top: -40;'>" + gamesData[i-2].name+ "</h2>" +
                 "<div class='innder-slide''>" +
                 "<div style='display: inline;'>" +
-                "<h3 class='label-under-glass' style='right: 140'>Кол-во игроков: </h3>" +
-                "<h3 class='label-under-glass' style='left: 150; top: 30'>" + gamesData[i-2].personCount +"</h3>" +
+                "<h3 class='label-under-glass' style='right: 1em'>Кол-во игроков: </h3>" +
+                "<h3 class='label-under-glass' style='left: 6em; top: 1.5em'>" + gamesData[i-2].personCount +"</h3>" +
                 "</div>" +
                 "</div></div>";
 
             $(tag).append(slide);
 
-            $(".slide-gm-" + i).click({gameId:i-2}, renderGameInfoForm);
+            $(".slide-gm-" + i).click({gameId:i-2, selector:"#gm-game-info"}, renderGameInfoForm);
         }
     }
 }
 
 // Получение списка созданных игр пользователем
-function getAllCreatedGameCallback(data) {
+function getAllGameCallback(data) {
     allGamesData = $.parseJSON(JSON.stringify(data));
     createAllActiveGameList("#player-games-slider");
 }
@@ -210,27 +210,27 @@ function getAllCreatedGameCallback(data) {
 // Создание спика доступныхы игр для игрока
 function createAllActiveGameList(tag) {
     $(tag).empty();
-    for(var i = 1; i <= 3; i++){
+    for(var i = 1; i <= allGamesData.length; i++){
         if(i - 1 < allGamesData.length){
             var slide = "<div class='game-slide slide-player-" + i + "'>" +
                 "<h2 class='label-under-glass' style='top: -40;'>" + allGamesData[i-1].name+ "</h2>" +
                 "<div class='innder-slide''>" +
                 "<div style='display: inline;'>" +
-                "<h3 class='label-under-glass' style='right: 140'>Кол-во игроков: </h3>" +
-                "<h3 class='label-under-glass' style='left: 150; top: 30'>" + allGamesData[i-1].personCount +"</h3>" +
+                "<h3 class='label-under-glass' style='right: 1em'>Кол-во игроков: </h3>" +
+                "<h3 class='label-under-glass' style='left: 6em; top: 1.5em'>" + allGamesData[i-1].personCount +"</h3>" +
                 "</div>" +
                 "</div></div>";
 
             $(tag).append(slide);
 
-            $(".slide-player-" + i).click({gameId:i-1}, renderGameInfoForm);
+            $(".slide-player-" + i).click({gameId:i-1, selector:"#player-game-info"}, renderGameInfoForm);
         }
     }
 }
 
 // Отрисовка формы для создания новой игры
 function renderCreatingGameForm() {
-    $("#game-info").hide();
+    $("#gm-game-info").empty();
     $("#create-new-game-form").show(600);
 
     $("#game-form-header").empty().
@@ -277,17 +277,17 @@ function createNewGame(event) {
 function renderGameInfoForm(event) {
     // TODO Дописать отображение информации
     $("#create-new-game-form").hide();
-    $("#game-info").show(600);
 
-    $("#game-form-header").empty().
-    text("Информация об игре").
-    addClass("fill-game-form-header");
+    $(event.data.selector).load("../../resources/html/gameinfo.html", function () {
+        $("#game-form-header").empty().
+        text("Информация об игре").
+        addClass("fill-game-form-header");
+        $("#game-name").text(gamesData[event.data.gameId].name);
+        $("#game-count").text(gamesData[event.data.gameId].personCount);
+        $("#game-descr").text(gamesData[event.data.gameId].description);
 
-    $("#game-name").text(gamesData[event.data.gameId].name);
-    $("#game-count").text(gamesData[event.data.gameId].personCount);
-    $("#game-descr").text(gamesData[event.data.gameId].description);
-
-    $("#share-game-btn").click({gameId: event.data.gameId},shareGame);
+        $("#share-game-btn").click({gameId: event.data.gameId},shareGame);
+    });
 }
 
 // Запрос на открытие игры для поиска
@@ -318,6 +318,9 @@ function getAllCreatedGame() {
 function shareGameEventHandler(data){
     var response = $.parseJSON(JSON.stringify(data));
     $("#btn-back-to-game-list").show();
+    $("#share-game-btn").hide();
+    $("#gm-games-slider").empty();
+    $("#start-game-btn").show(400);
 }
 
 // Выбор количества персонажей в игре
@@ -335,5 +338,8 @@ $("#personCount").on("input", function() {
 
 // Обработчик события при возврате к списку игр
 function backToGameListEventHandler() {
-    $("#btn-back-to-game-list").hide(400);
+    $("#btn-back-to-game-list").hide();
+    createGameList("#gm-games-slider");
+    $("#start-game-btn").hide();
+    $("#share-game-btn").show();
 }

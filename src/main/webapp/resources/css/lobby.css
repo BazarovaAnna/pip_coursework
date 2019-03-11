@@ -277,15 +277,21 @@
 
 .games-slider{
     position: relative;
+    width: 90%;
+    overflow: auto;
+    right: 10%;
+    top: 10%;
+    height: 70%;
 }
+
 
 .game-slide{
     position: relative;
     width: 60%;
     height: 200px;
-    margin: 30px;
+    margin: 0 30px 30px;
     background-image: url("./../../resources/default/img/panel-background.jpg");
-    right: -15%;
+    right: -30%;
 }
 
 .game-slide:hover{
@@ -352,18 +358,6 @@
     top: 148px;
 }
 
-/* Стили для позиций в слайдере */
-.slide-player-1, .slide-gm-1{
-    top: 160px;
-}
-
-.slide-player-2, .slide-gm-2{
-    top: 160px;
-}
-
-.slide-player-3, .slide-gm-3{
-    top: 160px;
-}
 
 .label-under-glass{
     position: absolute;
