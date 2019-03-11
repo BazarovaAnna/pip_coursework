@@ -1,6 +1,6 @@
 package com.pip_coursework.transmittedObject;
 
-public class GameInfo {
+public class GameInfoMessage {
     private String gameName;
 
     public String getGameName() {
