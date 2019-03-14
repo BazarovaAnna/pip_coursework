@@ -3,19 +3,22 @@
 <head>
     <title>Игровое поле</title>
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
-          rel="stylesheet">
+          rel="stylesheet"/>
     <link rel="stylesheet" href="../../resources/css/photosDiv.css"/>
     <link rel="stylesheet" href="../../resources/css/chat.css"/>
-    <link rel="stylesheet" href="../../resources/css/photosDiv.css"/>
-    <link rel="stylesheet" href="../../resources/css/map.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../resources/css/map.css"/>
+    <link rel="stylesheet" href="../../resources/css/shop_and_magic.css"/>
+    <link rel="stylesheet" href="../../resources/css/pers_info.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="../../resources/js/gamefield.js"></script>
 </head>
+<!--body onload="init(${param["sessionId"]}, ${param["userId"]});"-->
 <body>
 <jsp:include page="templates/header.jsp"/>
-<script>
-    init(${param["username1"]}, ${param["username2"]}, ${param["username3"]}, ${param["username4"]}, ${param["username5"]});
-</script>
+
+<button onclick="if (current_role === 'gamer') {current_role = 'gm';}
+                else {current_role = 'gamer'}">смена роли УДАЛИ МЕНЯ</button>
+
 <div class="wrapper">
     <div class="content">
         <div class="container">
@@ -37,65 +40,55 @@
                         </div>
                     </div>
                     <div id="photos" class="photos">
-                        <div class="photoDiv" id="user1">
-                            <div class="photobox">
-                                <img src="../../resources/default/img/race/лучник_орк.jpg" class="photo_box" id="user-avatar1">
+                        <div class="photobox" id="user1">
+                            <div class="photobox__previewbox" id="photobox1">
+                                <img src="../../resources/default/img/race/лучник_орк.jpg" class="photobox__preview" id="user-avatar1">
                             </div>
                             <div class="description">
                                 <p>${param["gmname"]}</p>
                             </div>
                         </div>
-                        <div class="photoDiv" id="user2">
-                            <div class="photobox">
-                                <img src="../../resources/default/img/race/молот_шит_гном.jpg" class="photo_box" id="user-avatar2">
+                        <div class="photobox" id="user2">
+                            <div class="photobox__previewbox" id="photobox2">
+                                <img src="../../resources/default/img/race/молот_шит_гном.jpg" class="photobox__preview" id="user-avatar2">
                             </div>
-                            <div class="point uSpot" style="background: red;"></div>
                             <div class="description">
-                                <p>${param["username1"]}</p>
-                                <p>${param["persname1"]}</p>
-                                <p>${param["cond"]}</p>
+                                <p>${param["persname1"]} любимая всеми Данка</p>
+                                <p>${param["cond"]} в неравной борьбе с долгами</p>
                             </div>
                         </div>
-                        <div class="photoDiv" id="user3">
-                            <div class="photobox">
-                                <img src="../../resources/default/img/race/женщина_воин_орк.jpg" class="photo_box" id="user-avatar3">
+                        <div class="photobox" id="user3">
+                            <div class="photobox__previewbox" id="photobox3">
+                                <img src="../../resources/default/img/race/женщина_воин_орк.jpg" class="photobox__preview" id="user-avatar3">
                             </div>
-                            <div class="point uSpot" style="background: blue;"></div>
                             <div class="description">
-                                <p>${param["username2"]}</p>
                                 <p>${param["persname2"]}</p>
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photoDiv" id="user4">
-                            <div class="photobox">
-                                <img src="../../resources/default/img/race/воин_гном.jpg" class="photo_box" id="user-avatar4">
+                        <div class="photobox" id="user4">
+                            <div class="photobox__previewbox" id="photobox4">
+                                <img src="../../resources/default/img/race/воин_гном.jpg" class="photobox__preview" id="user-avatar4">
                             </div>
-                            <div class="point uSpot" style="background: green;"></div>
                             <div class="description">
-                                <p>${param["username3"]}</p>
                                 <p>${param["persname3"]}</p>
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photoDiv" id="user5">
-                            <div class="photobox">
-                                <img src="../../resources/default/img/race/женщина_воин_человек.jpg" class="photo_box" id="user-avatar5">
+                        <div class="photobox" id="user5">
+                            <div class="photobox__previewbox" id="photobox5">
+                                <img src="../../resources/default/img/race/женщина_воин_человек.jpg" class="photobox__preview" id="user-avatar5">
                             </div>
-                            <div class="point uSpot" style="background: orange;"></div>
                             <div class="description">
-                                <p>${param["username4"]}</p>
                                 <p>${param["persname4"]}</p>
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photoDiv" id="user6">
-                            <div class="photobox">
-                                <img src="../../resources/default/img/race/маг_хаоса_нежить.jpg" class="photo_box" id="user-avatar6">
+                        <div class="photobox" id="user6">
+                            <div class="photobox__previewbox" id="photobox6">
+                                <img src="../../resources/default/img/race/маг_хаоса_нежить.jpg" class="photobox__preview" id="user-avatar6">
                             </div>
-                            <div class="point uSpot" style="background: purple;"></div>
                             <div class="description">
-                                <p>${param["username5"]}</p>
                                 <p>${param["persname5"]}</p>
                                 <p>${param["cond"]}</p>
                             </div>
@@ -187,9 +180,18 @@
                             </div>
                             <div id="57" class="part p5 pp7" onclick="fieldClick(5, 7)">
                             </div>
-                            <div id="58" class="part p5 pp8" onclick="fieldClick(5, 8)">
+                            <div id="58" class="part p5 pp8" onclick="exitGame()">
+                                <img src="../../resources/default/img/door.png" onclick="exitGame()" id="exit_door">
                             </div>
                         </div>
+                    </div>
+                    <div id="shop">
+                        <img src="../../resources/default/img/shop-icon.png" onclick="renderShop();" id="shop_ico">
+                    </div>
+                    <div id="magic_random">
+                        <img src="../../resources/default/img/moving-sphere.gif" id="magic_gif">
+                        <img src="../../resources/default/img/magic-ball.png" id="magic_ico">
+                        <div id="magic_number"></div>
                     </div>
                 </div>
                 <div class="col-sm-1"></div>
@@ -200,6 +202,92 @@
     </div>
     <div class="footer">
         <jsp:include page="templates/footer.jsp"/>
+    </div>
+</div>
+
+<div id="shadowing" style="display: none;">
+    <div id="pers_info">
+        <table width="100%">
+            <tr>
+                <td colspan="3" id="pers_info_main">
+                    <p></p>
+                    <p class="info_header">Информация о персонаже</p>
+                    <p id="pers_info_gamer">Игрок: </p>
+                    <p id="pers_info_pers">Персонаж: </p>
+                    <p id="pers_info_cond">Состояние: </p>
+                    <p id="pers_info_level">Уровень: </p>
+                    <p id="pers_info_race">Раса: </p>
+                    <p id="pers_info_class">Класс: </p>
+                    <p id="pers_info_max_weight">Могу унести: </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                    <p class="info_header">Перки и абилки</p>
+                    <div id="perks_abils"></div>
+                </td>
+                <td>
+                    <br>
+                    <p class="info_header">Эффекты</p>
+                    <div id="effects"></div>
+                </td>
+                <td>
+                    <br>
+                    <p class="info_header">Инвентарь</p>
+                    <div id="inventory"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <br>
+                    <p class="info_header">Кошелёк</p>
+                    <p id="cur_money">Сейчас в кошельке: </p>
+                    <div id="money"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <br>
+                    <button class="close" id="close_info" onclick="closeInfo()" style="float: none;">Закрыть</button>
+                    <br>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="shadowing2" style="display: none;">
+    <div id="shop_div">
+        <table id="shop_table" width="100%">
+            <tr>
+                <td colspan="2">
+                    <p class="info_header">Магазин</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p class="info_header" id="my_money">В кошельке: </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="info_header">Купить</p>
+                </td>
+                <td>
+                    <p class="info_header">У меня</p>
+                </td>
+            </tr>
+            <tr>
+                <td id="shop_buy"></td>
+                <td id="shop_sell"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button id="exit_shop" onclick="exitShop();">Выйти</button>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 </body>

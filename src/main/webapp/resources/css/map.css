@@ -9,57 +9,58 @@
     background: red;
     left: 10px;
     top: 10px;
-    -moz-box-shadow:0 0 20px red;
-    -webkit-box-shadow:0 0 20px red;
-    box-shadow:0 0 20px red;
+    -moz-box-shadow:2px 2px 8px red;
+    -webkit-box-shadow:2px 2px 8px red;
+    box-shadow:2px 2px 8px red;
 }
 
 .spot2 {
     background: blue;
     right: 10px;
     top: 10px;
-    -moz-box-shadow:0 0 20px blue;
-    -webkit-box-shadow:0 0 20px blue;
-    box-shadow:0 0 20px blue;
+    -moz-box-shadow:2px 2px 8px blue;
+    -webkit-box-shadow:2px 2px 8px blue;
+    box-shadow:2px 2px 8px blue;
 }
 
 .spot3 {
-    background: green;
+    background: #30ff30;
     left: 36px;
     top: 38px;
-    -moz-box-shadow:0 0 20px green;
-    -webkit-box-shadow:0 0 20px green;
-    box-shadow:0 0 20px green;
+    -moz-box-shadow:2px 2px 8px #30ff30;
+    -webkit-box-shadow:2px 2px 8px #30ff30;
+    box-shadow:2px 2px 8px #30ff30;
 }
 
 .spot4 {
-    background: orange;
+    background: yellow;
     left: 10px;
     bottom: 10px;
-    -moz-box-shadow:0 0 20px yellow;
-    -webkit-box-shadow:0 0 20px yellow;
-    box-shadow:0 0 20px yellow;
+    -moz-box-shadow:2px 2px 8px yellow;
+    -webkit-box-shadow:2px 2px 8px yellow;
+    box-shadow:2px 2px 8px yellow;
 }
 
 .spot5 {
-    background: purple;
+    background: #00e4ff;
     right: 10px;
     bottom: 10px;
-    -moz-box-shadow:0 0 20px purple;
-    -webkit-box-shadow:0 0 20px purple;
-    box-shadow:0 0 20px purple;
+    -moz-box-shadow:2px 2px 8px #00e4ff;
+    -webkit-box-shadow:2px 2px 8px #00e4ff;
+    box-shadow:2px 2px 8px #00e4ff;
 }
 #map {
     position: absolute;
-    top: 120px;
+    top: 160px;
     left: 340px;
     width: 700px;
     height: 470px;
+    opacity: 0.85;
 }
 
 .field {
     position: absolute;
-    top: 140px;
+    top: 180px;
     left: 360px;
     width: 664px;
     height: 430px;
@@ -70,6 +71,7 @@
     width: 81px;
     height: 84px;
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .pp1 {
