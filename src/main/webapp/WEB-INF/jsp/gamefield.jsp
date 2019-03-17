@@ -2,29 +2,20 @@
 <html>
 <head>
     <title>Игровое поле</title>
-    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
-          rel="stylesheet"/>
-    <link rel="stylesheet" href="../../resources/css/photosDiv.css"/>
-    <link rel="stylesheet" href="../../resources/css/chat.css"/>
-    <link rel="stylesheet" href="../../resources/css/map.css"/>
-    <link rel="stylesheet" href="../../resources/css/shop_and_magic.css"/>
-    <link rel="stylesheet" href="../../resources/css/pers_info.css"/>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../resources/css/gamefield.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="../../resources/js/gamefield.js"></script>
 </head>
 <!--body onload="init(${param["sessionId"]}, ${param["userId"]});"-->
-<body>
+<body style="width: 100%;">
 <jsp:include page="templates/header.jsp"/>
-
-<button onclick="if (current_role === 'gamer') {current_role = 'gm';}
-                else {current_role = 'gamer'}">смена роли УДАЛИ МЕНЯ</button>
 
 <div class="wrapper">
     <div class="content">
-        <div class="container">
-            <div class="row center-content">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-8">
+        <div class="content_wrap">
+                <div class="left">
                     <div id="chat" class="chat">
                         <div id="chat-header" class="chat-header">
                             <p style="padding-top: 10px;">Чат</p>
@@ -39,6 +30,16 @@
                             <button id="send-message" onclick="sendMessage();">Отправить</button>
                         </div>
                     </div>
+                    <div id="shop">
+                        <img src="../../resources/default/img/shop-icon.png" onclick="renderShop();" id="shop_ico">
+                    </div>
+                    <div id="magic_random">
+                        <img src="../../resources/default/img/moving-sphere.gif" id="magic_gif">
+                        <img src="../../resources/default/img/magic-ball.png" id="magic_ico">
+                        <div id="magic_number"></div>
+                    </div>
+                </div>
+                <div class="right">
                     <div id="photos" class="photos">
                         <div class="photobox" id="user1">
                             <div class="photobox__previewbox" id="photobox1">
@@ -185,109 +186,82 @@
                             </div>
                         </div>
                     </div>
-                    <div id="shop">
-                        <img src="../../resources/default/img/shop-icon.png" onclick="renderShop();" id="shop_ico">
-                    </div>
-                    <div id="magic_random">
-                        <img src="../../resources/default/img/moving-sphere.gif" id="magic_gif">
-                        <img src="../../resources/default/img/magic-ball.png" id="magic_ico">
-                        <div id="magic_number"></div>
-                    </div>
+
                 </div>
-                <div class="col-sm-1"></div>
-            </div>
             <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
             <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         </div>
     </div>
     <div class="footer">
-        <jsp:include page="templates/footer.jsp"/>
+        <div class="content_wrap">
+            <p class="footer-copyright">© 2019 Copyright D&D</p>
+        </div>
+        <div class="footer-social">
+            <a href="#" class="social-icons"><i class="fa fa-vk"></i></a>
+            <a href="#" class="social-icons"><i class="fa fa-telegram"></i></a>
+        </div>
     </div>
 </div>
 
 <div id="shadowing" style="display: none;">
     <div id="pers_info">
-        <table width="100%">
-            <tr>
-                <td colspan="3" id="pers_info_main">
-                    <p></p>
-                    <p class="info_header">Информация о персонаже</p>
-                    <p id="pers_info_gamer">Игрок: </p>
-                    <p id="pers_info_pers">Персонаж: </p>
-                    <p id="pers_info_cond">Состояние: </p>
-                    <p id="pers_info_level">Уровень: </p>
-                    <p id="pers_info_race">Раса: </p>
-                    <p id="pers_info_class">Класс: </p>
-                    <p id="pers_info_max_weight">Могу унести: </p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <br>
-                    <p class="info_header">Перки и абилки</p>
-                    <div id="perks_abils"></div>
-                </td>
-                <td>
-                    <br>
-                    <p class="info_header">Эффекты</p>
-                    <div id="effects"></div>
-                </td>
-                <td>
-                    <br>
-                    <p class="info_header">Инвентарь</p>
-                    <div id="inventory"></div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <br>
-                    <p class="info_header">Кошелёк</p>
-                    <p id="cur_money">Сейчас в кошельке: </p>
-                    <div id="money"></div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <br>
-                    <button class="close" id="close_info" onclick="closeInfo()" style="float: none;">Закрыть</button>
-                    <br>
-                </td>
-            </tr>
-        </table>
+        <div id="pers_info_main">
+            <p></p>
+            <p class="info_header">Информация о персонаже</p>
+            <p id="pers_info_gamer">Игрок: </p>
+            <p id="pers_info_pers">Персонаж: </p>
+            <p id="pers_info_cond">Состояние: </p>
+            <p id="pers_info_level">Уровень: </p>
+            <p id="pers_info_race">Раса: </p>
+            <p id="pers_info_class">Класс: </p>
+            <p id="pers_info_max_weight">Могу унести: </p>
+        </div>
+        <div id="perks_div">
+            <br>
+            <p class="info_header">Перки и абилки</p>
+            <div id="perks_abils"></div>
+        </div>
+        <div id="effects_div">
+            <br>
+            <p class="info_header">Эффекты</p>
+            <div id="effects"></div>
+        </div>
+        <div id="items_div">
+            <br>
+            <p class="info_header">Инвентарь</p>
+            <div id="inventory"></div>
+        </div>
+        <div id="money_div">
+            <br>
+            <p class="info_header">Кошелёк</p>
+            <p id="cur_money">Сейчас в кошельке: </p>
+            <div id="money"></div>
+        </div>
+        <div id="close_div">
+            <br>
+            <button id="close_info" onclick="closeInfo()" style="float: none;">Закрыть</button>
+            <br>
+        </div>
     </div>
 </div>
 
 <div id="shadowing2" style="display: none;">
     <div id="shop_div">
-        <table id="shop_table" width="100%">
-            <tr>
-                <td colspan="2">
-                    <p class="info_header">Магазин</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <p class="info_header" id="my_money">В кошельке: </p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="info_header">Купить</p>
-                </td>
-                <td>
-                    <p class="info_header">У меня</p>
-                </td>
-            </tr>
-            <tr>
-                <td id="shop_buy"></td>
-                <td id="shop_sell"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button id="exit_shop" onclick="exitShop();">Выйти</button>
-                </td>
-            </tr>
-        </table>
+        <div id="shop_header_div">
+            <p class="info_header">Магазин</p>
+        </div>
+        <div id="shop_money_div">
+            <p class="info_header" id="my_money">В кошельке: </p>
+        </div>
+        <div id="shop_buy">
+            <p class="info_header">Купить</p>
+        </div>
+        <div id="shop_sell">
+            <p class="info_header">У меня</p>
+        </div>
+        <div id="shop_exit_div">
+            <button id="exit_shop" onclick="exitShop();">Выйти</button>
+        </div>
     </div>
 </div>
 </body>

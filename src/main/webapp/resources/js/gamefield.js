@@ -6,7 +6,7 @@ let uid3;
 let uid4;
 let uid5;
 let gmid;
-let current_role = "gm";
+let current_role = "gamer";
 
 function init(sessionId, userId) {
     //TODO: ajax query
@@ -530,68 +530,45 @@ function renderShop() {
         ["several kittens", "distracting your attention by meow meow", 10, 5],
         ["new socks", "your granny made by yourself with love", 999, 1]];
     document.getElementById("shop_buy").appendChild(renderShopTable(buyCols, "buy_table", true));
-    document.getElementById("shop_sell").appendChild(renderShopTable(sellCols, "sell_table", true));
+    document.getElementById("shop_sell").appendChild(renderShopTable(sellCols, "sell_table", false));
 }
 
-function addItem(table, item) {
-    //TODO: ajax query
-    let newTr = document.createElement("tr");
-    for (let a of item) {
-        let newTd = document.createElement("td");
-        newTd.innerHTML = a;
-        newTr.appendChild(newTd);
-    }
-    table.appendChild(newTr);
-}
-
-function buyItem(table_name) {
+function buyItem(name) {
     let tableId = "buy_table";
-    //TODO: ajax query
     let curTable = document.getElementById(tableId);
     for (let a of curTable.childNodes) {
         let curTh = a.firstChild;
         if (curTh.innerText === name) {
-            let addedItem = [];
+            //TODO: ajax query
             for (let b of a.childNodes) {
-                if (b !== a.lastChild) {
-                    addedItem.append(b.innerHTML);
-                }
-                else {
-                    b.innerText = "-";
-                    b.setAttribute('class', 'remove_button');
+                if (b === a.lastChild) {
+                    b.firstChild.innerText = "-";
+                    b.firstChild.setAttribute('class', 'remove_button');
+                    b.firstChild.setAttribute("onclick", "sellItem(this.value);");
                 }
             }
-            //if ((int)(document.getElementById("my_money").innerText.split(": ")[1]))
+            let addedItem = a;
             let table = document.getElementById("sell_table");
-            addItem(table, addedItem);
-            a.innerHTML = "";
-            curTable.removeChild(a);
+            table.appendChild(addedItem);
             break;
         }
     }
 }
 
 function sellItem(name) {
-    let tableId = "sale_table";
-    //TODO: ajax query
+    let tableId = "sell_table";
     let curTable = document.getElementById(tableId);
     for (let a of curTable.childNodes) {
         let curTh = a.firstChild;
         if (curTh.innerText === name) {
-            let addedItem = [];
+            //TODO: ajax query
             for (let b of a.childNodes) {
-                if (b !== a.lastChild) {
-                    addedItem.append(b.innerHTML);
-                }
-                else {
-                    b.innerText = "+";
-                    b.setAttribute('class', 'add_button');
+                if (b === a.lastChild) {
+                    b.firstChild.innerText = "+";
+                    b.firstChild.setAttribute('class', 'add_button');
+                    b.firstChild.setAttribute("onclick", "buyItem(this.value);");
                 }
             }
-
-            let table = document.getElementById("buy_table");
-            addItem(table, addedItem);
-            a.innerHTML = "";
             curTable.removeChild(a);
             break;
         }
@@ -600,8 +577,9 @@ function sellItem(name) {
 
 function exitShop() {
     document.getElementById("shadowing2").style.display = "none";
-    remove_children(document.getElementById("shop_buy"));
-    remove_children(document.getElementById("shop_sell"));
+    document.getElementById("shop_buy").removeChild(document.getElementById("buy_table"));
+    document.getElementById("shop_sell").removeChild(document.getElementById("sell_table"));
+    document.getElementById("my_money").innerText = "В кошельке: ";
 }
 
 function sendMessage() {
