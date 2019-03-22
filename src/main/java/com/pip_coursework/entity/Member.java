@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Member {
     @Id
     @ManyToOne
+    @JoinColumn(name = "session_id", referencedColumnName = "id")
     private Session session;
 
     public Session getSession() {
@@ -18,13 +19,14 @@ public class Member {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Character character;
 
     public Character getCharacter() {
         return character;
     }
 
-    @Column(name = "Characters_Rating")
+    @Column(name = "Characters_Rating", nullable = true)
     private float charactersRating;
 
     public float getCharactersRating() {

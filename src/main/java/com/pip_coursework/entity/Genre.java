@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Genres")
@@ -19,6 +20,25 @@ public class Genre {
 
     public String getName() {
         return name;
+    }
+
+    @OneToMany(mappedBy = "genre")
+    private List<UserGenre> userGenres;
+
+    public void setUserGenre(List<UserGenre> UserGenres) {
+        this.userGenres = UserGenres;
+    }
+
+    public List<UserGenre> getUserGenres() {
+        return userGenres;
+    }
+
+    public void addUserGenre(UserGenre userGenre) {
+        this.userGenres.add(userGenre);
+    }
+
+    public void removeUserGenre(UserGenre userGenre) {
+        this.userGenres.remove(userGenre);
     }
 
     protected Genre(){ }

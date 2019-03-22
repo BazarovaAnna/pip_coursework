@@ -11,6 +11,7 @@ import java.util.Date;
 public class CharactersAbilities {
     @Id
     @ManyToOne
+    @JoinColumn(name = "ability_id", referencedColumnName = "id")
     private Ability ability;
 
     public Ability getAbility() {
@@ -19,6 +20,7 @@ public class CharactersAbilities {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Character character;
 
     public Character getCharacter() {

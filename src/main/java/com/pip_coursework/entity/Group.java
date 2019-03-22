@@ -10,10 +10,12 @@ import javax.persistence.*;
 public class Group {
     @Id
     @ManyToOne
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Game game;
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Character character;
 
     protected Group(){

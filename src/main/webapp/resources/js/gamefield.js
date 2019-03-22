@@ -1,15 +1,28 @@
 let coordinates = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 //x, y and user id on map
-let uid1;
-let uid2;
-let uid3;
-let uid4;
-let uid5;
+
+let pid1;
+let pid2;
+let pid3;
+let pid4;
+let pid5;
 let gmid;
 let current_role = "gamer";
+let myPId = 1;
+let sessionId;
 
-function init(sessionId, userId) {
+function init(sessionID, pId) {
     //TODO: ajax query
+    myPId = userId;
+    sessionId = sessionID;
+    let gameInfo = getGameInfoAjax(sessionID, myId);
+    current_role = gameInfo.current_role;
+    pid1 = gameInfo.userId1;
+    pid2 = gameInfo.userId2;
+    pid3 = gameInfo.userId3;
+    pid4 = gameInfo.userId4;
+    pid5 = gameInfo.userId5;
+    gmid = gameInfo.gmid;
     if (current_role === "gm") {
         let shop = document.getElementById("shop");
         remove_children(shop);
@@ -84,6 +97,8 @@ window.onload = function (ev) {
                 $('#magic_number').removeClass('clicked_number');
             }, 3000);
         });
+    } else {
+        //TODO: maybe web socket
     }
     init(1, 1);
 };
@@ -519,16 +534,28 @@ function renderShopTable(dataList, tableId, isBuy) {
 }
 
 function renderShop() {
+    let buyJson = getAllItemsAjax();
+    buyJson = JSON.parse(buyJson.responseText);
+    let buyCols = [];
+    for (let a of buyJson) {
+        let curLine = [];
+        curLine.push(a.name);
+        curLine.push(a.description);
+        curLine.push(a.price);
+        curLine.push(a.weight);
+        buyCols.push(curLine);
+    }
     //TODO: ajax query
-    document.getElementById("my_money").innerText += 100;
+    let myMoney = getPersMoneyAjax(myPId);
+    document.getElementById("my_money").innerText += myMoney;
     document.getElementById("shadowing2").style.display = "block";
-    let buyCols = [["wizard's spoon", "makes poison from tea", 30, 1],
+    let sellCols = [["wizard's spoon", "makes poison from tea", 30, 1],
         ["several kittens", "distracting your attention by meow meow", 10, 5],
         ["new socks", "your granny made by yourself with love", 999, 1],
         ["no sql database", "making relations disappear, brokes hearts", 100, 9999]];
-    let sellCols = [["wizard's spoon", "makes poison from tea", 30, 1],
-        ["several kittens", "distracting your attention by meow meow", 10, 5],
-        ["new socks", "your granny made by yourself with love", 999, 1]];
+    //let sellCols = [["wizard's spoon", "makes poison from tea", 30, 1],
+    //    ["several kittens", "distracting your attention by meow meow", 10, 5],
+    //    ["new socks", "your granny made by yourself with love", 999, 1]];
     document.getElementById("shop_buy").appendChild(renderShopTable(buyCols, "buy_table", true));
     document.getElementById("shop_sell").appendChild(renderShopTable(sellCols, "sell_table", false));
 }
@@ -616,4 +643,46 @@ function drawSpot() {
         let curDiv = document.getElementById(coordinates[i][0].toString() + coordinates[i][1].toString());
         curDiv.appendChild(document.getElementById("spot" + (i + 1).toString()));
     }
+}
+function getAllItemsAjax() {
+    return $.ajax({
+        url: 'http://localhost:8080/ItemController/findall',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function getPersMoneyAjax(pId) {
+    let curAjax = $.ajax({
+        url: 'http://localhost:8080/character/getMoney',
+        type: 'GET',
+        async: false,
+        data: {
+            id: pId
+        },
+        success: function(response){
+            return response;
+        }
+    });
+    return curAjax.responseText;
+}
+
+function getGameInfoAjax(sId, uId) {
+    return $.ajax({
+        url: '/',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        data: {
+            sessionId: sId,
+            userId: uId
+        },
+        success: function(response){
+            return JSON.parse(response);
+        }
+    });
 }

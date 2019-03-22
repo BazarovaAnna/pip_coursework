@@ -3,6 +3,7 @@ package com.pip_coursework.entity;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Sessions")
@@ -50,6 +51,25 @@ public class Session {
 
     public Instant getDate_end() {
         return dateEnd;
+    }
+
+    @OneToMany(mappedBy = "session")
+    private List<Member> members;
+
+    public void setMembers(List<Member> member) {
+        this.members = member;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void addMember(Member member) {
+        this.members.add(member);
+    }
+
+    public void removeMember(Member member) {
+        this.members.remove(member);
     }
 
     // Нужен для получения данных из БД

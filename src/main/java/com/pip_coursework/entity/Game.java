@@ -3,6 +3,7 @@ package com.pip_coursework.entity;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Games")
@@ -98,6 +99,25 @@ public class Game {
 
     public void setTimeDeleting(Instant timeDeleting) {
         this.timeDeleting = timeDeleting;
+    }
+
+    @OneToMany(mappedBy = "character")
+    private List<Group> groups;
+
+    public void setGroups(List<Group> Groups) {
+        this.groups = Groups;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        this.groups.remove(group);
     }
 
     // Нужен для получения данных из БД
