@@ -137,7 +137,7 @@
                 <configuration>
                     <url>jdbc:postgresql://localhost:5432/dd</url>
                     <user>postgres</user>
-                    <password>123</password>
+                    <password>admin</password>
                     <schemas>public</schemas>
                 </configuration>
                 <dependencies>
