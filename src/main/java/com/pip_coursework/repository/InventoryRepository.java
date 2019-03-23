@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface InventoryRepository extends CrudRepository<Inventory, Long> {
     ArrayList<Inventory> findByCharacterIdAndItemId(long characterId, long itemId);
+    ArrayList<Inventory> findByCharacterId(long characterId);
 }

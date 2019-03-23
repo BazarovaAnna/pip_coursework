@@ -3,7 +3,7 @@ package com.pip_coursework.entity;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "Games")
@@ -101,18 +101,31 @@ public class Game {
         this.timeDeleting = timeDeleting;
     }
 
+    @OneToMany(mappedBy = "character")
+    private List<Group> groups;
+
+    public void setGroups(List<Group> Groups) {
+        this.groups = Groups;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        this.groups.remove(group);
+    }
+
     // Нужен для получения данных из БД
     public Game(){ }
 
     public Game(String state){
         this.state = state;
     }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_publisher",
-            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "character_id", referencedColumnName = "id"))
-    private Set<Character> characters;
 
     // Нужен для добавления данных в БД
     public Game(User gm, String name, String password, String description, int personCount){
@@ -121,7 +134,7 @@ public class Game {
         this.password = password;
         this.personCount = personCount;
         this.description = description;
-        this.state = GameState.INACTIVESTATE;
+        this.state = GameState.ACTIVESTATE;
         this.timeCreating = Instant.now();
     }
 }

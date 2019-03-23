@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name ="Items")
@@ -42,6 +43,25 @@ public class Item {
         return weight;
     }
 
+    @OneToMany(mappedBy = "item")
+    private List<Inventory> inventoryList;
+
+    public void setInventory(List<Inventory> inventory) {
+        this.inventoryList = inventory;
+    }
+
+    public List<Inventory> getInventory() {
+        return inventoryList;
+    }
+
+    public void addInventory(Inventory inventory) {
+        this.inventoryList.add(inventory);
+    }
+
+    public void removeInventory(Inventory inventory) {
+        this.inventoryList.remove(inventory);
+    }
+
     protected Item(){}
 
     public Item(String name, String description,
@@ -54,6 +74,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format("%s Название предмета - '%s', цена - %s, вес - %s. %s", id, name, price, weight, description);
+        return String.format("{\"id\":\"%s\",\"name\":\"%s\",\"description\":\"%s\",\"price\":%s,\"weight\":%s}", id, name, description, price, weight);
     }
+    //{"id":1,"name":"\"wizard's spoon\"","description":"\"makes poison from tea\"","price":30.0,"weight":1.0}
 }

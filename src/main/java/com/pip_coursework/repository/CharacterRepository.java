@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface CharacterRepository extends CrudRepository<Character, Long> {
     Character findByName(String name);
 
-    ArrayList<Character> findById(long is);
+    ArrayList<Character> findById(long id);
 
     boolean existsByName(String name);
 

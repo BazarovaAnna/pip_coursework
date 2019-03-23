@@ -25,23 +25,25 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
+    /*
+    @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
+    public String gamefield(@AuthenticationPrincipal User user,
+                            Model model, int sId){
+
+        model.addAttribute("login", user.getLogin());
+        model.addAttribute("sessionId", sId);
+        return "gamefield";
+    }*/
+
+    //delete me
     @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
     public String gamefield(@AuthenticationPrincipal User user,
                             Model model){
 
         model.addAttribute("login", user.getLogin());
-
+        model.addAttribute("sessionId", 1);
         return "gamefield";
     }
-
-
-
-
-
-
-
-
-
 
     @Autowired
     GameRepository repository;

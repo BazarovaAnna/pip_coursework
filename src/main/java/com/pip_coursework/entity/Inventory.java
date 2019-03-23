@@ -6,11 +6,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@IdClass(InventoryKey.class)
+@IdClass(InventoryKey.class) //embedable id
 @Table(name = "Inventory")
 public class Inventory {
     @Id
     @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
     public Item getItem() {
@@ -19,6 +20,7 @@ public class Inventory {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Character character;
 
     public Character getCharacter() {
@@ -34,8 +36,10 @@ public class Inventory {
         return timeGetting;
     }
 
+    public void setTimeGetting() { this.timeGetting = new Date(); }
+
     @Basic(optional = false)
-    @Column(name = "Time_Selling")
+    @Column(name = "Time_Selling", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeSelling;
 
@@ -43,7 +47,7 @@ public class Inventory {
         return timeSelling;
     }
 
-    public void SellTimeSelling(){
+    public void setTimeSelling(){
         this.timeSelling = new Date();
     }
 

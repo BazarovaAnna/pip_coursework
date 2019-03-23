@@ -10,7 +10,7 @@
 </head>
 <body>
 <jsp:include page="templates/header.jsp"/>
-<div class="container" id="center-content">
+<div class="content_wrap" id="center-content">
     <div class="row main-form">
         <h3>Форма для восстановления пароля</h3>
         <form method="post" action="/changepassword">

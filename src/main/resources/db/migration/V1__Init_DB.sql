@@ -63,15 +63,15 @@ create table characters (
 
 create table characters_abilities (
   time_learning timestamp not null,
-  character_id char(1) not null,
+  character_id int8 not null,
   ability_id int8 not null,
   primary key (ability_id, character_id)
   );
 
 create table characters_effects (
   time_overlay timestamp not null,
-  time_removal timestamp not null,
-  character_id char(1) not null,
+  time_removal timestamp,
+  character_id int8 not null,
   effect_id int8 not null,
   primary key (character_id, effect_id));
 
@@ -107,14 +107,14 @@ create table genres (
   primary key (id));
 
 create table groups (
-  character_id char(1) not null,
+  character_id int8 not null,
   game_id int8 not null,
   primary key (character_id, game_id));
 
 create table inventory (
   time_getting timestamp not null,
-  time_selling timestamp not null,
-  character_id char(1) not null,
+  time_selling timestamp,
+  character_id int8 not null,
   item_id int8 not null,
   primary key (character_id, item_id));
 
@@ -128,7 +128,7 @@ create table items (
 
 create table members (
   characters_rating float4,
-  character_id char(1) not null,
+  character_id int8 not null,
   session_id int8 not null,
   primary key (character_id, session_id));
 
