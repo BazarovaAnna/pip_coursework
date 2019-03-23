@@ -5,6 +5,7 @@ import com.pip_coursework.entity.User;
 import com.pip_coursework.service.CharacterService;
 import com.pip_coursework.service.GameService;
 import com.pip_coursework.transmittedObject.AddingToGroupMessage;
+import com.pip_coursework.transmittedObject.CharacterInfoMessage;
 import com.pip_coursework.transmittedObject.ConnectionResponse;
 import com.pip_coursework.transmittedObject.GameInfoMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class LobbyController {
@@ -116,13 +120,13 @@ public class LobbyController {
      */
     @MessageMapping("/lobby/connect")
     @SendTo("/topic/joining")
-    public ConnectionResponse joiningToGroup(AddingToGroupMessage message) throws  Exception {
+    public List<CharacterInfoMessage> joiningToGroup(AddingToGroupMessage message) throws  Exception {
 
         Character character = characterService.getCharacterByName(message.getCharacterName());
         if(character != null){
             gameService.connectToGroup(message.getGameId(), character);
 
-            return new ConnectionResponse(character);
+            return gameService.getCharacterInGroup(message.getGameId());
         }
 
         throw new Exception();

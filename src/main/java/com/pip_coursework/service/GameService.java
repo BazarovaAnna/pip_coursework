@@ -6,6 +6,7 @@ import com.pip_coursework.repository.CharacterRepository;
 import com.pip_coursework.repository.GameRepository;
 import com.pip_coursework.repository.GroupRepository;
 import com.pip_coursework.repository.SessionRepository;
+import com.pip_coursework.transmittedObject.CharacterInfoMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,9 +75,6 @@ public class GameService {
         throw new Exception("Название такой игры уже существует!");
     }
 
-    private ArrayList<Character> getPlayers(Game game){
-        return groupRepository.findAllByGame(game);
-    }
 
     /**
      * Получение списка игр для конкретного пользователя
@@ -118,8 +116,8 @@ public class GameService {
 
     /**
      * Подключение персонажа к игровой группе
-      * @param gameId
-     * @param character
+      * @param gameId Идентификатор игры
+     * @param character Персонаж игрока
      * @throws Exception
      */
     public void connectToGroup(long gameId, Character character) throws Exception {
@@ -131,6 +129,32 @@ public class GameService {
 
                 groupRepository.save(group);
             }
+        }
+        else{
+            throw new Exception("Попытка подключиться к несуществующей игре");
+        }
+    }
+
+    /**
+     * Получение списка персонажей в группе
+     * @param gameId Идентификатор игры
+     * @return Список персонажей в группе
+     * @throws Exception
+     */
+    public ArrayList<CharacterInfoMessage> getCharacterInGroup(long gameId) throws Exception {
+        Game game = gameRepository.findById(gameId);
+
+        if(game != null){
+            ArrayList<CharacterInfoMessage> characters = new ArrayList<>();
+            CharacterInfoMessage test = new CharacterInfoMessage();
+            test.setCharacterName("Тест");
+            characters.add(test);
+
+            groupRepository.
+                    findAllByGame(game).
+                    forEach(group -> characters.add(new CharacterInfoMessage(group.character)));
+
+            return characters;
         }
         else{
             throw new Exception("Попытка подключиться к несуществующей игре");
