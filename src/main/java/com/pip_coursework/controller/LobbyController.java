@@ -77,13 +77,30 @@ public class LobbyController {
      * Расшаривание созданной игры для других игроков(Создание игровой сессии)
       */
     @RequestMapping(value = "/lobby/sharegame", method = RequestMethod.POST)
-    public ResponseEntity<  ?> shareGame(@RequestBody GameInfoMessage gameInfoMessage,
+    public ResponseEntity<?> shareGame(@RequestBody GameInfoMessage gameInfoMessage,
                                        @AuthenticationPrincipal User gm){
         try {
             gameService.setGameActive(gm, gameInfoMessage.getGameName());
             gameService.createGameSession(gm);
 
             return new ResponseEntity<>((String) "Игра активна для поиска!", HttpStatus.OK);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>((String)ex.getMessage(), HttpStatus.OK);
+        }
+    }
+
+    /**
+    * Сокрытие созданной игры для других игроков(сокрытие игровой сессии)
+     */
+    @RequestMapping(value = "/lobby/hidegame", method = RequestMethod.POST)
+    public ResponseEntity<?> hideGame(@RequestBody GameInfoMessage gameInfoMessage,
+                                      @AuthenticationPrincipal User gm){
+        try {
+            gameService.setGameInactive(gm, gameInfoMessage.getGameName());
+            gameService.hideGameSession(gm);
+
+            return new ResponseEntity<>((String) "Игра неактивна для поиска!", HttpStatus.OK);
         }
         catch (Exception ex){
             return new ResponseEntity<>((String)ex.getMessage(), HttpStatus.OK);

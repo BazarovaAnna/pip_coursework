@@ -3,6 +3,7 @@ package com.pip_coursework.entity;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "Games")
@@ -107,6 +108,12 @@ public class Game {
         this.state = state;
     }
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_publisher",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "character_id", referencedColumnName = "id"))
+    private Set<Character> characters;
+
     // Нужен для добавления данных в БД
     public Game(User gm, String name, String password, String description, int personCount){
         this.gm = gm;
@@ -114,7 +121,7 @@ public class Game {
         this.password = password;
         this.personCount = personCount;
         this.description = description;
-        this.state = GameState.ACTIVESTATE;
+        this.state = GameState.INACTIVESTATE;
         this.timeCreating = Instant.now();
     }
 }

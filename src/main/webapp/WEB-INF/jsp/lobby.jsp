@@ -81,16 +81,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id=""></div>
+                                        <div id="player-game-info"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="game-info" style="position: relative">
-                                        <div id="player-games-slider" class="games-slider"></div>
+                                        <div id="player-games-slider" class="lobby-slider"></div>
+                                        <div id="player-players-slider" class="lobby-slider"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="player-game-info"></div>
                         </div>
                     </div>
                     <!-- Версия лобби для мастера -->
@@ -99,14 +99,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="info-form">
-                                    <div class="row" style="height: 90px;">
-                                        <label style="float: right;" class="header-form header-form-sub" id="btn-back-to-game-list" hidden >
-                                            <i class="fa fa-arrow-right" style="font-size: 60px; background: transparent;" aria-hidden="true"></i>
-                                        </label>
-                                    </div>
-                                    <div class="row">
-                                        <h2 class="header-form" id="game-form-header"></h2>
-                                    </div>
                                     <div id="create-new-game-form" hidden>
                                         <form id="new-game-form">
                                             <div class="form-group">
@@ -152,14 +144,12 @@
                                             <button id="submit-btn" class="stamp-btn">Создать</button>
                                         </form>
                                     </div>
-                                        <div id="gm-game-info">
-
-                                    </div>
+                                    <div id="gm-game-info"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="game-info">
-                                    <div id="gm-games-slider" class="games-slider"></div>
+                                    <div id="gm-games-slider" class="lobby-slider"></div>
                                 </div>
                             </div>
                         </div>
@@ -177,10 +167,9 @@
 <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
 <script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
 <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../resources/js/lobby.js"></script>
 <!-- Либы для работы с WebSocket -->
 <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-<script type="text/javascript" src="../../resources/js/lobbyWebSocket.js"></script>
+<script type="text/javascript" src="../../resources/js/lobby.js"></script>
 </body>
 </html>

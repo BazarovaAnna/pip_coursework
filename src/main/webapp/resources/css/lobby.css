@@ -251,31 +251,8 @@
     background: transparent url("./../../resources/default/img/table.png") round;
 }
 
-.dukat{
-    position: absolute;
-    right: -20%;
-    top: 3.5%;
-    z-index: 4;
-    text-align: center;
-    height: 70px;
-    width: 70px;
-    margin: 25%;
-    background: transparent url("./../../resources/default/img/dukat.png") round;
-}
-
-.dukat:hover{
-    background-color: gold;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.015s;
-}
-
 /* Слайдер для списка доступных игр */
-#gm-games-slider{
-
-}
-
-.games-slider{
+.lobby-slider{
     position: relative;
     width: 90%;
     overflow: auto;

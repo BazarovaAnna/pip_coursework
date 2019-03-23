@@ -82,7 +82,7 @@ public class GameService {
      * Получение списка игр для конкретного пользователя
       */
     public ArrayList<Game> getUserGames(User user) {
-        ArrayList<Game> games = gameRepository.findAllByGmAndState(user, GameState.ACTIVESTATE);
+        ArrayList<Game> games = gameRepository.findAllByGm(user);
         games.forEach(x -> x.setGm(null));
 
         return games;
@@ -94,6 +94,20 @@ public class GameService {
      */
     public void createGameSession(User gm){
         ArrayList<Game> games = gameRepository.findAllByGmAndState(gm, GameState.ACTIVESTATE);
+
+        if(games.size() > 0){
+            Session session = new Session(games.get(0));
+
+            sessionRepository.save(session);
+        }
+    }
+
+    /**
+     * Сокрытие игровой сессии, привязанной к конкретному ГМу
+     * @param gm конкретный ГМ
+     */
+    public void hideGameSession(User gm){
+        ArrayList<Game> games = gameRepository.findAllByGmAndState(gm, GameState.INACTIVESTATE);
 
         if(games.size() > 0){
             Session session = new Session(games.get(0));
