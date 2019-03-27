@@ -4,10 +4,7 @@ import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.User;
 import com.pip_coursework.service.CharacterService;
 import com.pip_coursework.service.GameService;
-import com.pip_coursework.transmittedObject.AddingToGroupMessage;
-import com.pip_coursework.transmittedObject.CharacterInfoMessage;
-import com.pip_coursework.transmittedObject.ConnectionResponse;
-import com.pip_coursework.transmittedObject.GameInfoMessage;
+import com.pip_coursework.transmittedObject.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class LobbyController {
@@ -55,7 +51,6 @@ public class LobbyController {
       */
     @RequestMapping(value = "/lobby/allgames", method = RequestMethod.GET)
     public ResponseEntity<?> getAllGames(@AuthenticationPrincipal User user){
-        // TODO возможно нужно подгружать кусками
         return new ResponseEntity<>(gameService.getListActiveGame(), HttpStatus.OK);
     }
 
@@ -65,11 +60,10 @@ public class LobbyController {
     @RequestMapping(value = "/lobby/newgame", method = RequestMethod.POST)
     public ResponseEntity<?> createNewGame(@RequestParam("name") String name,
                                            @RequestParam("personCount") String personCount,
-                                           @RequestParam("password") String password,
                                            @RequestParam("description") String description,
                                            @AuthenticationPrincipal User user){
         try {
-            gameService.createNewGame(user, name, Integer.parseInt(personCount), password, description);
+            gameService.createNewGame(user, name, Integer.parseInt(personCount), "", description);
             return new ResponseEntity<>((String) "Игра успешно создана!", HttpStatus.OK);
         }
         catch (Exception ex){
@@ -120,15 +114,51 @@ public class LobbyController {
      */
     @MessageMapping("/lobby/connect")
     @SendTo("/topic/joining")
-    public List<CharacterInfoMessage> joiningToGroup(AddingToGroupMessage message) throws  Exception {
+    public Object joiningToGroup(AddingToGroupMessage message) throws  Exception {
 
         Character character = characterService.getCharacterByName(message.getCharacterName());
         if(character != null){
-            gameService.connectToGroup(message.getGameId(), character);
+            if (message.isConnection()){
+                if(gameService.connectToGroup(message.getGameId(), character)){
 
-            return gameService.getCharacterInGroup(message.getGameId());
+                    return gameService.getCharacterInGroup(message.getGameId());
+                }
+                else {
+                    return new ResultResponse("Нет свободных мест в группе", HttpStatus.CONFLICT);
+                }
+            }
+            else {
+                gameService.disconnectFromGroup(message.getGameId(), character);
+
+                return new ResultResponse();
+            }
         }
 
-        throw new Exception();
+        return new ResultResponse("Персонажа с таким именем не существует", HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * STOMP messaging
+     * Указания готовности игроков, и переход на другую страницу
+     * @return
+     */
+    @MessageMapping("/lobby/ready")
+    @SendTo("/topic/redirecting")
+    public SessionResponse redirectingToGameField(ReadyGroupMessage message){
+        if(message.isReady()){
+            if(!message.isStart()){
+                gameService.setReadyToStartGame(message.getGameId(), message.getCharacterName());
+            }
+
+            if(gameService.checkAllIsReady(message.getGameId()) && message.isStart()){
+                return gameService.getGameSession(message.getGameId());
+            }
+        }
+        else {
+            // TODO Логика отжатия готовности
+        }
+        return new SessionResponse();
+    }
+
+
 }

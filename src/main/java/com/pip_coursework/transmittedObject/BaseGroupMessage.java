@@ -1,8 +1,16 @@
 package com.pip_coursework.transmittedObject;
 
-import com.pip_coursework.entity.Character;
+public class BaseGroupMessage {
+    private long gameId;
 
-public class CharacterInfoMessage {
+    public long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
+    }
+
     private String characterName;
 
     public String getCharacterName() {
@@ -12,10 +20,4 @@ public class CharacterInfoMessage {
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
     }
-
-    public CharacterInfoMessage(Character character){
-        this.characterName = character.getName();
-    }
-
-    public CharacterInfoMessage(){}
 }

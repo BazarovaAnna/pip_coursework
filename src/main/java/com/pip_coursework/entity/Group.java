@@ -21,11 +21,23 @@ public class Group {
     @JsonManagedReference
     public Character character;
 
+    @Column(name = "IsReady", nullable = false)
+    private boolean isReady;
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public void setReady(boolean ready) {
+        isReady = ready;
+    }
+
     protected Group(){
     }
 
     public Group(Game game, Character character){
         this.game = game;
         this.character = character;
+        this.isReady = false;
     }
 }

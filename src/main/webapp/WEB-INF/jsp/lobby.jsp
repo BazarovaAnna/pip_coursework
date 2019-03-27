@@ -100,7 +100,7 @@
                             <div class="col-md-6">
                                 <div class="info-form">
                                     <div id="create-new-game-form" hidden>
-                                        <form id="new-game-form">
+                                        <form id="new-game-form" action="">
                                             <div class="form-group">
                                                 <h4 class="header-form header-form-sub">Название игры</h4>
                                                 <div class="lobby-input-group">
@@ -127,13 +127,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <h4 class="header-form header-form-sub">Пароль</h4>
-                                                <div class="lobby-input-group">
-                                                    <input type="text" name="password" minlength="2" maxlength="12"
-                                                           id="password" placeholder="Введите пароль">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <h4 class="header-form header-form-sub">Описание</h4>
                                                 <div class="lobby-input-group">
                                                     <textarea id="description" name="description" rows="4" cols="50"
@@ -141,7 +134,7 @@
                                                     </textarea>
                                                 </div>
                                             </div>
-                                            <button id="submit-btn" class="stamp-btn">Создать</button>
+                                            <input id="submit-btn" type="button" class="stamp-btn" value="Создать"/>
                                         </form>
                                     </div>
                                     <div id="gm-game-info"></div>

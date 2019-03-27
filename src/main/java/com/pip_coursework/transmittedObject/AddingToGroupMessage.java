@@ -1,23 +1,13 @@
 package com.pip_coursework.transmittedObject;
 
-public class AddingToGroupMessage {
-    private long gameId;
+public class AddingToGroupMessage extends BaseGroupMessage{
+    private boolean isConnection;
 
-    public long getGameId() {
-        return gameId;
+    public boolean isConnection() {
+        return isConnection;
     }
 
-    public void setGameId(long gameId) {
-        this.gameId = gameId;
-    }
-
-    private String characterName;
-
-    public String getCharacterName() {
-        return characterName;
-    }
-
-    public void setCharacterName(String characterName) {
-        this.characterName = characterName;
+    public void setConnection(boolean connection) {
+        isConnection = connection;
     }
 }

@@ -108,6 +108,7 @@ create table genres (
 
 create table groups (
   character_id int8 not null,
+  is_ready boolean not null,
   game_id int8 not null,
   primary key (character_id, game_id));
 

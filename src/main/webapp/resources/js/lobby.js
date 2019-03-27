@@ -15,11 +15,21 @@ var allGamesData;
 // Флаг выбора режима
 var isChosen = false;
 
+// Флаг выбранной роли для игры
+var isGM = false;
+
+// Флаг подключения к игре
+var isConnectionGame = false;
+
 // Выбранная для поиска игра ГМом
 var currentGmGame;
 
 // Выбранный персонаж
 var currentCharacter;
+
+// Подписка на переход к игровому полю
+var subscriptionOnRedirectToGameField;
+
 
 window.onload = function (ev) {
     createConnectionToGameWebSocketEndPoint();
@@ -30,19 +40,22 @@ window.onload = function (ev) {
     }).mouseout(function () {
         if(!isChosen)
             $(".shadow-form").remove();
-        if(currentGmGame != null){
-            hideGame();
-        }
+        hideGame();
+        isGM = true;
     });
 
     $("#player-mode").mousedown(renderPlayerForm).mouseover(function () {
-        // Затемняем картинку игрок
+        // Затемняем картинку игрока
         $(".shadow-form").remove();
         $("#gm-mode").prepend("<div class='shadow-form'></div>");
     }).mouseout(function () {
         if(!isChosen)
             $(".shadow-form").remove();
         reversePlayerForm();
+
+        getDataFromServer('/lobby/allgames', getAllGameCallback);
+        hideGame();
+        isGM = false;
     });
 
     getDataFromServer('/user/allcharacters', createCharacterList);
@@ -155,10 +168,12 @@ function createGMGameList() {
             $(".slide-gm-" + i).click(
                 {
                     gameId:i-2,
+                    gameCollection: gamesData,
                     selector:"#gm-game-info",
                     callback:gmGameInfoFormCallBack,
                     backfunction: hideGame,
-                    executefunction: shareGame
+                    executefunction: shareGame,
+                    startfunction: startGameGM
                 }, renderGameInfoForm);
         }
     }
@@ -190,10 +205,12 @@ function createUserGameList() {
             $(".slide-player-" + i).click(
                 {
                     gameId:i-1,
+                    gameCollection: allGamesData,
                     selector:"#player-game-info",
                     callback:playerGameInfoFormCallBack,
                     backfunction: backToPlayerEventHandler,
-                    executefunction: connectionPlayerEventHandler
+                    executefunction: connectionPlayerEventHandler,
+                    startfunction: startGamePlayer
                 }, renderGameInfoForm);
         }
     }
@@ -209,27 +226,30 @@ function createNewGame() {
         function () {
             clearGameForm();
             getDataFromServer('/lobby/usergames', getUserCreatedGameCallback);
-        }, false);
+        },
+        false);
 }
 
 // ОТРИСОВКА КОМПОНЕНТОВ
 
 // Отрисовка формы с информацией об игре
 function renderGameInfoForm(event) {
-    currentGmGame = gamesData[event.data.gameId];
-
+    currentGmGame = event.
+        data.
+        gameCollection[event.data.gameId];
     event.data.callback();
-
-    $(event.data.selector).load("../../resources/html/GameInfo.html", function () {
+    $(event.data.selector).load("../../resources/html/gameinfo.html", function () {
         $("#game-form-header").empty().
         text("Информация об игре").
         addClass("fill-game-form-header");
         $("#game-name").text(currentGmGame.name);
+        $("#game-master").text(currentGmGame.gameMaseterName);
         $("#game-count").text(currentGmGame.personCount);
         $("#game-descr").text(currentGmGame.description);
 
         $("#share-game-btn").click({gameId: event.data.gameId}, event.data.executefunction);
 
+        $("#start-game-btn").click(event.data.startfunction);
         //Задание обработчиков ивентов для кнопок
         $('#btn-back-to-game-list').click(event.data.backfunction);
     });
@@ -239,20 +259,47 @@ function renderGameInfoForm(event) {
 
 // ОТКРЫТИЕ И СОКРЫТИЕ ИГР ДЛЯ ПОИСКА
 
+// Начало новой игры (Переход на страницу с игровым полем)
+function startGameGM() {
+    isStartGame();
+}
+
+// Подтверждение готовности игроком (Индикатор того, что игрок готов перейти на страницу с игровым полем)
+function startGamePlayer() {
+    isReadyToGame();
+}
+
 // Открытие игры для поиска
 function shareGame(event){
     postDataToServer('/lobby/sharegame',
         JSON.stringify({"gameName": gamesData[event.data.gameId].name}),
             shareGameEventHandler,
             'application/json');
+
+    isConnectionGame = true;
+
+    subscribeToStartGame();
 }
 
 // Сокрытие игры для поиска
 function hideGame(){
-    postDataToServer('/lobby/hidegame',
-        JSON.stringify({"gameName": currentGmGame.name}),
-        hideGameEventHandler,
-        'application/json');
+    hideGamePostRequest();
+
+    isConnectionGame = false;
+
+    if(subscriptionOnRedirectToGameField != null){
+        subscriptionOnRedirectToGameField.unsubscribe();
+    }
+}
+
+// Запрос на скрытие игры от других игроков
+function hideGamePostRequest() {
+    if(currentGmGame != null){
+        postDataToServer('/lobby/hidegame',
+            JSON.stringify({"gameName": currentGmGame.name}),
+            hideGameEventHandler,
+            'application/json');
+    }
 }
 
 // ОТРИСОВКА КОМПОНЕНТОВ ЛОББИ
@@ -327,6 +374,8 @@ function connectionPlayerEventHandler(event){
     $("#start-game-btn").show(400);
 
     connectToGame();
+
+    subscribeToStartGame();
 }
 
 // Скрытие формы описания персонажа после клика на игру
@@ -347,6 +396,28 @@ function renderCreatingGameForm() {
     $("#new-game-form").trigger('reset');
 
     $("#submit-btn").click(createNewGame);
+}
+
+// Отрисовка списка персонажей для определенной роли
+function renderCharacterList(characters, tag) {
+    $(tag).empty();
+    for(var i = 0; i < characters.length; i++){
+        $(tag).append(formCharacterSlide(characters[i], i));
+    }
+}
+
+// Формирование слайда с персонажем
+function formCharacterSlide(character, index) {
+    var slide = "<div class='game-slide slide-player-" + index + "'>" +
+        "<h2 class='label-under-glass' style='top: -40;'>" + character.characterName + "</h2>" +
+        "<div class='innder-slide''>" +
+        "<div style='display: inline;'>" +
+        "<h3 class='label-under-glass' style='right: 1emplayer-games-slider'>Расса: </h3>" +
+        "<h3 class='label-under-glass' style='left: 7em; top: 1.5em'>" + character.race.type +"</h3>" +
+        "</div>" +
+        "</div></div>";
+
+    return slide;
 }
 
 // ОБРАБОТЧИКИ СОБЫТИЙ
@@ -371,8 +442,17 @@ function hideGameEventHandler(){
 function backToPlayerEventHandler() {
     $("#btn-back-to-game-list").hide();
     createUserGameList();
+
+    if(isConnectionGame){
+        disconnectFromGame();
+    }
+
     $("#start-game-btn").hide();
     $("#share-game-btn").show();
+
+    if(subscriptionOnRedirectToGameField != null){
+        subscriptionOnRedirectToGameField.unsubscribe();
+    }
 }
 
 // ДОПОЛНИЕЛЬНЫЙ ФУНКЦИОНАЛ
@@ -399,24 +479,95 @@ $("#personCount").on("input", function() {
 
 // РАБОТА С WEB-SOCKETS
 
-// Создание точки входа для подключеия к лобби
+// Создание точки входа для подключеия к лобби и подписка на событие присоединения к лобби
 function createConnectionToGameWebSocketEndPoint() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
         stompClient.subscribe("/topic/joining", function (msg) {
-            alert("asdd");
+            if(isConnectionGame){
+                var message = JSON.parse(msg.body);
+
+                if(!message.message){
+                    var charactersInGroup = message;
+
+                    if(charactersInGroup.length > 0 &&
+                        charactersInGroup[0].gameId === currentGmGame.gameId){
+
+                        if(isGM){
+                            renderCharacterList(charactersInGroup, "#gm-games-slider");
+                        }
+                        else{
+                            renderCharacterList(charactersInGroup, "#player-games-slider");
+                        }
+                    }
+                }
+                else {
+                    if(!isGM){
+                        alert(message.message);
+                        backToPlayerEventHandler();
+                    }
+                }
+            }
         });
     });
 }
 
-// Подключение к точке входа
+// Подписка на событие перехода на страницу с игрой
+function subscribeToStartGame() {
+    subscriptionOnRedirectToGameField = stompClient.subscribe("/topic/redirecting", function (msg) {
+        var message = JSON.parse(msg.body);
+        if(message.ready){
+            if(isGM){
+                hideGamePostRequest();
+            }
+
+            document.location.href = "/gamefield?session_id=" + message.sessionId;
+        }
+    });
+}
+
+// Сигнал готовности игрока
+function isReadyToGame() {
+    generalPlayerReadyMethod(true, currentCharacter.name);
+}
+
+// Сигнал начала игры ГМом
+function isStartGame() {
+    generalPlayerReadyMethod(true, null);
+}
+
+// Общий метод готовности игрока к игре
+function generalPlayerReadyMethod(isReady, characterName) {
+    stompClient.send("/app/lobby/ready",
+        {},
+        JSON.stringify({
+            "gameId": currentGmGame.gameId,
+            "characterName": characterName,
+            "ready": isReady,
+            "start": !characterName
+        }));
+}
+
+// Подключение к группе
 function connectToGame() {
+    isConnectionGame = true;
+    generalGameConnection(isConnectionGame);
+}
+
+// Отключение от группы
+function disconnectFromGame() {
+    isConnectionGame = false;
+    generalGameConnection(isConnectionGame);
+}
+
+// Общий метод для активации/деактивации игры
+function generalGameConnection(isConnectionGame) {
     stompClient.send("/app/lobby/connect",
         {},
         JSON.stringify({
-            "gameId": 1,
-            "characterName": currentCharacter.name
+            "gameId": currentGmGame.gameId,
+            "characterName": currentCharacter.name,
+            "connection": isConnectionGame
         }));
 }
