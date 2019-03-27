@@ -7,11 +7,15 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.ArrayList;
 
 public interface GameRepository extends CrudRepository<Game, Long> {
-    ArrayList<Game> findById(long Id);
+    Game findById(long Id);
 
     ArrayList<Game> findAllByState(String state);
 
-    Game findByGmAndState(User user, String state);
+    ArrayList<Game> findAllByGmAndState(User gm, String state);
 
     Game findByGmAndName(User user, String name);
+
+    boolean existsByNameAndState(String name, String state);
+
+    ArrayList<Game> findAllByGm(User gm);
 }

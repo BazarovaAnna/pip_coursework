@@ -18,6 +18,7 @@ alter table if exists rules drop constraint if exists FKrfy1hyhwm7sgnhipgr6co6qj
 alter table if exists user_role drop constraint if exists FKj345gk1bovqvfame88rcx7yyx;
 alter table if exists users_genres drop constraint if exists FK6jttrkotguvhmy7p9xmotflqq;
 alter table if exists users_genres drop constraint if exists FKqc52o4roeu9ub81u9xj35dfdc;
+alter table if exists sessions drop constraint if exists FK9v1xm8ixyedpbykk14cfq8dg0;
 
 drop table if exists abilities cascade;
 drop table if exists characters cascade;
@@ -32,6 +33,7 @@ drop table if exists items cascade;
 drop table if exists members cascade;
 drop table if exists race cascade;
 drop table if exists rules cascade;
+drop table if exists sessions cascade;
 drop table if exists user_role cascade;
 drop table if exists users cascade;
 drop table if exists users_genres cascade;
@@ -61,15 +63,15 @@ create table characters (
 
 create table characters_abilities (
   time_learning timestamp not null,
-  character_id char(1) not null,
+  character_id int8 not null,
   ability_id int8 not null,
   primary key (ability_id, character_id)
   );
 
 create table characters_effects (
   time_overlay timestamp not null,
-  time_removal timestamp not null,
-  character_id char(1) not null,
+  time_removal timestamp,
+  character_id int8 not null,
   effect_id int8 not null,
   primary key (character_id, effect_id));
 
@@ -79,20 +81,23 @@ create table effects (
   name varchar(255) not null,
   primary key (id));
 
-
 create table games (
   id  bigserial not null,
   description varchar(255),
-  name varchar(255),
+  name varchar(255) not null,
+  password varchar(255),
+  person_count int4 not null,
   state varchar(255) not null,
   time_creating timestamp not null,
-  time_deleting timestamp not null,
-  date_end timestamp not null,
+  time_deleting timestamp,
+  gm_id int8,
+  primary key (id));
+
+create table sessions (
+  id  bigserial not null,
+  date_end timestamp,
   date_start timestamp not null,
   gms_rating float4,
-  genre_id int8,
-  gm_id int8,
-  rules_id int8,
   game_id int8,
   primary key (id));
 
@@ -102,14 +107,15 @@ create table genres (
   primary key (id));
 
 create table groups (
-  character_id char(1) not null,
+  character_id int8 not null,
+  is_ready boolean not null,
   game_id int8 not null,
   primary key (character_id, game_id));
 
 create table inventory (
   time_getting timestamp not null,
-  time_selling timestamp not null,
-  character_id char(1) not null,
+  time_selling timestamp,
+  character_id int8 not null,
   item_id int8 not null,
   primary key (character_id, item_id));
 
@@ -123,7 +129,7 @@ create table items (
 
 create table members (
   characters_rating float4,
-  character_id char(1) not null,
+  character_id int8 not null,
   session_id int8 not null,
   primary key (character_id, session_id));
 
@@ -144,7 +150,6 @@ create table race (
 create table user_role (
   user_id int8 not null,
   roles varchar(255));
-
 
 create table users (
   id  bigserial not null,
@@ -175,11 +180,9 @@ alter table if exists users add constraint UK_ow0gan20590jrb00upg3va2fn unique (
 alter table if exists characters add constraint FK27yx743bsnnsqplnjhk5yf224 foreign key (user_id) references users;
 alter table if exists characters_abilities add constraint FK35j9mn5tihv3b9aarka58b3qr foreign key (ability_id) references abilities;
 alter table if exists characters_effects add constraint FKfuqkijbcvwayg8213v83if3ai foreign key (effect_id) references effects;
-alter table if exists games add constraint FKfnb2pp2b4p361k65kaf7kig55 foreign key (genre_id) references genres;
 alter table if exists games add constraint FKdce8igggv304msoc4n9viv3rs foreign key (gm_id) references users;
-alter table if exists games add constraint FKbw641s5pl9hxqnu62k9o9usig foreign key (rules_id) references rules;
-alter table if exists games add constraint FK96mh9a45l0ttt9igu5lxel207 foreign key (game_id) references games;
 alter table if exists groups add constraint FKq5odfls4c242crio7ewsbqyc0 foreign key (game_id) references games;
+alter table if exists sessions add constraint FK9v1xm8ixyedpbykk14cfq8dg0 foreign key (game_id) references games;
 
 alter table if exists inventory add constraint FKem4n7umseo46fdpsowncsbwac foreign key (item_id) references items;
 alter table if exists members add constraint FK5fv6ms2l7erm7783ttb8t1n1b foreign key (session_id) references games;

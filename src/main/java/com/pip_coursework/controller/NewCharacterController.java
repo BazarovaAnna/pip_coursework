@@ -31,17 +31,18 @@ public class NewCharacterController {
         return "newcharacter";
     }
 
-    // Получение всех рас
+    /**
+     * Получение всех рас
+      */
     @RequestMapping(value = "/newcharacter/allrace", method = RequestMethod.POST)
     public ResponseEntity<?> getAllType(@AuthenticationPrincipal User user,
                                         Model model){
-
-        model.addAttribute("races", characterService.getAllRace());
-
         return new ResponseEntity<>(characterService.getAllRace(), HttpStatus.OK);
     }
 
-    // Получение изображений конкретной расы
+    /**
+     * Получение изображений конкретной расы
+      */
     @RequestMapping(value = "/newcharacter/race", method = RequestMethod.POST)
     public ResponseEntity<?> getImg(@AuthenticationPrincipal User user,
                          Model model,
@@ -51,7 +52,9 @@ public class NewCharacterController {
     }
 
 
-    // Добавление нового пользователя
+    /**
+     * Добавление нового пользователя
+      */
     @RequestMapping(value = "/newcharacter/add", method = RequestMethod.POST)
     public ResponseEntity<?> addNewCharacter(
             @RequestParam("sex") char sex,

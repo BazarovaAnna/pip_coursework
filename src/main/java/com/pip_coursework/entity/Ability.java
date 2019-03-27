@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Abilities")
@@ -33,6 +34,25 @@ public class Ability {
 
     public char getPerkAbility() {
         return perkAbility;
+    }
+
+    @OneToMany(mappedBy = "ability")
+    private List<CharactersAbilities> charactersAbilities;
+
+    public void setCharactersAbilities(List<CharactersAbilities> charactersAbilities) {
+        this.charactersAbilities = charactersAbilities;
+    }
+
+    public List<CharactersAbilities> getCharactersAbilities() {
+        return charactersAbilities;
+    }
+
+    public void addCharacterAbility(CharactersAbilities charactersAbilities) {
+        this.charactersAbilities.add(charactersAbilities);
+    }
+
+    public void removeCharacterAbility(CharactersAbilities charactersAbilities) {
+        this.charactersAbilities.remove(charactersAbilities);
     }
 
     protected Ability(){ }

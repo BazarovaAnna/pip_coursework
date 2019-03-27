@@ -1,6 +1,9 @@
 package com.pip_coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Characters")
@@ -31,6 +34,14 @@ public class Character {
 
     @ManyToOne
     private Race race;
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
+    }
 
     @Column(name = "Name", unique = true, nullable = false)
     private  String name;
@@ -104,13 +115,100 @@ public class Character {
         this.level = level;
     }
 
+    @OneToMany(mappedBy = "character")
+    private List<CharactersAbilities> charactersAbilities;
 
-    public Race getRace() {
-        return race;
+    public void setCharactersAbilities(List<CharactersAbilities> charactersAbilities) {
+        this.charactersAbilities = charactersAbilities;
     }
 
-    public void setRace(Race race) {
-        this.race = race;
+    public List<CharactersAbilities> getCharactersAbilities() {
+        return charactersAbilities;
+    }
+
+    public void addCharacterAbility(CharactersAbilities charactersAbilitie) {
+        this.charactersAbilities.add(charactersAbilitie);
+    }
+
+    public void removeCharacterAbility(CharactersAbilities charactersAbilitie) {
+        this.charactersAbilities.remove(charactersAbilitie);
+    }
+
+    @OneToMany(mappedBy = "character")
+    private List<CharactersEffects> charactersEffects;
+
+    public void setCharactersEffects(List<CharactersEffects> charactersEffects) {
+        this.charactersEffects = charactersEffects;
+    }
+
+    public List<CharactersEffects> getCharactersEffects() {
+        return charactersEffects;
+    }
+
+    public void addCharacterEffect(CharactersEffects charactersEffect) {
+        this.charactersEffects.add(charactersEffect);
+    }
+
+    public void removeCharacterEffects(CharactersEffects charactersEffect) {
+        this.charactersEffects.remove(charactersEffect);
+    }
+
+    @OneToMany(mappedBy = "character")
+    @JsonBackReference
+    private List<Group> groups;
+
+    public void setGroups(List<Group> Groups) {
+        this.groups = Groups;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        this.groups.remove(group);
+    }
+
+    @OneToMany(mappedBy = "character")
+    private List<Inventory> inventoryList;
+
+    public void setInventory(List<Inventory> inventory) {
+        this.inventoryList = inventory;
+    }
+
+    public List<Inventory> getInventory() {
+        return inventoryList;
+    }
+
+    public void addInventory(Inventory inventory) {
+        this.inventoryList.add(inventory);
+    }
+
+    public void removeInventory(Inventory inventory) {
+        this.inventoryList.remove(inventory);
+    }
+
+    @OneToMany(mappedBy = "character")
+    private List<Member> members;
+
+    public void setMembers(List<Member> member) {
+        this.members = member;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void addMember(Member member) {
+        this.members.add(member);
+    }
+
+    public void removeMember(Member member) {
+        this.members.remove(member);
     }
 
     public Character(){}

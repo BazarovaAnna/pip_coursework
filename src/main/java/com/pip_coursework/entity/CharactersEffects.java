@@ -11,6 +11,7 @@ import java.util.Date;
 public class CharactersEffects {
     @Id
     @ManyToOne
+    @JoinColumn(name = "effect_id", referencedColumnName = "id")
     private Effect effect;
 
     public Effect getEffect() {
@@ -19,6 +20,7 @@ public class CharactersEffects {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Character character;
 
     public Character getCharacter() {
@@ -36,7 +38,7 @@ public class CharactersEffects {
 
 
     @Basic(optional = false)
-    @Column(name = "Time_Removal")
+    @Column(name = "Time_Removal", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeRemoval;
 

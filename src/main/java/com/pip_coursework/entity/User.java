@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,6 +39,25 @@ public class User implements Serializable, UserDetails {
     @CollectionTable(name="User_Role", joinColumns = @JoinColumn(name="User_Id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserGenre> userGenres;
+
+    public void setUserGenre(List<UserGenre> UserGenres) {
+        this.userGenres = UserGenres;
+    }
+
+    public List<UserGenre> getUserGenres() {
+        return userGenres;
+    }
+
+    public void addUserGenre(UserGenre userGenre) {
+        this.userGenres.add(userGenre);
+    }
+
+    public void removeUserGenre(UserGenre userGenre) {
+        this.userGenres.remove(userGenre);
+    }
 
     // Параметр присутствия пользователя в сети
     @Column(name = "Active")

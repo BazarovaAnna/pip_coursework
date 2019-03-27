@@ -7,6 +7,7 @@ import com.pip_coursework.entity.User;
 import com.pip_coursework.entity.Character;
 import com.pip_coursework.entity.Group;
 import com.pip_coursework.repository.*;
+import com.pip_coursework.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,21 +22,30 @@ import java.util.ArrayList;
 
 @Controller
 public class GameController {
+    @Autowired
+    private GameService gameService;
+
+    @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
+    public String gamefield(@AuthenticationPrincipal User user,
+                            @RequestParam("session_id") String sessionId,
+                            Model model){
+
+        model.addAttribute("login", user.getLogin());
+        model.addAttribute("sessionId", sessionId);
+        return "gamefield";
+    }
+
+    //delete me
+    /*
     @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
     public String gamefield(@AuthenticationPrincipal User user,
                             Model model){
 
         model.addAttribute("login", user.getLogin());
-
+        model.addAttribute("sessionId", 1);
         return "gamefield";
     }
-
-
-
-
-
-
-
+    */
 
     @Autowired
     GameRepository repository;
@@ -57,7 +67,7 @@ public class GameController {
         Genre genre = getGenre(genre_id);
         Rules rules = getRules(rules_id);
         User gm = getUser(gm_id);
-        repository.save(new Game(genre, rules, gm, state));
+
 
         executiongStatus = "Done";
         return  executiongStatus;
@@ -100,7 +110,7 @@ public class GameController {
 
         try {
             Character character = characterRepository.findById(characterId).get(0);
-            Game game = repository.findById(id).get(0);
+            Game game = repository.findById(id);
             repository.save(game);
             characterRepository.save(character);
             groupRepository.save(new Group(game, character));

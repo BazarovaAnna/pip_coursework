@@ -5,6 +5,7 @@ import com.pip_coursework.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,13 +46,14 @@ public class ItemController {
         }
     }
 
-    @RequestMapping("ItemController/findall")
-    public  String findAll(){
-        String result = "";
+    @RequestMapping(value = "ItemController/findall", method = RequestMethod.GET)
+        public String findAll(){
+        String result = "[";
 
         for(Item item : repository.findAll()){
-            result += item.toString() + "<br>";
+            result += item.toString() + ",";
         }
+        result = result.substring(0, result.length() - 1) + "]";
 
         return result;
     }

@@ -1,10 +1,12 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "Games")
+@Table(name = "Sessions")
 public class Session {
     @Id
     @Column(name = "Id")
@@ -33,46 +35,48 @@ public class Session {
         this.gmsRating = gmsRating;
     }
 
-    @Basic(optional = false)
-    @Column(name = "Date_Start", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date_start;
+    @Column(name = "DateStart", nullable = false)
+    private Instant dateStart;
 
-    public Date getDate_start() {
-        return date_start;
+    public Instant getDateStart() {
+        return dateStart;
     }
 
-    @Basic(optional = false)
-    @Column(name = "Date_End")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date_end;
+    @Column(name = "DateEnd", nullable = true)
+    private Instant dateEnd;
 
-    public void setDate_end(Date date_end) {
-        this.date_end = date_end;
+    public void setDateEnd(Instant dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
-    public Date getDate_end() {
-        return date_end;
+    public Instant getDate_end() {
+        return dateEnd;
+    }
+
+    @OneToMany(mappedBy = "session")
+    private List<Member> members;
+
+    public void setMembers(List<Member> member) {
+        this.members = member;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void addMember(Member member) {
+        this.members.add(member);
+    }
+
+    public void removeMember(Member member) {
+        this.members.remove(member);
     }
 
     // Нужен для получения данных из БД
     protected Session(){ }
 
-    // Нужен для добавления данных в БД
     public Session(Game game){
         this.game = game;
-        this.date_start = new Date();
-    }
-
-    public Session(Game game, float gmsRating){
-        this.game = game;
-        this.date_start = new Date();
-        this.gmsRating = gmsRating;
-    }
-
-    @Override
-    public String toString() {
-        return  String.format("%s Сессия из игры: %s, рейтинг ГМа - %s, длится с %s по %s",
-                id, game.toString(), gmsRating, date_start.toString(), date_end.toString());
+        this.dateStart = Instant.now();
     }
 }

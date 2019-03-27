@@ -1,6 +1,7 @@
 package com.pip_coursework.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Effects")
@@ -26,6 +27,25 @@ public class Effect{
 
     public String getDescription() {
         return description;
+    }
+
+    @OneToMany(mappedBy = "effect")
+    private List<CharactersEffects> charactersEffects;
+
+    public void setCharactersEffects(List<CharactersEffects> charactersEffects) {
+        this.charactersEffects = charactersEffects;
+    }
+
+    public List<CharactersEffects> getCharactersEffects() {
+        return charactersEffects;
+    }
+
+    public void addCharacterEffect(CharactersEffects charactersEffect) {
+        this.charactersEffects.add(charactersEffect);
+    }
+
+    public void removeCharacterEffects(CharactersEffects charactersEffect) {
+        this.charactersEffects.remove(charactersEffect);
     }
 
     protected Effect(){ }

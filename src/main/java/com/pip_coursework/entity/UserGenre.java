@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class UserGenre {
     @Id
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public User getUser() {
@@ -18,6 +19,7 @@ public class UserGenre {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genre genre;
 
     public Genre getGenre() {

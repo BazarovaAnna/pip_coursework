@@ -6,7 +6,7 @@
     </head>
     <body>
         <footer id="DNDFooter" class="navbar-fixed-bottom">
-            <div class="container">
+            <div class="content_wrap">
                 <p class="footer-copyright">© 2019 Copyright D&D</p>
             </div>
             <div class="footer-social">
