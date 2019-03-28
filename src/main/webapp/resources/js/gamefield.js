@@ -782,6 +782,8 @@ function drawSpot() {
         curDiv.appendChild(document.getElementById("spot" + (i + 1).toString()));
     }
 }
+
+
 function getAllItemsAjax() {
     return $.ajax({
         url: 'http://localhost:8080/ItemController/findall',

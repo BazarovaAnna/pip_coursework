@@ -2,12 +2,10 @@ package com.pip_coursework.service;
 
 import com.pip_coursework.entity.*;
 import com.pip_coursework.entity.Character;
-import com.pip_coursework.repository.CharacterRepository;
-import com.pip_coursework.repository.GameRepository;
-import com.pip_coursework.repository.GroupRepository;
-import com.pip_coursework.repository.SessionRepository;
+import com.pip_coursework.repository.*;
 import com.pip_coursework.transmittedObject.CharacterInfoResponse;
 import com.pip_coursework.transmittedObject.GameInfoResponse;
+import com.pip_coursework.transmittedObject.GameMemberInfoResponse;
 import com.pip_coursework.transmittedObject.SessionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,9 @@ public class GameService {
 
     @Autowired
     private CharacterRepository characterRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     /**
      * Возвращает список игр, ожидающих игроков
@@ -255,5 +256,17 @@ public class GameService {
         }
 
         return new SessionResponse();
+    }
+
+    /**
+     * Получение всех участников игры
+     * @param sessionId
+     * @param user
+     * @return
+     */
+    public ArrayList<GameMemberInfoResponse> getAllMembers(int sessionId, User user) {
+        ArrayList<Member> members = memberRepository.findBySessionId(sessionId);
+
+        return new ArrayList<>();
     }
 }

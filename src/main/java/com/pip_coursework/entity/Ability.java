@@ -1,5 +1,7 @@
 package com.pip_coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class Ability {
     }
 
     @OneToMany(mappedBy = "ability")
+    @JsonBackReference
     private List<CharactersAbilities> charactersAbilities;
 
     public void setCharactersAbilities(List<CharactersAbilities> charactersAbilities) {

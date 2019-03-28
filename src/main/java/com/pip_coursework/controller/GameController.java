@@ -10,6 +10,8 @@ import com.pip_coursework.repository.*;
 import com.pip_coursework.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,14 @@ public class GameController {
         model.addAttribute("login", user.getLogin());
         model.addAttribute("sessionId", sessionId);
         return "gamefield";
+    }
+
+    @RequestMapping(value = "/gamefield/allmembers", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCharacters(@AuthenticationPrincipal User user,
+                                              @RequestParam("session_id") String sessionId){
+
+        return new ResponseEntity<>(gameService.getAllMembers(Integer.parseInt(sessionId), user), HttpStatus.OK);
+
     }
 
     //delete me
