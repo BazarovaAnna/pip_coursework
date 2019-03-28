@@ -90,13 +90,3 @@ insert into effects (id, description, name)
 insert into effects (id, description, name)
   values (3, 'minimum damage from arrows', 'thick skinned');
 
-
-
-insert into inventory (item_id, character_id, Time_Getting)
-  values (1, 1, '2004-10-19 10:23:54');
-
-insert into characters_abilities (ability_id, character_id, Time_Learning)
-  values (1, 1, '2004-10-19 10:23:54');
-
-insert into characters_effects (effect_id, character_id, Time_Overlay)
-  values (1, 1, '2004-10-19 10:23:54');

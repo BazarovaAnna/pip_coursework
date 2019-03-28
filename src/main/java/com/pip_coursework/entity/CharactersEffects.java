@@ -1,5 +1,6 @@
 package com.pip_coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pip_coursework.multipleKeys.CharactersEffectsKey;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class CharactersEffects {
     @Id
     @ManyToOne
     @JoinColumn(name = "effect_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Effect effect;
 
     public Effect getEffect() {
@@ -21,6 +23,7 @@ public class CharactersEffects {
     @Id
     @ManyToOne
     @JoinColumn(name = "character_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Character character;
 
     public Character getCharacter() {

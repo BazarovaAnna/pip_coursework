@@ -116,6 +116,7 @@ public class Character {
     }
 
     @OneToMany(mappedBy = "character")
+    @JsonBackReference
     private List<CharactersAbilities> charactersAbilities;
 
     public void setCharactersAbilities(List<CharactersAbilities> charactersAbilities) {
@@ -135,6 +136,7 @@ public class Character {
     }
 
     @OneToMany(mappedBy = "character")
+    @JsonBackReference
     private List<CharactersEffects> charactersEffects;
 
     public void setCharactersEffects(List<CharactersEffects> charactersEffects) {
@@ -174,6 +176,7 @@ public class Character {
     }
 
     @OneToMany(mappedBy = "character")
+    @JsonBackReference
     private List<Inventory> inventoryList;
 
     public void setInventory(List<Inventory> inventory) {
@@ -193,6 +196,7 @@ public class Character {
     }
 
     @OneToMany(mappedBy = "character")
+    @JsonBackReference
     private List<Member> members;
 
     public void setMembers(List<Member> member) {
