@@ -1,5 +1,7 @@
 package com.pip_coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class Item {
     }
 
     @OneToMany(mappedBy = "item")
+    @JsonBackReference
     private List<Inventory> inventoryList;
 
     public void setInventory(List<Inventory> inventory) {

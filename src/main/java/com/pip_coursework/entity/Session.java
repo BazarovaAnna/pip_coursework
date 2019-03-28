@@ -1,5 +1,7 @@
 package com.pip_coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
@@ -54,6 +56,7 @@ public class Session {
     }
 
     @OneToMany(mappedBy = "session")
+    @JsonBackReference
     private List<Member> members;
 
     public void setMembers(List<Member> member) {
