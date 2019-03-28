@@ -12,6 +12,7 @@ let myPId = 1;
 let sessionId;
 
 function init(sessionID, pId) {
+
     //TODO: ajax query
     /*
     myPId = userId;
@@ -41,7 +42,7 @@ function endGame() {
     //TODO: ajax query
     //to end game for other people
     if (confirm("Вы уверены, что хотите завершить игру?")) {
-
+        window.replace.location("http://localhost:8080");
     }
 }
 function exitGame() {
@@ -49,7 +50,7 @@ function exitGame() {
     //to end game only for me
     if (current_role === "gamer") {
         if (confirm("Вы уверены, что хотите покинуть игру?")) {
-
+            window.replace.location("http://localhost:8080");
         }
     }
 }
@@ -489,8 +490,8 @@ function submit_weight(cId) {
 }
 
 function submit_perk(cId) {
-    let name = document.getElementById("input_perks").innerText;
-    let desc = document.getElementById("perk_description").innerText;
+    let name = document.getElementById("input_perks").value;
+    let desc = document.getElementById("perk_description").value;
     let pa;
     if (document.getElementById("p_or_a_perk").checked) {
         pa = "p";
@@ -514,12 +515,82 @@ function submit_perk(cId) {
         //    ["do growl while sleeping", "перк", "awful noise, everyone's praying"]];
         document.getElementById("perks_abils").appendChild(renderTable(colsList, perksList, "perksTable", (current_role === "gm"), cId));
         document.getElementById("perks_abils").appendChild(document.createElement("br"));
+        //добавление перков и абилок
+        let curDiv = document.getElementById("perks_abils");
+        let newP = document.createElement("p");
+        newP.innerHTML = "Название";
+        curDiv.appendChild(newP);
+
+        newText = document.createElement("input");
+        newText.type = "text";
+        newText.id = "input_perks";
+        newText.class = "input_text";
+        curDiv.appendChild(newText);
+        let newDatalist = document.createElement("datalist");
+        newDatalist.id = "perks_list";
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!! найти все названия перков
+        let perkJson = getAllPerksAjax(cId);
+        perkJson = JSON.parse(perkJson.responseText);
+        let allOptions = [];
+        for (let a of perkJson) {
+            allOptions.push(a.name);
+        }
+        //let allOptions = ["jj", "xdcfghj"];
+        for (let a of allOptions) {
+            let newOption = document.createElement("option");
+            newOption.innerText = a;
+            newDatalist.appendChild(newOption);
+        }
+        curDiv.appendChild(newDatalist);
+        newText.setAttribute("list", "perks_list");
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Перк ";
+        let newRadio = document.createElement("input");
+        newRadio.type = "radio";
+        newRadio.name = "p_or_a";
+        newRadio.id = "p_or_a_perk";
+        newRadio.value = "perk";
+        newP.appendChild(newRadio);
+        document.getElementById("perks_abils").appendChild(newP);
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Абилка ";
+        newRadio = document.createElement("input");
+        newRadio.type = "radio";
+        newRadio.name = "p_or_a";
+        newRadio.name = "p_or_a_ability";
+        newRadio.value = "ability";
+        newP.appendChild(newRadio);
+        document.getElementById("perks_abils").appendChild(newP);
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Описание";
+        curDiv.appendChild(newP);
+
+        let newTextarea = document.createElement("textarea");
+        newTextarea.name = "description";
+        newTextarea.id = "perk_description";
+        newTextarea.cols = "40";
+        newTextarea.rows = "3";
+        curDiv.appendChild(newTextarea);
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        newButton = document.createElement("button");
+        newButton.setAttribute("onclick", "submit_perk(" + cId + ");");
+        newButton.innerHTML = "Добавить";
+        curDiv.appendChild(newButton);
     }
 }
 
 function submit_effect(cId) {
-    let name = document.getElementById("input_effects").innerText;
-    let desc = document.getElementById("effect_description").innerText;
+    let name = document.getElementById("input_effects").value;
+    let desc = document.getElementById("effect_description").value;
     if (addEffectAjax(cId, name, desc).responseText === "success") {
         document.getElementById("effects").innerText="";
         let effectsJson = getMyPerksAjax(cId);
@@ -537,14 +608,61 @@ function submit_effect(cId) {
         //    ["do growl while sleeping", "awful noise, everyone's praying"]];
         document.getElementById("effects").appendChild(renderTable(colsList, effectsList, "effectsTable", (current_role === "gm"), cId));
         document.getElementById("effects").appendChild(document.createElement("br"));
+        let curDiv = document.getElementById("effects");
+        let newP = document.createElement("p");
+        newP.innerHTML = "Название";
+        curDiv.appendChild(newP);
+
+        let newText = document.createElement("input");
+        newText.type = "text";
+        newText.id = "input_effects";
+        newText.class = "input_text";
+        curDiv.appendChild(newText);
+        let newDatalist = document.createElement("datalist");
+        newDatalist.id = "effects_list";
+        //!!!!!!!!!!!!!!!!!!!! названия эффектов
+        let effectJson = getAllEffectsAjax(cId);
+        effectJson = JSON.parse(effectJson.responseText);
+        let allOptions = [];
+        for (let a of effectJson) {
+            allOptions.push(a.name);
+        }
+        //allOptions = ["jj", "xdcfghj"];
+        for (let a of allOptions) {
+            let newOption = document.createElement("option");
+            newOption.innerText = a;
+            newDatalist.appendChild(newOption);
+        }
+        curDiv.appendChild(newDatalist);
+        newText.setAttribute("list", "effects_list");
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Описание";
+        curDiv.appendChild(newP);
+
+        let newTextarea = document.createElement("textarea");
+        newTextarea.name = "description";
+        newTextarea.id = "effect_description";
+        newTextarea.cols = "40";
+        newTextarea.rows = "3";
+        curDiv.appendChild(newTextarea);
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        let newButton = document.createElement("button");
+        newButton.setAttribute("onclick", "submit_effect(" + cId + ");");
+        newButton.innerHTML = "Добавить";
+        curDiv.appendChild(newButton);
     }
 }
 
 function submit_item(cId) {
-    let name = document.getElementById("input_items").innerText;
-    let iDesc = document.getElementById("item_description").innerText;
-    let iPrice = document.getElementById("item_price").innerText;
-    let iWeight = document.getElementById("item_weight").innerText;
+    let name = document.getElementById("input_items").value;
+    let iDesc = document.getElementById("item_description").value;
+    let iPrice = document.getElementById("item_price").value;
+    let iWeight = document.getElementById("item_weight").value;
     if (addItemAjax(cId, name, iDesc, iPrice, iWeight).responseText === "success") {
         document.getElementById("inventory").innerText="";
         let itemsJson = getPersItemsAjax(cId);
@@ -565,6 +683,77 @@ function submit_item(cId) {
         //    ["no sql database", "making relations disappear, brokes hearts", 100, 9999]];
         document.getElementById("inventory").appendChild(renderTable(colsList, itemsList, "inventoryTable", (current_role === "gm"), cId));
         document.getElementById("inventory").appendChild(document.createElement("br"));
+        let curDiv = document.getElementById("inventory");
+        let newP = document.createElement("p");
+        newP.innerHTML = "Название";
+        curDiv.appendChild(newP);
+
+        let newText = document.createElement("input");
+        newText.type = "text";
+        newText.id = "input_items";
+        newText.class = "input_text";
+        curDiv.appendChild(newText);
+        let newDatalist = document.createElement("datalist");
+        newDatalist.id = "items_list";
+        // !!!!!!!!!!!!!!!!!!!! названия предметов
+        let itemJson = getAllItemsAjax(cId);
+        itemJson = JSON.parse(itemJson.responseText);
+        let allOptions = [];
+        for (let a of itemJson) {
+            allOptions.push(a.name);
+        }
+        //allOptions = ["jj", "xdcfghj"];
+        for (let a of allOptions) {
+            let newOption = document.createElement("option");
+            newOption.innerText = a;
+            newDatalist.appendChild(newOption);
+        }
+        curDiv.appendChild(newDatalist);
+        newText.setAttribute("list", "items_list");
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Описание";
+        curDiv.appendChild(newP);
+
+        let newTextarea = document.createElement("textarea");
+        newTextarea.name = "description";
+        newTextarea.id = "item_description";
+        newTextarea.cols = "40";
+        newTextarea.rows = "3";
+        curDiv.appendChild(newTextarea);
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Цена";
+        curDiv.appendChild(newP);
+
+        newText = document.createElement("input");
+        newText.type = "text";
+        newText.id = "item_weight";
+        newText.class = "input_text";
+        curDiv.appendChild(newText);
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        newP = document.createElement("p");
+        newP.innerHTML = "Вес";
+        curDiv.appendChild(newP);
+
+        newText = document.createElement("input");
+        newText.type = "text";
+        newText.id = "item_price";
+        newText.class = "input_text";
+        curDiv.appendChild(newText);
+        curDiv.appendChild(document.createElement("br"));
+        curDiv.appendChild(document.createElement("br"));
+
+        let newButton = document.createElement("button");
+        newButton.setAttribute("onclick", "submit_item(" + cId + ");");
+        newButton.innerHTML = "Добавить";
+        curDiv.appendChild(newButton);
     }
 }
 

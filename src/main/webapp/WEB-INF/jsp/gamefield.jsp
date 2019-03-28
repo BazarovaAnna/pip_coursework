@@ -54,8 +54,8 @@
                                 <img src="../../resources/default/img/race/молот_шит_гном.jpg" class="photobox__preview" id="user-avatar2">
                             </div>
                             <div class="description">
-                                <p>${param["persname1"]} любимая всеми Данка</p>
-                                <p>${param["cond"]} в неравной борьбе с долгами</p>
+                                <p>${param["persname1"]}</p>
+                                <p>${param["cond"]}</p>
                             </div>
                         </div>
                         <div class="photobox" id="user3">

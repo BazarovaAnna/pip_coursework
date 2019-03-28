@@ -83,7 +83,7 @@ public class CharacterController {
     }
 
     @RequestMapping(value = "/character/buyItem", method = RequestMethod.GET)
-    public String addItemToCharacter(@RequestParam("character_id") long cId, @RequestParam("item_name") String iName) {
+    public String buyItemToCharacter(@RequestParam("character_id") long cId, @RequestParam("item_name") String iName) {
         String status = "success";
         try {
             Item addedItem = itemRepository.findByName(iName).get(0);
