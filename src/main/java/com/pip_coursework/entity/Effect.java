@@ -57,6 +57,6 @@ public class Effect{
 
     @Override
     public String toString() {
-        return  String.format("%s Название эффекта - '%s'. %s", id, name, description);
+        return  String.format("{\"id\":\"%s\",\"name\":\"%s\",\"description\":\"%s\"}", id, name, description);
     }
 }

@@ -76,5 +76,4 @@ public class Item {
     public String toString() {
         return String.format("{\"id\":\"%s\",\"name\":\"%s\",\"description\":\"%s\",\"price\":%s,\"weight\":%s}", id, name, description, price, weight);
     }
-    //{"id":1,"name":"\"wizard's spoon\"","description":"\"makes poison from tea\"","price":30.0,"weight":1.0}
 }

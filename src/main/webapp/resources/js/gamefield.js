@@ -1,11 +1,11 @@
 let coordinates = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 //x, y and user id on map
 
-let pid1;
-let pid2;
-let pid3;
-let pid4;
-let pid5;
+let pid1 = 1;
+let pid2 = 1;
+let pid3 = 1;
+let pid4 = 1;
+let pid5 = 1;
 let gmid;
 let current_role = "gamer";
 let myPId = 1;
@@ -13,16 +13,18 @@ let sessionId;
 
 function init(sessionID, pId) {
     //TODO: ajax query
+    /*
     myPId = userId;
     sessionId = sessionID;
     let gameInfo = getGameInfoAjax(sessionID, myId);
     current_role = gameInfo.current_role;
-    pid1 = gameInfo.userId1;
-    pid2 = gameInfo.userId2;
-    pid3 = gameInfo.userId3;
-    pid4 = gameInfo.userId4;
-    pid5 = gameInfo.userId5;
+    pid1 = gameInfo.cId1;
+    pid2 = gameInfo.cId2;
+    pid3 = gameInfo.cId3;
+    pid4 = gameInfo.cId4;
+    pid5 = gameInfo.cId5;
     gmid = gameInfo.gmid;
+    */
     if (current_role === "gm") {
         let shop = document.getElementById("shop");
         remove_children(shop);
@@ -47,17 +49,17 @@ function exitGame() {
     //to end game only for me
     if (current_role === "gamer") {
         if (confirm("Вы уверены, что хотите покинуть игру?")) {
-            fieldClick(5, 8);
+
         }
     }
 }
 
 window.onload = function (ev) {
-    $("#photobox2").click(function () {renderInfo("g1");});
-    $("#photobox3").click(function () {renderInfo("g2");});
-    $("#photobox4").click(function () {renderInfo("g3");});
-    $("#photobox5").click(function () {renderInfo("g4");});
-    $("#photobox6").click(function () {renderInfo("g5");});
+    $("#photobox2").click(function () {renderInfo(pid1);});
+    $("#photobox3").click(function () {renderInfo(pid2);});
+    $("#photobox4").click(function () {renderInfo(pid3);});
+    $("#photobox5").click(function () {renderInfo(pid4);});
+    $("#photobox6").click(function () {renderInfo(pid5);});
     //TODO: ajax query to get ids
     if (current_role === "gm") {
         $('#magic_ico').on('click', function () {
@@ -109,7 +111,7 @@ function randomInteger(min, max) {
     return rand;
 }
 
-function renderTable(colsList, dataList, tableId, isGm) {
+function renderTable(colsList, dataList, tableId, isGm, cId) {
     if (isGm) { colsList.push(""); }
     let newTable = document.createElement("table");
     newTable.setAttribute("class", "info_table");
@@ -136,7 +138,7 @@ function renderTable(colsList, dataList, tableId, isGm) {
         if (isGm) {
             newTh = document.createElement("th");
             let newButton = document.createElement("button");
-            newButton.value = tableId + "; " + dataList[i][0];
+            newButton.value = tableId + "; " + dataList[i][0] + "; " + cId;
             newButton.innerText = "-";
             newButton.setAttribute("onclick", "deleteItem(this.value);");
             newButton.setAttribute("class", "remove_button");
@@ -148,64 +150,90 @@ function renderTable(colsList, dataList, tableId, isGm) {
     return newTable;
 }
 
-function renderInfo(){
-    document.getElementById("shadowing").style.display = "block";
-    //TODO: ajax query
-    //getting main info about pers
-    let newPersInfo = "Ира";
-    document.getElementById("pers_info_gamer").innerText += " " + newPersInfo;
-    newPersInfo = "Дана";
-    document.getElementById("pers_info_pers").innerText += " " + newPersInfo;
-    newPersInfo = "жива";
-    document.getElementById("pers_info_cond").innerText += " " + newPersInfo + " ";
-    newPersInfo = "1";
-    document.getElementById("pers_info_level").innerText += " " + newPersInfo;
-    newPersInfo = "эльф";
-    document.getElementById("pers_info_race").innerText += " " + newPersInfo;
-    newPersInfo = "втшник";
-    document.getElementById("pers_info_class").innerText += " " + newPersInfo;
-    newPersInfo = "20";
-    document.getElementById("pers_info_max_weight").innerText += " " + newPersInfo + " ";
+//info table
+//processing
 
-    //TODO: ajax query to get info
-    //table: name, perk/ability, description
-    let colsList = ["название", "перк / абилка", "описание"]
-    let perksList = [["cool jokes", "абилка", "making laugh everybody"], ["make sandwich", "абилка", "very delicious"],
-        ["do growl while sleeping", "перк", "awful noise, everyone's praying"]];
-    document.getElementById("perks_abils").appendChild(renderTable(colsList, perksList, "perksTable", (current_role === "gm")));
+function renderInfo(cId){
+    document.getElementById("shadowing").style.display = "block";
+
+    let persInfoJson = getPersInfoAjax(cId);
+    let persInfo = JSON.parse(persInfoJson.responseText);
+    document.getElementById("pers_info_gamer").innerText += " " + persInfo.username;
+    document.getElementById("pers_info_pers").innerText += " " + persInfo.name;
+    document.getElementById("pers_info_cond").innerText += " " + persInfo.condition + " ";
+    document.getElementById("pers_info_level").innerText += " " + persInfo.level;
+    document.getElementById("pers_info_race").innerText += " " + persInfo.race;
+    document.getElementById("pers_info_class").innerText += " " + persInfo.class;
+    document.getElementById("pers_info_max_weight").innerText += " " + persInfo.maxWeight + " ";
+
+
+    let colsList = ["название", "перк / абилка", "описание"];
+    let perksJson = getMyPerksAjax(cId);
+    perksJson = JSON.parse(perksJson.responseText);
+    let perksList = [];
+    for (let a of perksJson) {
+        let newPerk = [];
+        newPerk.add(a.name);
+        newPerk.add(a.description);
+        newPerk.add(a.p_a);
+        perksList.appendChild(newPerk);
+    }
+    //let perksList = [["cool jokes", "абилка", "making laugh everybody"], ["make sandwich", "абилка", "very delicious"],
+    //    ["do growl while sleeping", "перк", "awful noise, everyone's praying"]];
+    document.getElementById("perks_abils").appendChild(renderTable(colsList, perksList, "perksTable", (current_role === "gm"), cId));
     document.getElementById("perks_abils").appendChild(document.createElement("br"));
 
-    //TODO: ajax query to get info
-    //effects info
-    //table: name, description
-    colsList = ["название", "описание"]
-    let effectsList = [["cool jokes", "making laugh everybody"], ["make sandwich", "very delicious"],
-        ["do growl while sleeping", "awful noise, everyone's praying"]];
-    document.getElementById("effects").appendChild(renderTable(colsList, effectsList, "effectsTable", (current_role === "gm")));
+
+    let effectsJson = getMyPerksAjax(cId);
+    effectsJson = JSON.parse(effectsJson.responseText);
+    let effectsList = [];
+    for (let a of effectsJson) {
+        let neweffect = [];
+        neweffect.add(a.name);
+        neweffect.add(a.description);
+        neweffect.add(a.p_a);
+        effectsList.appendChild(neweffect);
+    }
+    colsList = ["название", "описание"];
+    //let effectsList = [["cool jokes", "making laugh everybody"], ["make sandwich", "very delicious"],
+    //    ["do growl while sleeping", "awful noise, everyone's praying"]];
+    document.getElementById("effects").appendChild(renderTable(colsList, effectsList, "effectsTable", (current_role === "gm"), cId));
     document.getElementById("effects").appendChild(document.createElement("br"));
 
-    //TODO: ajax query to get info
-    //max weight and table: name, description, price, weight
+
+    let itemsJson = getPersItemsAjax(cId);
+    itemsJson = JSON.parse(itemsJson.responseText);
+    let itemsList = [];
+    for (let a of itemsJson) {
+        let curLine = [];
+        curLine.push(a.name);
+        curLine.push(a.description);
+        curLine.push(a.price);
+        curLine.push(a.weight);
+        itemsList.push(curLine);
+    }
     colsList = ["название", "описание", "цена", "вес"];
-    let itemsList = [["wizard's spoon", "makes poison from tea", 30, 1],
-        ["several kittens", "distracting your attention by meow meow", 10, 5],
-        ["new socks", "your granny made by yourself with love", 999, 1],
-        ["no sql database", "making relations disappear, brokes hearts", 100, 9999]];
-    document.getElementById("inventory").appendChild(renderTable(colsList, itemsList, "inventoryTable", (current_role === "gm")));
+    //let itemsList = [["wizard's spoon", "makes poison from tea", 30, 1],
+    //    ["several kittens", "distracting your attention by meow meow", 10, 5],
+    //    ["new socks", "your granny made by yourself with love", 999, 1],
+    //    ["no sql database", "making relations disappear, brokes hearts", 100, 9999]];
+    document.getElementById("inventory").appendChild(renderTable(colsList, itemsList, "inventoryTable", (current_role === "gm"), cId));
     document.getElementById("inventory").appendChild(document.createElement("br"));
-    //TODO: ajax query to get info
-    //money info
-    //just how mush money does pers have
-    let curMoney = 10;
+
+
+    let curMoney = getPersMoneyAjax(cId);
     document.getElementById("cur_money").innerText += curMoney;
 
     if (current_role === "gm") {
         //смена состояния
         let curP = document.getElementById("pers_info_cond");
         let newSelect = document.createElement("select");
-        newSelect.id = "pers_info_cond_select"
+        newSelect.id = "pers_info_cond_select";
+
         //TODO: ajax query to get all avaliable conditions with pers sex
-        let allConds = ["жива", "мертва"]
+        //!!!!!!!!!!!!!!!!!!
+
+        let allConds = ["жива", "мертва"];
         for (let a of allConds) {
             let newOption = document.createElement("option");
             newOption.innerHTML = a;
@@ -214,7 +242,7 @@ function renderInfo(){
         curP.appendChild(newSelect);
         let newButton = document.createElement("button");
         newButton.setAttribute("class", "left_margin_button");
-        newButton.onclick = submit_cond();
+        newButton.onclick = submit_cond(cId);
         newButton.innerHTML = "Сохранить";
         curP.appendChild(newButton);
 
@@ -227,7 +255,7 @@ function renderInfo(){
         curP.appendChild(newText);
         newButton = document.createElement("button");
         newButton.setAttribute("class", "left_margin_button");
-        newButton.onclick = submit_weight();
+        newButton.onclick = submit_weight(cId);
         newButton.innerHTML = "Сохранить";
         curP.appendChild(newButton);
 
@@ -244,8 +272,14 @@ function renderInfo(){
         curDiv.appendChild(newText);
         let newDatalist = document.createElement("datalist");
         newDatalist.id = "perks_list";
-        //TODO: ajax query to find all and relevant from them
-        let allOptions = ["jj", "xdcfghj"];
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!! найти все названия перков
+        let perkJson = getAllPerksAjax(cId);
+        perkJson = JSON.parse(perkJson.responseText);
+        let allOptions = [];
+        for (let a of perkJson) {
+            allOptions.push(a.name);
+        }
+        //let allOptions = ["jj", "xdcfghj"];
         for (let a of allOptions) {
             let newOption = document.createElement("option");
             newOption.innerText = a;
@@ -292,7 +326,7 @@ function renderInfo(){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_perk();
+        newButton.onclick = submit_perk(cId);
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
 
@@ -309,8 +343,14 @@ function renderInfo(){
         curDiv.appendChild(newText);
         newDatalist = document.createElement("datalist");
         newDatalist.id = "effects_list";
-        //TODO: ajax query to find all and relevant from them
-        allOptions = ["jj", "xdcfghj"];
+        //!!!!!!!!!!!!!!!!!!!! названия эффектов
+        let effectJson = getAllEffectsAjax(cId);
+        effectJson = JSON.parse(effectJson.responseText);
+        allOptions = [];
+        for (let a of effectJson) {
+            allOptions.push(a.name);
+        }
+        //allOptions = ["jj", "xdcfghj"];
         for (let a of allOptions) {
             let newOption = document.createElement("option");
             newOption.innerText = a;
@@ -335,7 +375,7 @@ function renderInfo(){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_effect();
+        newButton.onclick = submit_effect(cId);
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
 
@@ -352,8 +392,14 @@ function renderInfo(){
         curDiv.appendChild(newText);
         newDatalist = document.createElement("datalist");
         newDatalist.id = "items_list";
-        //TODO: ajax query to find all and relevant from them
-        allOptions = ["jj", "xdcfghj"];
+        // !!!!!!!!!!!!!!!!!!!! названия предметов
+        let itemJson = getAllItemsAjax(cId);
+        itemJson = JSON.parse(itemJson.responseText);
+        allOptions = [];
+        for (let a of itemJson) {
+            allOptions.push(a.name);
+        }
+        //allOptions = ["jj", "xdcfghj"];
         for (let a of allOptions) {
             let newOption = document.createElement("option");
             newOption.innerText = a;
@@ -402,7 +448,7 @@ function renderInfo(){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_item();
+        newButton.onclick = submit_item(cId);
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
 
@@ -417,55 +463,127 @@ function renderInfo(){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_money();
+        newButton.onclick = submit_money(cId);
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
     }
 }
 
-function submit_cond() {
+function submit_cond(cId) {
     //TODO: ajax query
     //change cond
 }
 
-function submit_weight() {
+function submit_weight(cId) {
     //TODO: ajax query
     //change weight
 }
 
-function submit_perk() {
-    //TODO: ajax query
-    //add perk
-}
-
-function submit_effect() {
-    //TODO: ajax query
-    //add effect
-}
-
-function submit_item() {
-    //TODO: ajax query
-    //add item
-}
-
-function submit_money() {
-    //TODO: ajax query
-    //add money
-}
-
-function deleteItem(tableId_name) {
-    let tableId = tableId_name.split("; ");
-    let name = tableId[1];
-    tableId = tableId[0];
-    //TODO: ajax query
-    let curTable = document.getElementById(tableId);
-    for (let a of curTable.childNodes) {
-        let curTh = a.firstChild;
-        if (curTh.innerText === name) {
-            remove_children(a);
-            curTable.removeChild(a);
-            break;
+function submit_perk(cId) {
+    let name = document.getElementById("input_perks").innerText;
+    let desc = document.getElementById("perk_description").innerText;
+    let pa;
+    if (document.getElementById("p_or_a_perk").checked) {
+        pa = "p";
+    } else {
+        pa = "a";
+    }
+    if (addPerkAjax(cId, name, desc, pa).responseText === "success") {
+        document.getElementById("perks_abils").innerText="";
+        let colsList = ["название", "перк / абилка", "описание"];
+        let perksJson = getMyPerksAjax(cId);
+        perksJson = JSON.parse(perksJson.responseText);
+        let perksList = [];
+        for (let a of perksJson) {
+            let newPerk = [];
+            newPerk.add(a.name);
+            newPerk.add(a.description);
+            newPerk.add(a.p_a);
+            perksList.appendChild(newPerk);
         }
+        //let perksList = [["cool jokes", "абилка", "making laugh everybody"], ["make sandwich", "абилка", "very delicious"],
+        //    ["do growl while sleeping", "перк", "awful noise, everyone's praying"]];
+        document.getElementById("perks_abils").appendChild(renderTable(colsList, perksList, "perksTable", (current_role === "gm"), cId));
+        document.getElementById("perks_abils").appendChild(document.createElement("br"));
+    }
+}
+
+function submit_effect(cId) {
+    let name = document.getElementById("input_effects").innerText;
+    let desc = document.getElementById("effect_description").innerText;
+    if (addEffectAjax(cId, name, desc).responseText === "success") {
+        document.getElementById("effects").innerText="";
+        let effectsJson = getMyPerksAjax(cId);
+        effectsJson = JSON.parse(effectsJson.responseText);
+        let effectsList = [];
+        for (let a of effectsJson) {
+            let neweffect = [];
+            neweffect.add(a.name);
+            neweffect.add(a.description);
+            neweffect.add(a.p_a);
+            effectsList.appendChild(neweffect);
+        }
+        let colsList = ["название", "описание"];
+        //let effectsList = [["cool jokes", "making laugh everybody"], ["make sandwich", "very delicious"],
+        //    ["do growl while sleeping", "awful noise, everyone's praying"]];
+        document.getElementById("effects").appendChild(renderTable(colsList, effectsList, "effectsTable", (current_role === "gm"), cId));
+        document.getElementById("effects").appendChild(document.createElement("br"));
+    }
+}
+
+function submit_item(cId) {
+    let name = document.getElementById("input_items").innerText;
+    let iDesc = document.getElementById("item_description").innerText;
+    let iPrice = document.getElementById("item_price").innerText;
+    let iWeight = document.getElementById("item_weight").innerText;
+    if (addItemAjax(cId, name, iDesc, iPrice, iWeight).responseText === "success") {
+        document.getElementById("inventory").innerText="";
+        let itemsJson = getPersItemsAjax(cId);
+        itemsJson = JSON.parse(itemsJson.responseText);
+        let itemsList = [];
+        for (let a of itemsJson) {
+            let curLine = [];
+            curLine.push(a.name);
+            curLine.push(a.description);
+            curLine.push(a.price);
+            curLine.push(a.weight);
+            itemsList.push(curLine);
+        }
+        let colsList = ["название", "описание", "цена", "вес"];
+        //let itemsList = [["wizard's spoon", "makes poison from tea", 30, 1],
+        //    ["several kittens", "distracting your attention by meow meow", 10, 5],
+        //    ["new socks", "your granny made by yourself with love", 999, 1],
+        //    ["no sql database", "making relations disappear, brokes hearts", 100, 9999]];
+        document.getElementById("inventory").appendChild(renderTable(colsList, itemsList, "inventoryTable", (current_role === "gm"), cId));
+        document.getElementById("inventory").appendChild(document.createElement("br"));
+    }
+}
+
+function submit_money(cId) {
+    let money = document.getElementById("input_money").innerText;
+    setPersMoneyAjax(cId, money);
+    let curMoney = getPersMoneyAjax(cId);
+    document.getElementById("cur_money").innerText = "Сейчас в кошельке: " + curMoney;
+}
+
+function deleteItem(tableId_name_cId) {
+    let tableId = tableId_name_cId.split("; ");
+    let name = tableId[1];
+    let cId = tableId[2];
+    tableId = tableId[0];
+    let resultAjax = sellItemAjax(name);
+    if (resultAjax.responseText === "success") {
+        let curTable = document.getElementById(tableId);
+        for (let a of curTable.childNodes) {
+            let curTh = a.firstChild;
+            if (curTh.innerText === name) {
+                remove_children(a);
+                curTable.removeChild(a);
+                break;
+            }
+        }
+        let curMoney = getPersMoneyAjax(cId);
+        document.getElementById("cur_money").innerText = "Сейчас в кошельке: " + curMoney;
     }
 }
 
@@ -490,6 +608,11 @@ function closeInfo() {
 function remove_children(curelem) {
     curelem.innerHTML = "";
 }
+
+//processing
+
+//shop
+//done
 
 function renderShopTable(dataList, tableId, isBuy) {
     let colsList = ["название", "описание", "цена", "вес", ""];
@@ -545,60 +668,73 @@ function renderShop() {
         curLine.push(a.weight);
         buyCols.push(curLine);
     }
-    //TODO: ajax query
     let myMoney = getPersMoneyAjax(myPId);
     document.getElementById("my_money").innerText += myMoney;
+    let sellJson = getPersItemsAjax(myPId);
+    sellJson = JSON.parse(sellJson.responseText);
+    let sellCols = [];
+    for (let a of sellJson) {
+        let curLine = [];
+        curLine.push(a.name);
+        curLine.push(a.description);
+        curLine.push(a.price);
+        curLine.push(a.weight);
+        sellCols.push(curLine);
+    }
     document.getElementById("shadowing2").style.display = "block";
-    let sellCols = [["wizard's spoon", "makes poison from tea", 30, 1],
-        ["several kittens", "distracting your attention by meow meow", 10, 5],
-        ["new socks", "your granny made by yourself with love", 999, 1],
-        ["no sql database", "making relations disappear, brokes hearts", 100, 9999]];
-    //let sellCols = [["wizard's spoon", "makes poison from tea", 30, 1],
-    //    ["several kittens", "distracting your attention by meow meow", 10, 5],
-    //    ["new socks", "your granny made by yourself with love", 999, 1]];
     document.getElementById("shop_buy").appendChild(renderShopTable(buyCols, "buy_table", true));
     document.getElementById("shop_sell").appendChild(renderShopTable(sellCols, "sell_table", false));
 }
 
 function buyItem(name) {
-    let tableId = "buy_table";
-    let curTable = document.getElementById(tableId);
-    for (let a of curTable.childNodes) {
-        let curTh = a.firstChild;
-        if (curTh.innerText === name) {
-            //TODO: ajax query
-            for (let b of a.childNodes) {
-                if (b === a.lastChild) {
-                    b.firstChild.innerText = "-";
-                    b.firstChild.setAttribute('class', 'remove_button');
-                    b.firstChild.setAttribute("onclick", "sellItem(this.value);");
+    let resultAjax = buyItemAjax(name);
+    if (resultAjax.responseText === "success") {
+        let tableId = "buy_table";
+        let curTable = document.getElementById(tableId);
+        for (let a of curTable.childNodes) {
+            let curTh = a.firstChild;
+            if (curTh.innerText === name) {
+                let newA = a.cloneNode(true);
+                for (let b of newA.childNodes) {
+                    if (b === newA.lastChild) {
+                        b.firstChild.innerText = "-";
+                        b.firstChild.setAttribute('class', 'remove_button');
+                        b.firstChild.setAttribute("onclick", "sellItem(this.value);");
+                    }
                 }
+                let table = document.getElementById("sell_table");
+                table.appendChild(newA);
+                break;
             }
-            let addedItem = a;
-            let table = document.getElementById("sell_table");
-            table.appendChild(addedItem);
-            break;
         }
+        document.getElementById("my_money").innerText = "В кошельке: " +  getPersMoneyAjax(myPId).toString();
+    } else {
+        alert(resultAjax.responseText);
     }
 }
 
 function sellItem(name) {
-    let tableId = "sell_table";
-    let curTable = document.getElementById(tableId);
-    for (let a of curTable.childNodes) {
-        let curTh = a.firstChild;
-        if (curTh.innerText === name) {
-            //TODO: ajax query
-            for (let b of a.childNodes) {
-                if (b === a.lastChild) {
-                    b.firstChild.innerText = "+";
-                    b.firstChild.setAttribute('class', 'add_button');
-                    b.firstChild.setAttribute("onclick", "buyItem(this.value);");
+    let resultAjax = sellItemAjax(name);
+    if (resultAjax.responseText === "success") {
+        let tableId = "sell_table";
+        let curTable = document.getElementById(tableId);
+        for (let a of curTable.childNodes) {
+            let curTh = a.firstChild;
+            if (curTh.innerText === name) {
+                for (let b of a.childNodes) {
+                    if (b === a.lastChild) {
+                        b.firstChild.innerText = "+";
+                        b.firstChild.setAttribute('class', 'add_button');
+                        b.firstChild.setAttribute("onclick", "buyItem(this.value);");
+                    }
                 }
+                curTable.removeChild(a);
+                break;
             }
-            curTable.removeChild(a);
-            break;
         }
+        document.getElementById("my_money").innerText = "В кошельке: " +  getPersMoneyAjax(myPId).toString();
+    } else {
+        alert(resultAjax.responseText);
     }
 }
 
@@ -608,6 +744,8 @@ function exitShop() {
     document.getElementById("shop_sell").removeChild(document.getElementById("sell_table"));
     document.getElementById("my_money").innerText = "В кошельке: ";
 }
+
+//done
 
 function sendMessage() {
     let chat = document.getElementById("chat-messages");
@@ -656,6 +794,72 @@ function getAllItemsAjax() {
     });
 }
 
+function getPersItemsAjax(pId) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/getCharacterItems',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            id: pId
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function buyItemAjax(name) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/buyItem',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: myPId,
+            item_name: name
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function addItemAjax(cId, name, iDesc, iPrice, iWeight) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/addItemToCharacter',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: cId,
+            name: name,
+            description: iDesc,
+            price: iPrice,
+            weight: iWeight
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function sellItemAjax(name) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/removeItemFromCharacter',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: myPId,
+            item_name: name
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
 function getPersMoneyAjax(pId) {
     let curAjax = $.ajax({
         url: 'http://localhost:8080/character/getMoney',
@@ -669,6 +873,172 @@ function getPersMoneyAjax(pId) {
         }
     });
     return curAjax.responseText;
+}
+
+function setPersMoneyAjax(pId) {
+    let curAjax = $.ajax({
+        url: 'http://localhost:8080/character/setMoney',
+        type: 'GET',
+        async: false,
+        data: {
+            id: pId
+        },
+        success: function(response){
+            return response;
+        }
+    });
+    return curAjax.responseText;
+}
+
+function getPersInfoAjax(pId) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/getCharacterInfo',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            id: pId
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function getPersPerksAjax(pId, name, description, p_a) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/addAbilityToCharacter',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: pId,
+            name: name,
+            description: description,
+            p_a: p_a
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function addPerkAjax(pId, aName, aDesc, pa) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/getCharacterAbilities',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: pId,
+            name: aName,
+            description: aDesc,
+            p_a: pa
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function removePerkAjax(pId, name) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/removeAbilityFromCharacter',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: pId,
+            ability_name: name
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function getMyPerksAjax(pId) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/getCharacterAbilities',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            id: pId
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function getAllPerksAjax(pId) {
+    return $.ajax({
+        url: 'http://localhost:8080/AbilityController/findall',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function getAllEffectsAjax(pId) {
+    return $.ajax({
+        url: 'http://localhost:8080/EffectController/findall',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function getPersEffectsAjax(pId) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/getCharacterEffects',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function addEffectAjax(pId, name,  desc) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/addEffectToCharacter',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: pId,
+            name: name,
+            description: desc
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
+}
+
+function removeEffectAjax(pId, name) {
+    return $.ajax({
+        url: 'http://localhost:8080/character/removeEffectFromCharacter',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            character_id: pId,
+            effect_name: name
+        },
+        async: false,
+        success: function(response){
+            return  response;
+        }
+    });
 }
 
 function getGameInfoAjax(sId, uId) {
