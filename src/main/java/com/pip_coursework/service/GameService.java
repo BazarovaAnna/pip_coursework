@@ -10,7 +10,9 @@ import com.pip_coursework.transmittedObject.SessionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class GameService {
@@ -135,13 +137,17 @@ public class GameService {
         Game game = gameRepository.findById(gameId);
 
         if(game != null){
+            ArrayList<Session> sessions = sessionRepository.findByGame(game);
+
             ArrayList<Group> groups = groupRepository.findAllByGame(game);
 
-            if(character != null && game.getPersonCount() > groups.size()){
+            if(character != null && game.getPersonCount() > groups.size()) {
 
                 Group group = new Group(game, character);
+                Member member = new Member(sessions.get(sessions.size() - 1), character);
 
                 groupRepository.save(group);
+                memberRepository.save(member);
 
                 return true;
             }
@@ -164,11 +170,19 @@ public class GameService {
     public void disconnectFromGroup(long gameId, Character character) throws Exception {
         Game game = gameRepository.findById(gameId);
 
-        if(character != null){
-            Group group = new Group(game, character);
+        ArrayList<Session> sessions = sessionRepository.findByGame(game);
+        for (Session session : sessions){
+            if(session.getDate_end().toString().equals("")){
+                session.setDateEnd(Instant.now());
+                if(character != null){
+                    Group group = new Group(game, character);
+                    sessionRepository.save(session);
 
-            groupRepository.delete(group);
+                    groupRepository.delete(group);
+                }
+            }
         }
+
     }
 
     /**
@@ -252,7 +266,6 @@ public class GameService {
             if(lastId != -1){
                 return  new SessionResponse(sessionRepository.findById(lastId));
             }
-
         }
 
         return new SessionResponse();
@@ -267,6 +280,39 @@ public class GameService {
     public ArrayList<GameMemberInfoResponse> getAllMembers(int sessionId, User user) {
         ArrayList<Member> members = memberRepository.findBySessionId(sessionId);
 
-        return new ArrayList<>();
+        ArrayList<GameMemberInfoResponse> gameMemberInfoResponses = new ArrayList<>();
+        ArrayList<Character> characters = characterRepository.findAllByUser(user);
+
+        members.forEach(member -> addGameMemberInfoResponse(member, gameMemberInfoResponses, characters));
+
+        return gameMemberInfoResponses;
+    }
+
+    /**
+     * Определение принадлежности персонажа к конкретной роли и формирование ответа
+     * @param member
+     * @param gameMemberInfoResponses
+     * @param characters
+     */
+    private void addGameMemberInfoResponse(
+            Member member,
+            ArrayList<GameMemberInfoResponse> gameMemberInfoResponses,
+            ArrayList<Character> characters){
+
+        boolean isMe = false;
+
+        for(Character character : characters){
+            if(character.getName().equals(member.getCharacter().getName())){
+                isMe = true;
+                break;
+            }
+        }
+
+        if(isMe){
+            gameMemberInfoResponses.add(new GameMemberInfoResponse(member.getCharacter(), isMe));
+        }
+        else {
+            gameMemberInfoResponses.add(new GameMemberInfoResponse(true));
+        }
     }
 }

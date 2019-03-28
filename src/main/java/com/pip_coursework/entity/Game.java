@@ -137,7 +137,7 @@ public class Game {
         this.password = password;
         this.personCount = personCount;
         this.description = description;
-        this.state = GameState.ACTIVESTATE;
+        this.state = GameState.INACTIVESTATE;
         this.timeCreating = Instant.now();
     }
 }

@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="../../resources/js/gamefield.js"></script>
 </head>
-<!--body onload="init(${param["sessionId"]}, ${param["userId"]});"-->
-<body style="width: 100%;">
+<body style="width: 100%;" onload="init(${param["sessionId"]}, ${param["userId"]});">
 <jsp:include page="templates/header.jsp"/>
 
 <div class="wrapper">
@@ -43,7 +42,7 @@
                     <div id="photos" class="photos">
                         <div class="photobox" id="user1">
                             <div class="photobox__previewbox" id="photobox1">
-                                <img src="../../resources/default/img/race/лучник_орк.jpg" class="photobox__preview" id="user-avatar1">
+                                <img src="../../resources/img/0eeef16d-919c-4e96-83dd-2843e0ad80e7.test2.jpg" class="photobox__preview" id="user-avatar1">
                             </div>
                             <div class="description">
                                 <p>${param["gmname"]}</p>
@@ -58,7 +57,7 @@
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photobox" id="user3">
+                        <div class="photobox" id="user3" hidden>
                             <div class="photobox__previewbox" id="photobox3">
                                 <img src="../../resources/default/img/race/женщина_воин_орк.jpg" class="photobox__preview" id="user-avatar3">
                             </div>
@@ -67,7 +66,7 @@
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photobox" id="user4">
+                        <div class="photobox" id="user4" hidden>
                             <div class="photobox__previewbox" id="photobox4">
                                 <img src="../../resources/default/img/race/воин_гном.jpg" class="photobox__preview" id="user-avatar4">
                             </div>
@@ -76,7 +75,7 @@
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photobox" id="user5">
+                        <div class="photobox" id="user5" hidden>
                             <div class="photobox__previewbox" id="photobox5">
                                 <img src="../../resources/default/img/race/женщина_воин_человек.jpg" class="photobox__preview" id="user-avatar5">
                             </div>
@@ -85,7 +84,7 @@
                                 <p>${param["cond"]}</p>
                             </div>
                         </div>
-                        <div class="photobox" id="user6">
+                        <div class="photobox" id="user6" hidden>
                             <div class="photobox__previewbox" id="photobox6">
                                 <img src="../../resources/default/img/race/маг_хаоса_нежить.jpg" class="photobox__preview" id="user-avatar6">
                             </div>
@@ -100,10 +99,10 @@
                         <div class="field">
                             <div id="11" class="part p1 pp1" onclick="fieldClick(1, 1)">
                                 <div class="point spot1" id="spot1"></div>
-                                <div class="point spot2" id="spot2"></div>
-                                <div class="point spot3" id="spot3"></div>
-                                <div class="point spot4" id="spot4"></div>
-                                <div class="point spot5" id="spot5"></div>
+                                <div class="point spot2" id="spot2" hidden></div>
+                                <div class="point spot3" id="spot3" hidden></div>
+                                <div class="point spot4" id="spot4" hidden></div>
+                                <div class="point spot5" id="spot5" hidden></div>
                             </div>
                             <div id="12" class="part p1 pp2" onclick="fieldClick(1, 2)">
                             </div>

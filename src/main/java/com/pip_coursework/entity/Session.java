@@ -26,6 +26,8 @@ public class Session {
         return game;
     }
 
+    public void setGame(Game game) { this.game = game; }
+
     @Column(name = "GMs_Rating")
     private float gmsRating;
 
