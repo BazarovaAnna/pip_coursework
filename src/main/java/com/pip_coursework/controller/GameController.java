@@ -25,17 +25,18 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    /*
     @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
     public String gamefield(@AuthenticationPrincipal User user,
-                            Model model, int sId){
+                            @RequestParam("session_id") String sessionId,
+                            Model model){
 
         model.addAttribute("login", user.getLogin());
-        model.addAttribute("sessionId", sId);
+        model.addAttribute("sessionId", sessionId);
         return "gamefield";
-    }*/
+    }
 
     //delete me
+    /*
     @RequestMapping(value= "/gamefield", method = RequestMethod.GET)
     public String gamefield(@AuthenticationPrincipal User user,
                             Model model){
@@ -44,6 +45,7 @@ public class GameController {
         model.addAttribute("sessionId", 1);
         return "gamefield";
     }
+    */
 
     @Autowired
     GameRepository repository;
@@ -108,7 +110,7 @@ public class GameController {
 
         try {
             Character character = characterRepository.findById(characterId).get(0);
-            Game game = repository.findById(id).get(0);
+            Game game = repository.findById(id);
             repository.save(game);
             characterRepository.save(character);
             groupRepository.save(new Group(game, character));

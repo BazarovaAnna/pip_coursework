@@ -23,7 +23,9 @@ public class UserService implements UserDetailsService {
     @Value("${upload.path}")
     private String uploadPath;
 
-    // Параметр, отвечающий за сервис на который будет направлен пользователь после перехода по ссылке
+    /**
+     * Параметр, отвечающий за сервис на который будет направлен пользователь после перехода по ссылке
+      */
     @Value("${confirmation.path}")
     private String confirmationPath;
 
@@ -38,7 +40,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findByLogin(login);
     }
 
-    // Добавление нового пользователя
+    /**
+     * Добавление нового пользователя
+      */
     public boolean addUser(User user){
         User userFromDb = userRepository.findByLogin(user.getLogin());
         if(userFromDb != null){
@@ -53,7 +57,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    // Отпавка запроса на смену пароля
+    /**
+     * Отпавка запроса на смену пароля
+      */
     public boolean sendRequestByChangePassword(User user){
         user = userRepository.findByLogin(user.getLogin());
 
@@ -76,7 +82,9 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-    // Смена пароля
+    /**
+     * Смена пароля
+      */
     public boolean changePassword(User userWithNewPassword) {
         User user = userRepository.
                 findByActivationCode(userWithNewPassword.getActivationCode());
@@ -94,7 +102,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    // Проверка на наличие корректного кода активации
+    /**
+     * Проверка на наличие корректного кода активации
+      */
     public boolean isCorrectActivationCode(String code){
         User user = userRepository.findByActivationCode(code);
 
@@ -105,7 +115,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    // Добавление аватара пользователя
+    /**
+     * Добавление аватара пользователя
+      */
     public void addUsersAvatar(MultipartFile file, User user)
             throws IOException {
 
@@ -127,7 +139,9 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    // Получение аватара пользователя
+    /**
+     * Получение аватара пользователя
+      */
     public Object getUserAvatar(User user) {
         if(user.getFilename() == null){
             if(user.getSex() == 'm'){

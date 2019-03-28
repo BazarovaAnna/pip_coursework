@@ -14,13 +14,17 @@ public class ForgotPasswordController {
     @Autowired
     private UserService userService;
 
-    // Переход на страницу для восстановления пароля
+    /**
+     * Переход на страницу для восстановления пароля
+      */
     @RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
     public String forgotpassword(Model model){
         return "forgotpassword";
     }
 
-    // Отправка на почту сообщения о смене пароля в случае существования такого логина
+    /**
+     * Отправка на почту сообщения о смене пароля в случае существования такого логина
+      */
     @RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
     public String sendRequestByChangePassword(Model model, User user) {
 
@@ -36,7 +40,9 @@ public class ForgotPasswordController {
         return "forgotpassword";
     }
 
-    // Проверка на существование кода активации и редирект
+    /**
+     * Проверка на существование кода активации и редирект
+      */
     @RequestMapping(value = "/confirmation/{code}", method = RequestMethod.GET)
     public String confirmation(Model model, @PathVariable String code){
 
@@ -52,7 +58,9 @@ public class ForgotPasswordController {
         return "confirmation";
     }
 
-    // Смена пароля
+    /**
+     * Смена пароля
+      */
     @RequestMapping(value = "/changepassword", method = RequestMethod.POST)
     public String changePassword(Model model, User user){
 

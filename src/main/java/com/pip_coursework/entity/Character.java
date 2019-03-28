@@ -1,5 +1,7 @@
 package com.pip_coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -152,6 +154,7 @@ public class Character {
     }
 
     @OneToMany(mappedBy = "character")
+    @JsonBackReference
     private List<Group> groups;
 
     public void setGroups(List<Group> Groups) {
