@@ -7,7 +7,7 @@ let pid3 = 1;
 let pid4 = 1;
 let pid5 = 1;
 let gmid;
-let current_role = "gamer";
+let current_role = "gm";
 let myPId = 1;
 let sessionId;
 
@@ -140,7 +140,16 @@ function renderTable(colsList, dataList, tableId, isGm, cId) {
             let newButton = document.createElement("button");
             newButton.value = tableId + "; " + dataList[i][0] + "; " + cId;
             newButton.innerText = "-";
-            newButton.setAttribute("onclick", "deleteItem(this.value);");
+            if (tableId === "perksTable") {
+                newButton.setAttribute("onclick", "deletePerk(this.value);");
+            }
+            else if (tableId === "inventoryTable") {
+                newButton.setAttribute("onclick", "deleteItem(this.value);");
+            }
+            else {
+                newButton.setAttribute("onclick", "deleteEffect(this.value);");
+            }
+
             newButton.setAttribute("class", "remove_button");
             newTh.appendChild(newButton);
         }
@@ -173,10 +182,10 @@ function renderInfo(cId){
     let perksList = [];
     for (let a of perksJson) {
         let newPerk = [];
-        newPerk.add(a.name);
-        newPerk.add(a.description);
-        newPerk.add(a.p_a);
-        perksList.appendChild(newPerk);
+        newPerk.push(a.name);
+        newPerk.push(a.description);
+        newPerk.push(a.p_a);
+        perksList.push(newPerk);
     }
     //let perksList = [["cool jokes", "абилка", "making laugh everybody"], ["make sandwich", "абилка", "very delicious"],
     //    ["do growl while sleeping", "перк", "awful noise, everyone's praying"]];
@@ -184,15 +193,15 @@ function renderInfo(cId){
     document.getElementById("perks_abils").appendChild(document.createElement("br"));
 
 
-    let effectsJson = getMyPerksAjax(cId);
+    let effectsJson = getPersEffectsAjax(cId);
     effectsJson = JSON.parse(effectsJson.responseText);
     let effectsList = [];
     for (let a of effectsJson) {
         let neweffect = [];
-        neweffect.add(a.name);
-        neweffect.add(a.description);
-        neweffect.add(a.p_a);
-        effectsList.appendChild(neweffect);
+        neweffect.push(a.name);
+        neweffect.push(a.description);
+        neweffect.push(a.p_a);
+        effectsList.push(neweffect);
     }
     colsList = ["название", "описание"];
     //let effectsList = [["cool jokes", "making laugh everybody"], ["make sandwich", "very delicious"],
@@ -326,7 +335,7 @@ function renderInfo(cId){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_perk(cId);
+        newButton.setAttribute("onclick", "submit_perk(" + cId + ");");
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
 
@@ -375,7 +384,7 @@ function renderInfo(cId){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_effect(cId);
+        newButton.setAttribute("onclick", "submit_effect(" + cId + ");");
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
 
@@ -448,7 +457,7 @@ function renderInfo(cId){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_item(cId);
+        newButton.setAttribute("onclick", "submit_item(" + cId + ");");
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
 
@@ -463,7 +472,7 @@ function renderInfo(cId){
         curDiv.appendChild(document.createElement("br"));
 
         newButton = document.createElement("button");
-        newButton.onclick = submit_money(cId);
+        newButton.setAttribute("onclick", "submit_money(" + cId + ");");
         newButton.innerHTML = "Добавить";
         curDiv.appendChild(newButton);
     }
@@ -496,10 +505,10 @@ function submit_perk(cId) {
         let perksList = [];
         for (let a of perksJson) {
             let newPerk = [];
-            newPerk.add(a.name);
-            newPerk.add(a.description);
-            newPerk.add(a.p_a);
-            perksList.appendChild(newPerk);
+            newPerk.push(a.name);
+            newPerk.push(a.description);
+            newPerk.push(a.p_a);
+            perksList.push(newPerk);
         }
         //let perksList = [["cool jokes", "абилка", "making laugh everybody"], ["make sandwich", "абилка", "very delicious"],
         //    ["do growl while sleeping", "перк", "awful noise, everyone's praying"]];
@@ -518,10 +527,10 @@ function submit_effect(cId) {
         let effectsList = [];
         for (let a of effectsJson) {
             let neweffect = [];
-            neweffect.add(a.name);
-            neweffect.add(a.description);
-            neweffect.add(a.p_a);
-            effectsList.appendChild(neweffect);
+            neweffect.push(a.name);
+            neweffect.push(a.description);
+            neweffect.push(a.p_a);
+            effectsList.push(neweffect);
         }
         let colsList = ["название", "описание"];
         //let effectsList = [["cool jokes", "making laugh everybody"], ["make sandwich", "very delicious"],
@@ -584,6 +593,44 @@ function deleteItem(tableId_name_cId) {
         }
         let curMoney = getPersMoneyAjax(cId);
         document.getElementById("cur_money").innerText = "Сейчас в кошельке: " + curMoney;
+    }
+}
+
+function deleteEffect(tableId_name_cId) {
+    let tableId = tableId_name_cId.split("; ");
+    let name = tableId[1];
+    let cId = tableId[2];
+    tableId = tableId[0];
+    let resultAjax = removeEffectAjax(cId, name);
+    if (resultAjax.responseText === "success") {
+        let curTable = document.getElementById(tableId);
+        for (let a of curTable.childNodes) {
+            let curTh = a.firstChild;
+            if (curTh.innerText === name) {
+                remove_children(a);
+                curTable.removeChild(a);
+                break;
+            }
+        }
+    }
+}
+
+function deletePerk(tableId_name_cId) {
+    let tableId = tableId_name_cId.split("; ");
+    let name = tableId[1];
+    let cId = tableId[2];
+    tableId = tableId[0];
+    let resultAjax = removePerkAjax(cId, name);
+    if (resultAjax.responseText === "success") {
+        let curTable = document.getElementById(tableId);
+        for (let a of curTable.childNodes) {
+            let curTh = a.firstChild;
+            if (curTh.innerText === name) {
+                remove_children(a);
+                curTable.removeChild(a);
+                break;
+            }
+        }
     }
 }
 
@@ -927,7 +974,7 @@ function getPersPerksAjax(pId, name, description, p_a) {
 
 function addPerkAjax(pId, aName, aDesc, pa) {
     return $.ajax({
-        url: 'http://localhost:8080/character/getCharacterAbilities',
+        url: 'http://localhost:8080/character/addAbilityToCharacter',
         type: 'GET',
         dataType: 'json',
         data: {
@@ -1004,6 +1051,9 @@ function getPersEffectsAjax(pId) {
         type: 'GET',
         dataType: 'json',
         async: false,
+        data: {
+            id: pId
+        },
         success: function(response){
             return  response;
         }
