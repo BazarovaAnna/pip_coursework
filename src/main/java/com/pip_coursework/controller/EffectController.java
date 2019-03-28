@@ -37,11 +37,12 @@ public class EffectController {
 
     @RequestMapping("/EffectController/findall")
     public  String findAll(){
-        String result = "";
+        String result = "[";
 
         for(Effect effect : repository.findAll()){
-            result += effect.toString() + "<br>";
+            result += effect.toString() + ",";
         }
+        result = result.substring(0, result.length() - 1) + "]";
 
         return result;
     }

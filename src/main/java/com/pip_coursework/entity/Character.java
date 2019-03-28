@@ -258,4 +258,11 @@ public class Character {
 
         return perMoney;
     }
+
+    @Override
+    public String toString() {
+        return  String.format("{\"id\":\"%s\",\"name\":\"%s\",\"username\":\"%s\",\"condition\":\"%s\",\"level\":%s," +
+                        "\"race\":\"%s\",\"class\":\"%s\",\"sex\":\"%s\",\"persMoney\":%s,\"maxWeight\":%s}",
+                id, name, user.getLogin(), condition, level, race.getType(), userClass, sex, persMoney, maxWeight);
+    }
 }

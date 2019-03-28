@@ -585,6 +585,7 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto;
+    margin-bottom: 200px;
 }
 
 #shop_header_div {

@@ -55,16 +55,17 @@ public class Ability {
         this.charactersAbilities.remove(charactersAbilities);
     }
 
-    protected Ability(){ }
+    protected Ability() {
+    }
 
-    public Ability(String name, String description, char perkAbility){
+    public Ability(String name, String description, char perkAbility) {
         this.name = name;
-        this.description= description;
+        this.description = description;
         this.perkAbility = perkAbility;
     }
 
     @Override
     public String toString() {
-        return  String.format("%s Название %s - '%s'. %s", id, perkAbility, name, description);
+        return String.format("{\"id\":\"%s\",\"name\":\"%s\",\"description\":\"%s\",\"p_a\":\"%s\"}", id, name, description, perkAbility);
     }
 }

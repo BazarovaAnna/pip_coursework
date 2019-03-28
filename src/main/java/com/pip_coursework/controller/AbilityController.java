@@ -47,11 +47,12 @@ public class AbilityController {
 
     @RequestMapping("/AbilityController/findall")
     public  String findAll(){
-        String result = "";
+        String result = "[";
 
         for(Ability ability : repository.findAll()){
-            result += ability.toString() + "<br>";
+            result += ability.toString() + ",";
         }
+        result = result.substring(0, result.length() - 1) + "]";
 
         return result;
     }
